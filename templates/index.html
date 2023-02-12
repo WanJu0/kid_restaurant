@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全台親子餐廳</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css" />
+</head>
+<body> 
+    <div class="overlay_login" id="overlay_login">
+        <div id="login_content">
+            <div id="decorator_section">
+                <div id="decorator_top"></div>
+                <div id="decorator_down">
+                    <div id="decorator_main">
+                        <div id="login_title">
+                            <div id="login_nane">登入會員帳號</div>
+                            <img onclick="closeLogin()" class="x_icon" src="/static/image/icon_closex.png" />
+                        </div>
+                    
+                        <input id="input_email"type="text" name="email" placeholder="輸入電子信箱"/><br/>
+                        <input id="input_password" type="password" name="password" placeholder="輸入密碼"/><br/>
+                        <button onclick="apiSingin()" id="login_btn">登入帳戶</button>
+                        <div id="signin_message"></div>
+                        <div onclick="openSignup(),closeLogin() " id="no_account">還沒有帳戶?點此註冊</div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <div class="overlay_signup" id="overlay_signup">
+        <div id="signup_content">
+            <div id="signup_section">
+                <div id="signup_top"></div>
+                <div id="signup_down">
+                    <div id="signup_main">
+                        <div id="signup_title">
+                            <div id="signup_nane">註冊會員帳號</div>
+                            <img onclick="closeSignup()" class="signup_icon" src="/static/image/icon_closex.png" />
+                        </div>
+                        <input id="input_signup_name" type="text" name="name" placeholder="輸入姓名"/><br/>
+                        <input id="input_signup_email"type="text" name="email" placeholder="輸入電子信箱"/><br/>
+                        <input id="input_signup_password" type="password" name="password" placeholder="輸入密碼"/><br/>
+                        <button onclick="apiSingup()"id="signup_btn">註冊帳戶</button>
+                        <div id="signup_message"></div>
+                        <div onclick="closeSignup(),openLogin()"  id="account">已經有帳戶?點此登入</div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+    <div id="navigation_bar">
+        <a href="/">
+            <div class=left>親子餐廳大集合</div>
+        </a>
+        <div class=right_login>
+            <div class="login_logout" onclick=" openHamburger() ">
+                <img class="hamburger_icon" src="/static/image/hamburger.png" width="20" height="20"/>
+                <img class="user_icon" src="/static/image/member.jpeg" width="35" height="35"/>
+            </div>
+           
+        </div>
+        <div class="right_content">
+            <div class="sign_in" onclick="openLogin()">登入</div>
+            <div class="sign_up" onclick="openSignup()">註冊</div>
+        </div>
+        <div class=right_logout>
+            <!-- <a href="/member"> -->
+                 <div class="member_page" >會員頁面</div>
+            <!-- </a> -->
+            <div class="signout_btn" onclick="logout()">登出系統</div>
+        </div>
+    </div> 
+     
+    <div id="county_list">
+        <ul class="drop-down-menu">
+            <li><a >北部</a>
+                <ul>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">台北市</a>
+                    </li>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">新北市</a>
+                    </li>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">桃園市</a>
+                    </li>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">新竹縣</a>
+                    </li>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">新竹市</a>
+                    </li>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">宜蘭縣</a>
+                    </li>
+                </ul>
+            </li>
+            <li><a >中部</a>
+                <ul>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">台中市</a>
+                    </li>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">苗栗縣</a>
+                    </li>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">彰化縣</a>
+                    </li>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">雲林縣</a>
+                    </li>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">南投縣</a>
+                    </li>
+                </ul>
+            </li>
+            <li><a >南部</a>
+                <ul>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">嘉義市</a>
+                    </li>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">嘉義縣</a>
+                    </li>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">台南市</a>
+                    </li>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">高雄市</a>
+                    </li>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">屏東縣</a>
+                    </li>
+                </ul>
+            </li>
+            <li><a >東部</a>
+                <ul>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">花蓮</a>
+                    </li>
+                    <li><a onclick="apiRestaurant(this.innerHTML)">台東縣</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div id=welcome>
+        <img class="welcome_photo">
+    </div>
+    <div>
+        <div id="content">
+            <!-- <div class="restaurant_information">
+                <img class="restaurant_image" src="https://lh3.googleusercontent.com/places/AJDFj40y76z3zn8z9Cx7jFxBEnqk9P07m2fOB5F_ilED4pdThvRYZqQWKARNc4FohdgUvoP2AlsQpF7AZcKP9seEg4Uam1XnmfZ04Ok=s1600-w5823">
+                <div class="information">
+                    <div class="store_name">農人餐桌 親子餐廳</div>
+                    <div class="phone">02 2322 3716</div>
+                    <div class="address">100台灣台北市中正區重慶南路二段51號B1</div>
+                </div>
+            </div>
+            <div class="restaurant_information">
+                <img class="restaurant_image" src="https://lh3.googleusercontent.com/places/AJDFj40y76z3zn8z9Cx7jFxBEnqk9P07m2fOB5F_ilED4pdThvRYZqQWKARNc4FohdgUvoP2AlsQpF7AZcKP9seEg4Uam1XnmfZ04Ok=s1600-w5823">
+                <div class="information">
+                    <div class="store_name">農人餐桌 親子餐廳</div>
+                    <div class="phone">02 2322 3716</div>
+                    <div class="address">100台灣台北市中正區重慶南路二段51號B1</div>
+                </div>
+            </div>
+            <div class="restaurant_information">
+                <img class="restaurant_image" src="https://lh3.googleusercontent.com/places/AJDFj40y76z3zn8z9Cx7jFxBEnqk9P07m2fOB5F_ilED4pdThvRYZqQWKARNc4FohdgUvoP2AlsQpF7AZcKP9seEg4Uam1XnmfZ04Ok=s1600-w5823">
+                <div class="information">
+                    <div class="store_name">農人餐桌 親子餐廳</div>
+                    <div class="phone">02 2322 3716</div>
+                    <div class="address">100台灣台北市中正區重慶南路二段51號B1</div>
+                </div>
+            </div>
+            <div class="restaurant_information">
+                <img class="restaurant_image" src="https://lh3.googleusercontent.com/places/AJDFj40y76z3zn8z9Cx7jFxBEnqk9P07m2fOB5F_ilED4pdThvRYZqQWKARNc4FohdgUvoP2AlsQpF7AZcKP9seEg4Uam1XnmfZ04Ok=s1600-w5823">
+                <div class="information">
+                    <div class="store_name">農人餐桌 親子餐廳</div>
+                    <div class="phone">02 2322 3716</div>
+                    <div class="address">100台灣台北市中正區重慶南路二段51號B1</div>
+                </div>
+            </div> -->
+        </div>
+        
+    </div> 
+   
+    <div class="footer_container">
+        <footer>COPYRIGHT © 2023 親子餐廳大集合</footer>    
+    </div>
+    <!-- <script src="/static/JS/common.js"></script> -->
+    <script src="/static/js/index.js"></script>
+    <script src="/static/js/commom.js"></script>
+    
+    <!-- <script src="/static/JS/booking.js"></script> -->
+</body>
+</html>

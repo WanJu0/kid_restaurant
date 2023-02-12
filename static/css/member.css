@@ -1,0 +1,143 @@
+.main_content{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+#member_div{
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    margin-bottom: 40px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+#member_photo{
+    background-color: #add;
+    width: 300px;
+    height: 300px;
+    margin-top: 15px;
+}
+#member_content{
+    width: 900px;
+    height: 300px;
+    margin: 15px;
+    grid-template-columns: 1fr 1fr 1fr;
+    display: grid;
+    position: relative;
+}
+.member_item{
+    margin: 10px;
+}
+#input_name,#input_mail,#input_phone,#input_gender,
+#Emergency_Contact,#member_date,#Emergency_phone{
+    width: 200px;
+    height: 30px;
+    padding-left: 0.5rem;
+    background: #FFFFFF;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-top: 5px;
+}
+#update_member{
+    position: absolute;
+    right: 20px;
+    bottom: 20px
+}
+#update_button{
+    width: 154px;
+    height: 36px;
+    background: #4897c6;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 16px;
+    border: #448899;
+    cursor: pointer;
+}
+.add_photo{
+    cursor: pointer;
+}
+#img_input2 {
+    display: none;
+}
+#img_label2 {
+
+border-radius: 5px;
+display: inline-block;
+
+}
+#preview_box2 img {
+width: 200px;
+}
+.separator_line{
+    max-width: 1200px;
+    height: 0px;
+    border: 1px solid #E8E8E8;
+    margin: 0 auto;
+}
+.favorite_title{
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #d5ad78;
+    font-weight: 500;
+}
+.favorite_photo{
+    width: 270px;
+    height: 300px;
+    background-color: aliceblue;
+}
+.favorite_down{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.favorite_content{
+    margin-right: 10px;
+    margin-bottom: 40px;
+}
+.favorite_div{
+    margin-left: 40px;
+}
+.myComment_title{
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #d5ad78;
+    font-weight: 500;
+}
+.comment_photo{
+    width: 270px;
+    height: 300px;
+    background-color: aliceblue;
+}
+.member_icon{
+    margin-right: 4px;
+}
+.member_information{
+    display: flex;
+    align-items: center;
+}
+.user_comment{
+    width: 270px
+}
+.comment_content{
+    width: 270px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin-left: 40px;
+}
+.visitor_comment{
+    margin-right: 10px;
+}
+.myComment_div{
+   margin-left: 40px;
+}
+.favorite_location{
+    display: flex;
+    align-items: center;
+}

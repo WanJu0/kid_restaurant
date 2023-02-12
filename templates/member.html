@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全台親子餐廳</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/member.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css" />
+</head>
+<body> 
+    <body> 
+        <div class="overlay_login" id="overlay_login">
+            <div id="login_content">
+                <div id="decorator_section">
+                    <div id="decorator_top"></div>
+                    <div id="decorator_down">
+                        <div id="decorator_main">
+                            <div id="login_title">
+                                <div id="login_nane">登入會員帳號</div>
+                                <img onclick="closeLogin()" class="x_icon" src="/static/image/icon_closex.png" />
+                            </div>
+                        
+                            <input id="input_email"type="text" name="email" placeholder="輸入電子信箱"/><br/>
+                            <input id="input_password" type="password" name="password" placeholder="輸入密碼"/><br/>
+                            <button onclick="apiSingin()" id="login_btn">登入帳戶</button>
+                            <div id="signin_message"></div>
+                            <div onclick="openSignup(),closeLogin() " id="no_account">還沒有帳戶?點此註冊</div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <div class="overlay_signup" id="overlay_signup">
+            <div id="signup_content">
+                <div id="signup_section">
+                    <div id="signup_top"></div>
+                    <div id="signup_down">
+                        <div id="signup_main">
+                            <div id="signup_title">
+                                <div id="signup_nane">註冊會員帳號</div>
+                                <img onclick="closeSignup()" class="signup_icon" src="/static/image/icon_closex.png" />
+                            </div>
+                            <input id="input_signup_name" type="text" name="name" placeholder="輸入姓名"/><br/>
+                            <input id="input_signup_email"type="text" name="email" placeholder="輸入電子信箱"/><br/>
+                            <input id="input_signup_password" type="password" name="password" placeholder="輸入密碼"/><br/>
+                            <button onclick="apiSingup()"id="signup_btn">註冊帳戶</button>
+                            <div id="signup_message"></div>
+                            <div onclick="closeSignup(),openLogin()"  id="account">已經有帳戶?點此登入</div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        <div id="navigation_bar">
+            <a href="/">
+                <div class=left>親子餐廳大集合</div>
+            </a>
+            <div class=right_login>
+                <div class="login_logout" onclick=" openHamburger() ">
+                    <img class="hamburger_icon" src="/static/image/hamburger.png" width="20" height="20"/>
+                    <img class="user_icon" src="/static/image/member.jpeg" width="35" height="35"/>
+                </div>
+               
+            </div>
+            <div class="right_content">
+                <div class="sign_in" onclick="openLogin()">登入</div>
+                <div class="sign_up" onclick="openSignup()">註冊</div>
+            </div>
+        </div> 
+    <div class="main_content">
+        <div id="member_div">
+            <div id="member_photo">
+                <input id="img_input2" type="file" accept="image/*"/>
+                <label for="img_input2" id="img_label2">
+                    <img onclick="update_photo()" class="add_photo" src="" width="300" height="300"/>
+                    <!-- <button onclick="update_photo()" id="update_button">更新大頭照</button> -->
+                </label>
+                <div id="preview_box2"></div>
+                
+            </div>
+            <div id="member_content">
+                
+                <div class="member_item">
+                    <label>聯絡姓名 :</label><br/>
+                    <input id="input_name" type="text" name="name" ></input><br/>
+                </div>
+                <div class="member_item">
+                    <label>聯絡信箱 :</label><br/>
+                    <input id="input_mail" type="email" name="name" placeholder="輸入信箱"/><br/>
+                </div>
+    
+                <div class="member_item">
+                    <label>手機號碼 : &nbsp </label><br/>
+                    <input id="input_phone" type="tel" name="name" placeholder="輸入電話"/><br/>
+                </div>
+                <div class="member_item">
+                    <label>性別:</label><br/>
+                    <!-- <input id="input_gender" name="name"/><br/> -->
+                    <div id="gender">
+                        <input type="radio" name="gender" id="male" >
+                        <label for="male">男性</label>
+                        <input type="radio" name="gender" id="female">
+                        <label for="female">女性</label>
+                    </div>
+                </div>
+                <div class="member_item">
+                    <label>生日:</label><br/>
+                    <input type="date" name="date" id="member_date" /><br/>
+                </div>
+                <div id="update_member">
+                    <div id="update_content"></div>
+                    <button onclick="updateMember()" id="update_button">更新會員資料</button>
+                </div>
+                
+            </div>
+            
+        </div>
+        <div class="separator_line"></div>
+        <div class="favorite_div">
+            <div class="favorite_title">我喜愛的餐廳</div>
+        </div>
+        <div class="favorite_down">
+            <div class="favorite_content">
+                <div class="favorite_information">
+                    <div class="favorite_store">餐廳名稱</div>
+                    <div  class="favorite_location">
+                        <img class="location_icon" src="/static/image/location.png" width="16" height="16"/>
+                        <div class="google_location">高雄市 , 左營區</div>
+                    </div>
+                </div>
+                <div>
+                    <img class="favorite_photo" src=""/>
+                </div>
+            </div>
+            <div class="favorite_content">
+                <div class="favorite_information">
+                    <div class="favorite_store">餐廳名稱</div>
+                    <div class="favorite_location">
+                        <img class="location_icon" src="/static/image/location.png" width="16" height="16"/>
+                        <div class="google_location">高雄市 , 左營區</div>
+                    </div>
+                </div>
+                <div>
+                    <img class="favorite_photo" src=""/>
+                </div>
+            </div>
+            <div class="favorite_content">
+                <div class="favorite_information">
+                    <div class="favorite_store">餐廳名稱</div>
+                    <div class="favorite_location">
+                        <img class="location_icon" src="/static/image/location.png" width="16" height="16"/>
+                        <div class="google_location">高雄市 , 左營區</div>
+                    </div>
+                    
+                </div>
+                <div>
+                    <img class="favorite_photo" src=""/>
+                </div>
+            </div>
+            <div class="favorite_content">
+                <div class="favorite_information">
+                    <div class="favorite_store">餐廳名稱</div>
+                    <div class="favorite_location">
+                        <img class="location_icon" src="/static/image/location.png" width="16" height="16"/>
+                        <div class="google_location">高雄市 , 左營區</div>
+                    </div>
+                </div>
+                <div>
+                    <img class="favorite_photo" src=""/>
+                </div>
+            </div>
+        </div>
+        <div class="separator_line"></div>
+        <div class="myComment_div">
+            <div class="myComment_title">我的評論</div>
+        </div>
+        <div class="comment_content">
+            <div class="visitor_comment">
+                <div>
+                    <img class="comment_photo" src=""/>
+                </div>
+                <div class="member_information">
+                    <img class="member_icon" src="/static/image/member.png" width="40" height="40"/>
+                    <div class="visitor_name">某某某</div>
+                    <div></div>
+                </div>
+                <div class="user_comment">
+                    氣氛佳餐點也都蠻新鮮美味的
+                    很文青舒適
+                    #適合網美及情侶的約會地點
+                </div>
+                <div class="comment_date">2023/02/05</div>
+            </div>
+            <div class="visitor_comment">
+                <div>
+                    <img class="comment_photo" src=""/>
+                </div>
+                <div class="member_information">
+                    <img class="member_icon" src="/static/image/member.png" width="40" height="40"/>
+                    <div class="visitor_name">某某某</div>
+                    <div></div>
+                </div>
+                <div class="user_comment">
+                    氣氛佳餐點也都蠻新鮮美味的
+                    很文青舒適
+                    #適合網美及情侶的約會地點
+                </div>
+                <div class="comment_date">2023/02/05</div>
+            </div>
+            <div class="visitor_comment">
+                <div>
+                    <img class="comment_photo" src=""/>
+                </div>
+                <div class="member_information">
+                    <img class="member_icon" src="/static/image/member.png" width="40" height="40"/>
+                    <div class="visitor_name">某某某</div>
+                    <div></div>
+                </div>
+                <div class="user_comment">
+                    氣氛佳餐點也都蠻新鮮美味的
+                    很文青舒適
+                    #適合網美及情侶的約會地點
+                </div>
+                <div class="comment_date">2023/02/05</div>
+            </div>
+            <div class="visitor_comment">
+                <div>
+                    <img class="comment_photo" src=""/>
+                </div>
+                <div class="member_information">
+                    <img class="member_icon" src="/static/image/member.png" width="40" height="40"/>
+                    <div class="visitor_name">某某某</div>
+                    <div></div>
+                </div>
+                <div class="user_comment">
+                    氣氛佳餐點也都蠻新鮮美味的
+                    很文青舒適
+                    #適合網美及情侶的約會地點
+                </div>
+                <div class="comment_date">2023/02/05</div>
+            </div>
+
+        </div>
+    </div>
+
+    
+    <div class="footer_container">
+        <footer>COPYRIGHT © 2023 親子餐廳大集合</footer>    
+    </div>
+    <!-- <script src="/static/JS/common.js"></script> -->
+    
+    <script src="/static/js/commom.js"></script>
+    
+    <!-- <script src="/static/JS/booking.js"></script> -->
+</body>
+</html>

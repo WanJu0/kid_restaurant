@@ -1,0 +1,259 @@
+
+.restuarant_main{
+    margin-left: 40px;
+}
+.store_title{
+    font-size: 26px;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+}
+.store_detail{
+    display: flex;
+    align-items: center;
+    height: 36px;
+    position: relative;
+}
+.google_star{
+    margin-right: 4px;
+}
+.google_rent{
+    margin-right: 10px;
+}
+.location_icon{
+    margin-right: 4px;
+}
+.google_location{
+    margin-right: 10px;
+}
+.photo_1{
+    width: 560px;
+    height: 334.4px;
+    background-color: antiquewhite;
+    margin-right: 8px;
+    border-radius: 10px 0px 0 10px;
+    object-fit: cover;
+}
+.photo_2{
+    width: 272px;
+    height: 167.2px;
+    background-color: aliceblue;
+    margin-bottom: 2px;
+    object-fit: cover;
+}
+.photo_3{
+    width: 272px;
+    height: 159.2px;
+    background-color: aquamarine;
+    object-fit: cover;
+}
+.photo_4{
+    width: 272px;
+    height: 167.2px;
+    background-color: aliceblue;
+    margin-bottom: 2px;
+    border-radius: 0px 10px 0 0px;
+    object-fit: cover;
+}
+.photo_5{
+    width: 272px;
+    height: 159.2px;
+    background-color: aquamarine;
+    border-radius: 0px 0px 10px 0px;
+    object-fit: cover;
+}
+.sec_photo{
+    margin-right: 8px;
+}
+.restaurant_photo_list{
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+}
+.separator_line{
+    max-width: 1200px;
+    height: 0px;
+    border: 1px solid #E8E8E8;
+    margin: 0 auto;
+}
+.open_time{
+    display: flex;
+    align-items: center;
+    height: 35px;
+}
+.restaurant_location{
+    display: flex;
+    align-items: center;
+    height: 35px;
+}
+.clock_icon{
+    margin-right: 5px;
+}
+.comment_title{
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #d5ad78;
+    font-weight: 500;
+}
+.comment_photo{
+    width: 270px;
+    height: 300px;
+    background-color: aliceblue;
+}
+.member_icon{
+    margin-right: 4px;
+}
+.member_information{
+    display: flex;
+    align-items: center;
+}
+.user_comment{
+    width: 270px
+}
+.main_content{
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.comment_content{
+    width: 270px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    
+}
+.visitor_comment{
+    margin-right: 10px;
+}
+.favorite_button{
+    display: flex;
+    position: absolute;
+    right: 0;
+    background: bottom;
+    align-items: center;
+    border-radius: 5px 5px 5px 5px;
+    cursor: pointer;
+}
+.love_icon{
+    margin-right: 10px;
+}
+.save{
+    font-size: 16px;
+}
+.add_comment{
+    position: absolute;
+    right: 0;
+    align-items: center;
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+.comment_div{
+    display: flex;
+    position: relative;
+}
+.google_comment_title{
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #d5ad78;
+    font-weight: 500;
+}
+
+div[class^=google_information]{
+    display: flex;
+    align-items: center;
+}
+.google_comment_div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+div[class^=google_user_comment]{
+    background-color: #f6f6f6;
+    border-radius: 6px;
+    padding: 15px;
+    margin-top: 15px;
+    position: relative;
+    margin-bottom: 5px;
+    overflow: hidden;
+    word-break: break-word;
+    /* padding: 10px; */
+    white-space: pre-line;
+}
+div[class^=google_user_comment]{
+    margin: 10px;
+    margin-right: 20px;
+}
+.google_comment_date{
+    margin: 10px;
+    margin-bottom: 40px
+}
+p{
+    /* display: -webkit-box;
+    -webkit-box-orient: vertical; */
+    overflow: hidden;
+    /* -webkit-line-clamp: 4; */
+    line-height: 20px;
+    white-space: pre-line;
+}
+/* 留言板的css */
+.overlay_message{
+    background-color: rgba(0, 0, 0, 0.25);
+    width: 100%;
+    height: 80px;
+    position: fixed;
+    top: 0;
+    display: none;
+    justify-items: center;
+    z-index: 900;
+    display: flex;
+    height: 100vh;
+
+}
+.message_content{
+    width: 700px;
+    height: 275px;
+    position: absolute;
+    left: 50%;
+    margin-top: 80px;
+    transform: translate(-50%, -10px);
+    z-index: 800;
+}
+.message_down{
+    width: 700px;
+    height: 500px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 60px #aaaaaa;
+    border-radius: 10px 10px 10px
+}
+.message_main{
+    padding: 15px;
+}
+.message_title{
+    height: 27px;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 24px;
+    align-items: center;
+    text-align: center;
+    color: #666666;
+    justify-content: flex-end;
+    display: flex;
+}
+.message_name{
+    width: 700px;
+}
+/* 愛心css */
+.redLove_button{
+    display: flex;
+    position: absolute;
+    right: 0;
+    background: bottom;
+    align-items: center;
+    border-radius: 5px 5px 5px 5px;
+    cursor: pointer;
+    display: none;
+}

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全台親子餐廳</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/restaurant.css" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css" />
+
+</head>
+<body> 
+    <div class="overlay_login" id="overlay_login">
+        <div id="login_content">
+            <div id="decorator_section">
+                <div id="decorator_top"></div>
+                <div id="decorator_down">
+                    <div id="decorator_main">
+                        <div id="login_title">
+                            <div id="login_nane">登入會員帳號</div>
+                            <img onclick="closeLogin()" class="x_icon" src="/static/image/icon_closex.png" />
+                        </div>
+                    
+                        <input id="input_email"type="text" name="email" placeholder="輸入電子信箱"/><br/>
+                        <input id="input_password" type="password" name="password" placeholder="輸入密碼"/><br/>
+                        <button onclick="apiSingin()" id="login_btn">登入帳戶</button>
+                        <div id="signin_message"></div>
+                        <div onclick="openSignup(),closeLogin() " id="no_account">還沒有帳戶?點此註冊</div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <div class="overlay_signup" id="overlay_signup">
+        <div id="signup_content">
+            <div id="signup_section">
+                <div id="signup_top"></div>
+                <div id="signup_down">
+                    <div id="signup_main">
+                        <div id="signup_title">
+                            <div id="signup_nane">註冊會員帳號</div>
+                            <img onclick="closeSignup()" class="signup_icon" src="/static/image/icon_closex.png" />
+                        </div>
+                        <input id="input_signup_name" type="text" name="name" placeholder="輸入姓名"/><br/>
+                        <input id="input_signup_email"type="text" name="email" placeholder="輸入電子信箱"/><br/>
+                        <input id="input_signup_password" type="password" name="password" placeholder="輸入密碼"/><br/>
+                        <button onclick="apiSingup()"id="signup_btn">註冊帳戶</button>
+                        <div id="signup_message"></div>
+                        <div onclick="closeSignup(),openLogin()"  id="account">已經有帳戶?點此登入</div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+    <div id="navigation_bar">
+        <a href="/">
+            <div class=left>親子餐廳大集合</div>
+        </a>
+        <div class=right_login>
+            <div class="login_logout" onclick=" openHamburger() ">
+                <img class="hamburger_icon" src="/static/image/hamburger.png" width="20" height="20"/>
+                <img class="user_icon" src="/static/image/member.jpeg" width="35" height="35"/>
+            </div>
+           
+        </div>
+        <div class="right_content">
+            <div class="sign_in" onclick="openLogin()">登入</div>
+            <div class="sign_up" onclick="openSignup()">註冊</div>
+        </div>
+        <div class=right_logout>
+            <!-- <a href="/member"> -->
+                 <div class="member_page" >會員頁面</div>
+            <!-- </a> -->
+            <div class="signout_btn" onclick="logout()">登出系統</div>
+        </div>
+    </div> 
+    
+    <div class="main_content">
+        <div class="restuarant_main">
+            <div class="store_title">餐廳名稱</div>
+            <div class="store_detail">
+                <img class="google_star" src="/static/image/1985836.png" width="16" height="16"/>
+                <div class="google_rent">4.8</div>
+                <img class="location_icon" src="/static/image/location.png" width="16" height="16"/>
+                <div class="google_location">高雄市 , 左營區</div>
+                <img class="location_icon" src="/static/image/phone.png" width="16" height="16"/>
+                <div class="store_phone">電話:222222222</div>
+                <button class="favorite_button" onclick="myfavorite()" >
+                    <img class="love_icon" src="/static/image/love_none.png" width="16" height="16"/>
+                    <div class="save">儲存</div>
+                </button>
+                
+                <button class="redLove_button" onclick="unfavorite()">
+                    <img class="love_icon" src="/static/image/redlove.png" width="16" height="16"/>
+                    <div class="save">已儲存</div>
+                </button>
+            </div>
+            <div class="restaurant_photo_list">
+                <div class="first_photo">
+                    <img class="photo_1" src=""/>
+                </div>
+                <div class="sec_photo">
+                    <div>
+                        <img class="photo_2" src=""/>
+                    </div>
+                    <div>
+                        <img class="photo_3" src=""/>
+                    </div>
+                    
+                </div>
+                <div class="third_photo">
+                    <div>
+                        <img class="photo_4" src=""/>
+                    </div>
+                    <div>
+                        <img class="photo_5" src=""/>
+                    </div>
+                    
+                </div>
+
+            </div>
+            <div class="separator_line"></div>
+            <div>
+                <div class="open_time">
+                    <img class="clock_icon" src="/static/image/clock.png" width="20" height="20"/>
+                    <div class="store_time"></div>  
+                    </div>
+                </div>
+                <div class="weekly_time">
+                <div class="restaurant_location">
+                    <img class="location_icon" src="/static/image/location.png" width="20" height="20"/>
+                    <div class="store_address">台北市內湖區文湖街79號</div>
+                </div>
+            </div>
+            <div class="separator_line"></div>
+            <div class="google_comment_title">Google 評論</div>
+            <div class="google_comment_div">
+            
+            </div>
+            
+            <div class="separator_line"></div>
+            <div class="comment_div">
+                <div class="comment_title">美時客評論</div>
+                <button class="add_comment">
+                    <div class="comment_button">新增一筆評論</div>
+                </button>
+            </div>
+            
+            <!-- <div class="comment_content">
+                <div class="visitor_comment">
+                    <div>
+                        <img class="comment_photo" src=""/>
+                    </div>
+                    <div class="member_information">
+                        <img class="member_icon" src="/static/image/member.png" width="40" height="40"/>
+                        <div class="visitor_name">某某某</div>
+                        <div></div>
+                    </div>
+                    <div class="user_comment">
+                        氣氛佳餐點也都蠻新鮮美味的
+                        很文青舒適
+                        #適合網美及情侶的約會地點
+                    </div>
+                    <div class="comment_date">2023/02/05</div>
+                </div>
+                <div class="visitor_comment">
+                    <div>
+                        <img class="comment_photo" src=""/>
+                    </div>
+                    <div class="member_information">
+                        <img class="member_icon" src="/static/image/member.png" width="40" height="40"/>
+                        <div class="visitor_name">某某某</div>
+                        <div></div>
+                    </div>
+                    <div class="user_comment">
+                        氣氛佳餐點也都蠻新鮮美味的
+                        很文青舒適
+                        #適合網美及情侶的約會地點
+                    </div>
+                    <div class="comment_date">2023/02/05</div>
+                </div>
+                <div class="visitor_comment">
+                    <div>
+                        <img class="comment_photo" src=""/>
+                    </div>
+                    <div class="member_information">
+                        <img class="member_icon" src="/static/image/member.png" width="40" height="40"/>
+                        <div class="visitor_name">某某某</div>
+                        <div></div>
+                    </div>
+                    <div class="user_comment">
+                        氣氛佳餐點也都蠻新鮮美味的
+                        很文青舒適
+                        #適合網美及情侶的約會地點
+                    </div>
+                    <div class="comment_date">2023/02/05</div>
+                </div>
+                <div class="visitor_comment">
+                    <div>
+                        <img class="comment_photo" src=""/>
+                    </div>
+                    <div class="member_information">
+                        <img class="member_icon" src="/static/image/member.png" width="40" height="40"/>
+                        <div class="visitor_name">某某某</div>
+                        <div></div>
+                    </div>
+                    <div class="user_comment">
+                        氣氛佳餐點也都蠻新鮮美味的
+                        很文青舒適
+                        #適合網美及情侶的約會地點
+                    </div>
+                    <div class="comment_date">2023/02/05</div>
+                </div>
+
+            </div> -->
+            
+
+
+        </div>
+    </div>
+    <!-- <div class="overlay_message" id="overlay_message">
+        <div class="message_content">
+            <div class="message_section">
+                <div class="decorator_top"></div>
+                <div class="message_down">
+                    <div class="message_main">
+                        <div class="message_title">
+                            <div class="message_name">新增評論</div>
+                            <img onclick="closeMessage()" class="x_icon" src="/static/image/icon_closex.png" />
+                        </div>
+                        <div id="message_photo">
+                            <input id="img_input2" type="file" accept="image/*"/>
+                            <label for="img_input2" id="img_label2">
+                                <img onclick="update_photo()" class="add_photo" src="" width="200" height="200"/>
+                            </label>
+                            <div id="preview_box2"></div>
+                            
+                        </div>
+                        <input id="input_message"type="text" name="message" placeholder="對此餐廳的評論"/><br/>
+                    
+                        <button onclick="apiSingin()" id="login_btn">送出評論</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div> -->
+    <div class="footer_container">
+        <footer>COPYRIGHT © 2023 親子餐廳大集合</footer>    
+    </div>
+    <script src="/static/js/commom.js"></script>
+    <script src="/static/js/restaurant.js"></script>
+    <script src="/static/js/favorite.js"></script>
+    
+    <!-- <script src="/static/JS/common.js"></script> -->
+    <!-- <script src="/static/js/index.js"></script> -->
+    
+    <!-- <script src="/static/JS/booking.js"></script> -->
+</body>
+</html>
