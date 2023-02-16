@@ -14,84 +14,76 @@ function restaurant() {
                 let address = jsonData.data[i].address;
                 let straddress = address.split('台灣');
                 let content = document.querySelector("#content");
-                // 新增一個連結在最外層
-                // let restaurantLink = document.createElement("a");
-                // restaurantLink.className = `restaurant_link${i}`;
-                // restaurantLink.href=`/restaurant/${jsonData.data[i].id}`;
-                // content.appendChild(restaurantLink);
-                // 建立restaurant information div
-                let restaurantDiv = document.createElement("div");
-                restaurantDiv.className = `restaurant_information${i}`;
-                content.appendChild(restaurantDiv);
-
-                // 建立圖片在 restaurantDiv 中
-                let restaurant_content = document.querySelector(`.restaurant_information${i}`);
-                // 在下面創一個photo_list div
-                let photoDiv = document.createElement("div");
-                photoDiv.className = `photo_list${i}`;
-                let dotDiv = document.createElement("div");
-                dotDiv.className = `dot_content${i}`;
-                photoDiv.appendChild(dotDiv);
-                restaurant_content.appendChild(photoDiv)
-                // console.log(jsonData.data[i].image.length)
-                let photo_content = document.querySelector(`.photo_list${i}`);
-                // 建立button左右按鈕
-                let buttonLeft = document.createElement("button");
-                buttonLeft.className = "btn_left";
-                buttonLeft.setAttribute("onclick", "setTimeout(function(){plusDivs(-1)}, 100)");
-                let left_img = document.createElement("img");
-                left_img.className = "icon_left";
-                left_img.src = "/static/image/btn_leftArrowbutton.png";
-                left_img.setAttribute("width", "30");
-                left_img.setAttribute("height", "30");
-                buttonLeft.appendChild(left_img);
-                photo_content.appendChild(buttonLeft);
-
-                let buttonRight = document.createElement("button");
-                buttonRight.className = "btn_right";
-                buttonRight.setAttribute("onclick", "setTimeout(function(){plusDivs(1)}, 100)");
-                let right_img = document.createElement("img");
-                right_img.className = "icon_right";
-                right_img.src = "/static/image/btn_rightArrowbutton.png";
-                right_img.setAttribute("width", "30");
-                right_img.setAttribute("height", "30");
-                buttonRight.appendChild(right_img);
-                photo_content.appendChild(buttonRight);
-
-
-                restaurant_content.appendChild(photo_content);
-
-                let requestCounter = 0;
-                for (let j = 0; j < jsonData.data[i].image.length; j++) {
-                    let photo_img = document.createElement("img");
-                    photo_img.className = "photo_list_content";
-                    photo_img.src ="https://"+ jsonData.data[i].image[j];
-                    photo_content.appendChild(photo_img);
-
-                    let dot_content = document.querySelector(`.dot_content${i}`);
-                    let dots = document.createElement("span");
-                    dots.className = "dot";
-                    dots.setAttribute("onclick", `currentSlide(${j + 1})`);
-                    dot_content.appendChild(dots);
-
-                    // requestCounter++;
-                }
-
-                // let img=document.createElement("img");
-                // img.className="restaurant_image";
-                // img.src=image=jsonData.data[i].image[0];
-                // restaurant_content.appendChild(img);
-
-                // 新增一個連結在information最外層
+                
+                //新增一個連結在最外層
                 let restaurantLink = document.createElement("a");
                 restaurantLink.className = `restaurant_link${i}`;
                 restaurantLink.href=`/restaurant/${jsonData.data[i].id}`;
-                restaurant_content.appendChild(restaurantLink);
+                content.appendChild(restaurantLink);
+
+
+
+                let restaurantDiv = document.createElement("div");
+                restaurantDiv.className = `restaurant_information${i}`;
+                restaurantLink.appendChild(restaurantDiv);
+
+                // 建立圖片在 restaurantDiv 中
+                let restaurant_content=document.querySelector(`.restaurant_information${i}`);
+                let imgDiv = document.createElement("div")
+                imgDiv.className = "imgDiv"
+                let img=document.createElement("img");
+                img.className="restaurant_image";
+                img.src="https://"+jsonData.data[i].image[0];
+                imgDiv.appendChild(img)
+                restaurant_content.appendChild(imgDiv);
+                
+                // 建立圖片上的地標位置
+                let prodcut_map = document.createElement("div")
+                prodcut_map.className = `product_map${i}`;
+                restaurant_content.appendChild(prodcut_map);
+                let prodcut_map_content = document.querySelector(`.product_map${i}`)
+                let mapImg=document.createElement("img");
+                mapImg.className=" product_map_photo"
+                mapImg.src="/static/image/22.png"
+                mapImg.setAttribute("width", "24");
+                mapImg.setAttribute("height", "24");
+                prodcut_map_content.appendChild(mapImg);
+                restaurant_content.appendChild(prodcut_map_content);
+
+                let mapText=document.createElement("div")
+                mapText.className="map_text"
+                let mapTextNode = document.createTextNode(jsonData.data[i].county);
+                mapText.appendChild(mapTextNode);
+                prodcut_map_content.appendChild(mapText)
+
+                // 在圖片中建立愛心
+                let prodcut_love = document.createElement("button")
+                prodcut_love.className = `product_love${i}`;
+                restaurant_content.appendChild(prodcut_love);
+                let prodcut_love_content = document.querySelector(`.product_love${i}`)
+                let loveImg=document.createElement("img");
+                loveImg.className=" product_love_photo"
+                loveImg.src="/static/image/heart.png"
+                loveImg.setAttribute("width", "24");
+                loveImg.setAttribute("height", "24");
+                prodcut_love_content.appendChild(loveImg);
+                restaurant_content.appendChild(prodcut_love_content);
+
+
+
+
+
+
+                // 新增一個連結在information最外層
+                // let restaurantLink = document.createElement("a");
+                // restaurantLink.className = `restaurant_link${i}`;
+                // restaurantLink.href=`/restaurant/${jsonData.data[i].id}`;
+                // restaurant_content.appendChild(restaurantLink);
 
                 // 建立information
                 let informationElement = document.createElement("div");
                 informationElement.className = `information${i}`;
-                restaurantLink.appendChild(informationElement);
+                restaurant_content.appendChild(informationElement);
 
                 // information 底下建立name phone adress的div
                 let informationDiv = document.querySelector(`.restaurant_information${i} .information${i}`);
@@ -150,80 +142,71 @@ const callback = (entries) => {
                         let address = jsonData.data[i].address;
                         let straddress = address.split('台灣');
                         let content = document.querySelector("#content");
-                        // 新增一個連結在最外層
-                        // let restaurantLink = document.createElement("a");
-                        // restaurantLink.className = `restaurant_link${i}`;
-                        // restaurantLink.href=`/restaurant/${jsonData.data[i].id}`;
-                        // content.appendChild(restaurantLink);
-                        // 建立restaurant information div
+                        //新增一個連結在最外層
+                        let restaurantLink = document.createElement("a");
+                        restaurantLink.className = `restaurant_link${i+12*nextPage}`;
+                        restaurantLink.href=`/restaurant/${jsonData.data[i].id}`;
+                        content.appendChild(restaurantLink);
+            
                         let restaurantDiv = document.createElement("div");
                         restaurantDiv.className = `restaurant_information${i+12*nextPage}`;
-                        content.appendChild(restaurantDiv);
+                        restaurantLink.appendChild(restaurantDiv);
 
-                        // 建立圖片在 restaurantDiv 中
-                let restaurant_content = document.querySelector(`.restaurant_information${i+12*nextPage}`);
-                // 在下面創一個photo_list div
-                let photoDiv = document.createElement("div");
-                photoDiv.className = `photo_list${i+12*nextPage}`;
-                let dotDiv = document.createElement("div");
-                dotDiv.className = `dot_content${i+12*nextPage}`;
-                photoDiv.appendChild(dotDiv);
-                restaurant_content.appendChild(photoDiv)
-                // console.log(jsonData.data[i].image.length)
-                let photo_content = document.querySelector(`.photo_list${i+12*nextPage}`);
-                // 建立button左右按鈕
-                let buttonLeft = document.createElement("button");
-                buttonLeft.className = "btn_left";
-                buttonLeft.setAttribute("onclick", "setTimeout(function(){plusDivs(-1)}, 100)");
-                let left_img = document.createElement("img");
-                left_img.className = "icon_left";
-                left_img.src = "/static/image/btn_leftArrowbutton.png";
-                left_img.setAttribute("width", "30");
-                left_img.setAttribute("height", "30");
-                buttonLeft.appendChild(left_img);
-                photo_content.appendChild(buttonLeft);
+                    // 建立圖片在 restaurantDiv 中
+                    let restaurant_content=document.querySelector(`.restaurant_information${i+12*nextPage}`);
+                    let imgDiv = document.createElement("div")
+                    imgDiv.className = "imgDiv"
+                    let img=document.createElement("img");
+                    img.className="restaurant_image";
+                    img.src="https://"+jsonData.data[i].image[0];
+                    imgDiv.appendChild(img)
+                    restaurant_content.appendChild(imgDiv);
 
-                let buttonRight = document.createElement("button");
-                buttonRight.className = "btn_right";
-                buttonRight.setAttribute("onclick", "setTimeout(function(){plusDivs(1)}, 100)");
-                let right_img = document.createElement("img");
-                right_img.className = "icon_right";
-                right_img.src = "/static/image/btn_rightArrowbutton.png";
-                right_img.setAttribute("width", "30");
-                right_img.setAttribute("height", "30");
-                buttonRight.appendChild(right_img);
-                photo_content.appendChild(buttonRight);
+                    // 建立圖片上的地標位置
+                let prodcut_map = document.createElement("div")
+                prodcut_map.className = `product_map${i+12*nextPage}`;
+                restaurant_content.appendChild(prodcut_map);
+                let prodcut_map_content = document.querySelector(`.product_map${i+12*nextPage}`)
+                let mapImg=document.createElement("img");
+                mapImg.className=" product_map_photo"
+                mapImg.src="/static/image/22.png"
+                mapImg.setAttribute("width", "24");
+                mapImg.setAttribute("height", "24");
+                prodcut_map_content.appendChild(mapImg);
+                restaurant_content.appendChild(prodcut_map_content);
 
+                let mapText=document.createElement("div")
+                mapText.className="map_text"
+                let mapTextNode = document.createTextNode(jsonData.data[i].county);
+                mapText.appendChild(mapTextNode);
+                prodcut_map_content.appendChild(mapText)
 
-                restaurant_content.appendChild(photo_content);
+                // 在圖片中建立愛心
+                let prodcut_love = document.createElement("button")
+                prodcut_love.className = `product_love${i+12*nextPage}`;
+                restaurant_content.appendChild(prodcut_love);
+                let prodcut_love_content = document.querySelector(`.product_love${i+12*nextPage}`)
+                let loveImg=document.createElement("img");
+                loveImg.className=" product_love_photo"
+                loveImg.src="/static/image/heart.png"
+                loveImg.setAttribute("width", "24");
+                loveImg.setAttribute("height", "24");
+                prodcut_love_content.appendChild(loveImg);
+                restaurant_content.appendChild(prodcut_love_content);
 
-                let requestCounter = 0;
-                for (let j = 0; j < jsonData.data[i].image.length; j++) {
-                    let photo_img = document.createElement("img");
-                    photo_img.className = "photo_list_content";
-                    photo_img.src ="https://"+ jsonData.data[i].image[j];
-
-                    photo_content.appendChild(photo_img);
-
-                    let dot_content = document.querySelector(`.dot_content${i+12*nextPage}`);
-                    let dots = document.createElement("span");
-                    dots.className = "dot";
-                    dots.setAttribute("onclick", `currentSlide(${j+1})`)
-                    dot_content.appendChild(dots);
-
-                    requestCounter++;
-               
-                }
-                // 新增一個連結在information最外層
-                let restaurantLink = document.createElement("a");
-                restaurantLink.className = `restaurant_link${i+12*nextPage}`;
-                restaurantLink.href=`/restaurant/${jsonData.data[i].id}`;
-                restaurant_content.appendChild(restaurantLink);
                     
-                // 建立information
+
+
+                    // // 新增一個連結在information最外層
+                    // let restaurantLink = document.createElement("a");
+                    // restaurantLink.className = `restaurant_link${i+12*nextPage}`;
+                    // restaurantLink.href=`/restaurant/${jsonData.data[i].id}`;
+                    // restaurant_content.appendChild(restaurantLink);
+                        
+                    // 建立information
                     let informationElement = document.createElement("div");
                     informationElement.className = `information${i+12*nextPage}`;
-                    restaurantLink.appendChild(informationElement);
+                    restaurant_content.appendChild(informationElement);
 
                     // information 底下建立name phone adress的div
                     let informationDiv = document.querySelector(`.restaurant_information${i+12*nextPage} .information${i+12*nextPage}`);
@@ -288,78 +271,122 @@ function apiRestaurant(clickedCity) {
                 let address = jsonData.data[i].address;
                 let straddress = address.split('台灣');
                 let content = document.querySelector("#content");
-                // 新增一個連結在最外層
-                // let restaurantLink = document.createElement("a");
-                // restaurantLink.className = `restaurant_link${i}`;
-                // restaurantLink.href=`/restaurant/${jsonData.data[i].id}`;
-                // content.appendChild(restaurantLink);
-                // 建立restaurant information div
-                let restaurantDiv = document.createElement("div");
-                restaurantDiv.className = `restaurant_information${i}`;
-                content.appendChild(restaurantDiv);
-
-                // 建立圖片在 restaurantDiv 中
-                let restaurant_content = document.querySelector(`.restaurant_information${i}`);
-                // 在下面創一個photo_list div
-                let photoDiv = document.createElement("div");
-                photoDiv.className = `photo_list${i}`;
-                let dotDiv = document.createElement("div");
-                dotDiv.className = `dot_content${i}`;
-                photoDiv.appendChild(dotDiv);
-                restaurant_content.appendChild(photoDiv)
-                // console.log(jsonData.data[i].image.length)
-                let photo_content = document.querySelector(`.photo_list${i}`);
-                // 建立button左右按鈕
-                let buttonLeft = document.createElement("button");
-                buttonLeft.className = "btn_left";
-                buttonLeft.setAttribute("onclick", "setTimeout(function(){plusDivs(-1)}, 100)");
-                let left_img = document.createElement("img");
-                left_img.className = "icon_left";
-                left_img.src = "/static/image/btn_leftArrowbutton.png";
-                left_img.setAttribute("width", "30");
-                left_img.setAttribute("height", "30");
-                buttonLeft.appendChild(left_img);
-                photo_content.appendChild(buttonLeft);
-
-                let buttonRight = document.createElement("button");
-                buttonRight.className = "btn_right";
-                buttonRight.setAttribute("onclick", "setTimeout(function(){plusDivs(1)}, 100)");
-                let right_img = document.createElement("img");
-                right_img.className = "icon_right";
-                right_img.src = "/static/image/btn_rightArrowbutton.png";
-                right_img.setAttribute("width", "30");
-                right_img.setAttribute("height", "30");
-                buttonRight.appendChild(right_img);
-                photo_content.appendChild(buttonRight);
-
-
-                restaurant_content.appendChild(photo_content);
-
-                for (let j = 0; j < jsonData.data[i].image.length; j++) {
-                   
-                    let photo_img = document.createElement("img");
-                    photo_img.className = "photo_list_content";
-                    photo_img.src ="https://"+ jsonData.data[i].image[j];
-
-                    photo_content.appendChild(photo_img);
-
-                    let dot_content = document.querySelector(`.dot_content${i}`);
-                    let dots = document.createElement("span");
-                    dots.className = "dot";
-                    dots.setAttribute("onclick", `currentSlide(${j+1})`)
-                    dot_content.appendChild(dots);
-               
-                }
-                // 新增一個連結在information最外層
+                //新增一個連結在最外層
                 let restaurantLink = document.createElement("a");
                 restaurantLink.className = `restaurant_link${i}`;
                 restaurantLink.href=`/restaurant/${jsonData.data[i].id}`;
-                restaurant_content.appendChild(restaurantLink);
+                content.appendChild(restaurantLink);
+
+                // 建立restaurant information div
+                let restaurantDiv = document.createElement("div");
+                restaurantDiv.className = `restaurant_information${i}`;
+                restaurantLink.appendChild(restaurantDiv);
+
+                // // 建立圖片在 restaurantDiv 中
+                // let restaurant_content = document.querySelector(`.restaurant_information${i}`);
+                // // 在下面創一個photo_list div
+                // let photoDiv = document.createElement("div");
+                // photoDiv.className = `photo_list${i}`;
+                // let dotDiv = document.createElement("div");
+                // dotDiv.className = `dot_content${i}`;
+                // photoDiv.appendChild(dotDiv);
+                // restaurant_content.appendChild(photoDiv)
+                // // console.log(jsonData.data[i].image.length)
+                // let photo_content = document.querySelector(`.photo_list${i}`);
+                // // 建立button左右按鈕
+                // let buttonLeft = document.createElement("button");
+                // buttonLeft.className = "btn_left";
+                // buttonLeft.setAttribute("onclick", "setTimeout(function(){plusDivs(-1)}, 100)");
+                // let left_img = document.createElement("img");
+                // left_img.className = "icon_left";
+                // left_img.src = "/static/image/btn_leftArrowbutton.png";
+                // left_img.setAttribute("width", "30");
+                // left_img.setAttribute("height", "30");
+                // buttonLeft.appendChild(left_img);
+                // photo_content.appendChild(buttonLeft);
+
+                // let buttonRight = document.createElement("button");
+                // buttonRight.className = "btn_right";
+                // buttonRight.setAttribute("onclick", "setTimeout(function(){plusDivs(1)}, 100)");
+                // let right_img = document.createElement("img");
+                // right_img.className = "icon_right";
+                // right_img.src = "/static/image/btn_rightArrowbutton.png";
+                // right_img.setAttribute("width", "30");
+                // right_img.setAttribute("height", "30");
+                // buttonRight.appendChild(right_img);
+                // photo_content.appendChild(buttonRight);
+
+
+                // restaurant_content.appendChild(photo_content);
+
+                // for (let j = 0; j < jsonData.data[i].image.length; j++) {
+                   
+                //     let photo_img = document.createElement("img");
+                //     photo_img.className = "photo_list_content";
+                //     photo_img.src ="https://"+ jsonData.data[i].image[j];
+
+                //     photo_content.appendChild(photo_img);
+
+                //     let dot_content = document.querySelector(`.dot_content${i}`);
+                //     let dots = document.createElement("span");
+                //     dots.className = "dot";
+                //     dots.setAttribute("onclick", `currentSlide(${j+1})`)
+                //     dot_content.appendChild(dots);
+               
+                // }
+                // 建立圖片在 restaurantDiv 中
+                let restaurant_content=document.querySelector(`.restaurant_information${i}`);
+                let imgDiv = document.createElement("div")
+                imgDiv.className = "imgDiv"
+                let img=document.createElement("img");
+                img.className="restaurant_image";
+                img.src="https://"+jsonData.data[i].image[0];
+                imgDiv.appendChild(img)
+                restaurant_content.appendChild(imgDiv);
+
+                // 建立圖片上的地標位置
+                let prodcut_map = document.createElement("div")
+                prodcut_map.className = `product_map${i}`;
+                restaurant_content.appendChild(prodcut_map);
+                let prodcut_map_content = document.querySelector(`.product_map${i}`)
+                let mapImg=document.createElement("img");
+                mapImg.className=" product_map_photo"
+                mapImg.src="/static/image/22.png"
+                mapImg.setAttribute("width", "24");
+                mapImg.setAttribute("height", "24");
+                prodcut_map_content.appendChild(mapImg);
+                restaurant_content.appendChild(prodcut_map_content);
+
+                let mapText=document.createElement("div")
+                mapText.className="map_text"
+                let mapTextNode = document.createTextNode(jsonData.data[i].county);
+                mapText.appendChild(mapTextNode);
+                prodcut_map_content.appendChild(mapText)
+
+                // 在圖片中建立愛心
+                let prodcut_love = document.createElement("button")
+                prodcut_love.className = `product_love${i}`;
+                restaurant_content.appendChild(prodcut_love);
+                let prodcut_love_content = document.querySelector(`.product_love${i}`)
+                let loveImg=document.createElement("img");
+                loveImg.className=" product_love_photo"
+                loveImg.src="/static/image/heart.png"
+                loveImg.setAttribute("width", "24");
+                loveImg.setAttribute("height", "24");
+                prodcut_love_content.appendChild(loveImg);
+                restaurant_content.appendChild(prodcut_love_content);
+
+
+                // // 新增一個連結在information最外層
+                // let restaurantLink = document.createElement("a");
+                // restaurantLink.className = `restaurant_link${i}`;
+                // restaurantLink.href=`/restaurant/${jsonData.data[i].id}`;
+                // restaurant_content.appendChild(restaurantLink);
 
                 // 建立information
                 let informationElement = document.createElement("div");
                 informationElement.className = `information${i}`;
-                restaurantLink.appendChild(informationElement);
+                restaurant_content.appendChild(informationElement);
 
                 // information 底下建立name phone adress的div
                 let informationDiv = document.querySelector(`.restaurant_information${i} .information${i}`);

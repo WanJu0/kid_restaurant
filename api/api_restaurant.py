@@ -107,9 +107,19 @@ def api_restaurant():
             mycursor.close()
             connection_object.close()
             return json_result,200
+        else:
+            data={
+            "error": True,
+            "message":"資料不存在"
+            }
+            json_result=jsonify(data)
+            mycursor.close()
+            connection_object.close()
+            return json_result,400
         # for i in range(0,len(result)):
         #     print()
     except Exception as e:
+        print(e)
         data={
             "error": True,
             "message":e
@@ -118,6 +128,7 @@ def api_restaurant():
         mycursor.close()
         connection_object.close()
         return json_result,500
+    
 
 @route_api_restaurant.route("/api/restaurant/<restaurantID>",methods=["GET"])      
 def restaurant_ID(restaurantID):
@@ -209,4 +220,5 @@ def restaurant_ID(restaurantID):
         mycursor.close()
         connection_object.close()
         return json_result,500
+    
 # @route_api_restaurant.route("https://maps.googleapis.com/maps/api/place/details/json?place_id="+place_id+"&language=zh-TW&key="+key)

@@ -86,3 +86,4 @@ def google_comment(placeID):
         mycursor.close()
         connection_object.close()
         return json_result,500
+    

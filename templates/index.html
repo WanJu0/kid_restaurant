@@ -72,10 +72,170 @@
             <div class="signout_btn" onclick="logout()">登出系統</div>
         </div>
     </div> 
-     
-    <div id="county_list">
+    <div class="category-bar">
+        <div class="category-bar_category">
+            <div class="category-bar__category-item">
+                <span>北部</span>
+                <div class="panel-pop-up"> 
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">台北市</a>
+                        </span>
+                    </div>
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">新北市</a>
+                        </span>
+                    </div>
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">桃園市</a>
+                        </span>
+                    </div>
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">新竹縣</a>
+                        </span>
+                    </div>
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">新竹市</a>
+                        </span>
+                    </div>
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">宜蘭縣</a>
+                        </span>
+                    </div>
+                    <div class="dropdown-arrow"></div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="category-bar_category">
+            <div class="category-bar__category-item">
+                <span class="location">中部</span>
+                <div class="panel-pop-up"> 
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">台中市</a>
+                        </span>
+                    </div>
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">苗栗縣</a>
+                        </span>
+                    </div>
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">彰化縣</a>
+                        </span>
+                    </div>
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">雲林縣</a>
+                        </span>
+                    </div>
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">南投縣</a>
+                        </span>
+                    </div>
+            
+                    <div class="dropdown-arrow"></div>
+                </div>
+            </div>
+        </div>
+        <div class="category-bar_category">
+            <div class="category-bar__category-item">
+                <span class="location">南部</span>
+                <div class="panel-pop-up"> 
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">嘉義市</a>
+                        </span>
+                    </div>
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">嘉義縣</a>
+                        </span>
+                    </div>
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">台南市</a>
+                        </span>
+                    </div>
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">高雄市</a>
+                        </span>
+                    </div>
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">屏東縣</a>
+                        </span>
+                    </div>
+                    <div class="dropdown-arrow"></div>
+                </div>
+            </div>
+        </div>
+        <div class="category-bar_category">
+            <div class="category-bar__category-item">
+                <span class="location">東部</span>
+                <div class="panel-pop-up"> 
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">花蓮</a>
+                        </span>
+                    </div>
+                    <div class="category-bar__sub-category-item">
+                        <span>
+                            <a onclick="apiRestaurant(this.innerHTML)">台東縣</a>
+                        </span>
+                    </div>
+                    <div class="dropdown-arrow"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- <div class="panel-pop-up"> 
+        <div class="category-bar__sub-category-item">
+            <span>
+                <a onclick="apiRestaurant(this.innerHTML)">台北市</a>
+            </span>
+        </div>
+        <div class="category-bar__sub-category-item">
+            <span>
+                <a onclick="apiRestaurant(this.innerHTML)">新北市</a>
+            </span>
+        </div>
+        <div class="category-bar__sub-category-item">
+            <span>
+                <a onclick="apiRestaurant(this.innerHTML)">桃園市</a>
+            </span>
+        </div>
+        <div class="category-bar__sub-category-item">
+            <span>
+                <a onclick="apiRestaurant(this.innerHTML)">新竹縣</a>
+            </span>
+        </div>
+        <div class="category-bar__sub-category-item">
+            <span>
+                <a onclick="apiRestaurant(this.innerHTML)">新竹市</a>
+            </span>
+        </div>
+        <div class="category-bar__sub-category-item">
+            <span>
+                <a onclick="apiRestaurant(this.innerHTML)">宜蘭縣</a>
+            </span>
+        </div>
+        <div class="dropdown-arrow"></div>
+    </div> -->
+    <!-- <div id="county_list">
         <ul class="drop-down-menu">
-            <li><a >北部</a>
+            <li>
+                <a class="location_list">北部</a>
                 <ul>
                     <li><a onclick="apiRestaurant(this.innerHTML)">台北市</a>
                     </li>
@@ -91,7 +251,7 @@
                     </li>
                 </ul>
             </li>
-            <li><a >中部</a>
+            <li><a class="location_list">中部</a>
                 <ul>
                     <li><a onclick="apiRestaurant(this.innerHTML)">台中市</a>
                     </li>
@@ -105,7 +265,7 @@
                     </li>
                 </ul>
             </li>
-            <li><a >南部</a>
+            <li><a class="location_list">南部</a>
                 <ul>
                     <li><a onclick="apiRestaurant(this.innerHTML)">嘉義市</a>
                     </li>
@@ -119,7 +279,7 @@
                     </li>
                 </ul>
             </li>
-            <li><a >東部</a>
+            <li><a class="location_list">東部</a>
                 <ul>
                     <li><a onclick="apiRestaurant(this.innerHTML)">花蓮</a>
                     </li>
@@ -128,7 +288,7 @@
                 </ul>
             </li>
         </ul>
-    </div>
+    </div> -->
     <div id=welcome>
         <img class="welcome_photo">
     </div>
