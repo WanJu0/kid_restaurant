@@ -145,11 +145,7 @@ def signin():
         mycursor.close()
         connection_object.close()
         return json_result,500
-    finally:
-        if mycursor is not None:
-            mycursor.close()
-        if connection_object is not None:
-            connection_object.close()
+    
 
 @route_api_user.route("/api/user/auth",methods=["GET"])
 def signin_get():

@@ -128,6 +128,71 @@ def getFavorite(restaurantID):
         json_result=jsonify(data)
         return json_result,403
 
+# 這個是抓取使用者的所有儲存餐廳
+@route_api_favorite.route("/api/favorites",methods=["GET"])
+def getallFavorite():
+    cookie=request.cookies.get("Set-Cookie")
+    if cookie != None:
+        # 從前端接收資料
+        decode= jwt.decode(cookie, "secretJWT", ['HS256'])
+        member_id=decode["id"]
+        member_name=decode["name"]
+    # 和資料庫做互動
+        connection_object = connection_pool.get_connection()
+        mycursor = connection_object.cursor(dictionary=True)
+        # 這邊要把資料放進去資料庫,並回傳狀態
+        try:
+
+            mycursor.execute('SELECT * FROM favorite WHERE user_id=%s ' ,(member_id, ))
+            result = mycursor.fetchall()
+            print(result,"所有愛心")
+            if result != [] :
+                data_value=[]
+                for i in range(0,len(result)):
+                    favorite_restaurant=result[i]["store_id"]
+                    favorite_id=result[i]["favorite_id"]
+                    favorite_list={
+                        "favorite":favorite_restaurant,
+
+                    }
+                    data_value.append(favorite_list)	
+                data={
+
+                    "data":data_value
+                }
+                json_result=jsonify(data)
+                mycursor.close()
+                connection_object.close()
+                return json_result,200
+            else:
+                data={
+                    "data":None
+                }
+                json_result=jsonify(data)
+                mycursor.close()
+                connection_object.close()
+                return json_result,200
+
+
+        except Exception as e:
+            print(e)
+            data={
+                "error": True,
+                "message":"伺服器錯誤"
+            }
+            json_result=jsonify(data)
+            mycursor.close()
+            connection_object.close()
+            return json_result,500
+    else:
+        data={
+                "error":True,
+                "message":"請先登入會員"
+            }
+        # print(data)
+        json_result=jsonify(data)
+        return json_result,403
+
 @route_api_favorite.route("/api/favorites",methods=["DELETE"])
 def deleteFavorite():
     cookie=request.cookies.get("Set-Cookie")
