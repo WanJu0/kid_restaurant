@@ -257,3 +257,34 @@ p{
     cursor: pointer;
     display: none;
 }
+.user-message-textarea{
+    resize: none;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid rgba(128, 128, 128, 0.578);
+    border-radius: 10px;
+    width: 650px;
+    height: 160px;
+}
+#img_input2{
+    display: none;
+}
+.overlay_message{
+    display: none;
+}
+#add_message{
+    
+    height: 47px;
+    background: #26bec9;
+    border-radius: 5px;
+    border: none;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 16px;
+    align-items: center;
+    color: #FFFFFF;
+    text-align: center;
+    margin-bottom: 10px;
+}

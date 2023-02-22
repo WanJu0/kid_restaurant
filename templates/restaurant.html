@@ -141,14 +141,14 @@
             
             <div class="separator_line"></div>
             <div class="comment_div">
-                <div class="comment_title">美時客評論</div>
-                <button class="add_comment">
+                <div class="comment_title">美食客評論</div>
+                <button class="add_comment" onclick="openMessage()">
                     <div class="comment_button">新增一筆評論</div>
                 </button>
             </div>
             
-            <!-- <div class="comment_content">
-                <div class="visitor_comment">
+            <div class="comment_content">
+                <!-- <div class="visitor_comment">
                     <div>
                         <img class="comment_photo" src=""/>
                     </div>
@@ -211,15 +211,15 @@
                         #適合網美及情侶的約會地點
                     </div>
                     <div class="comment_date">2023/02/05</div>
-                </div>
+                </div> -->
 
-            </div> -->
+            </div>
             
 
 
         </div>
     </div>
-    <!-- <div class="overlay_message" id="overlay_message">
+    <div class="overlay_message" id="overlay_message">
         <div class="message_content">
             <div class="message_section">
                 <div class="decorator_top"></div>
@@ -232,25 +232,27 @@
                         <div id="message_photo">
                             <input id="img_input2" type="file" accept="image/*"/>
                             <label for="img_input2" id="img_label2">
-                                <img onclick="update_photo()" class="add_photo" src="" width="200" height="200"/>
+                                <img onclick="message()" class="add_photo" src="/static/image/add_photo.png" width="200" height="200"/>
                             </label>
                             <div id="preview_box2"></div>
                             
                         </div>
-                        <input id="input_message"type="text" name="message" placeholder="對此餐廳的評論"/><br/>
+                        <textarea class="user-message-textarea" placeholder="對此餐廳的評論"></textarea>
+                        <!-- <input id="input_message"type="text" name="message" placeholder="對此餐廳的評論"/><br/> -->
                     
-                        <button onclick="apiSingin()" id="login_btn">送出評論</button>
+                        <button onclick="update_Message()" id="add_message">送出評論</button>
                     </div>
                 </div>
             </div>
         </div> 
-    </div> -->
+    </div>
     <div class="footer_container">
         <footer>COPYRIGHT © 2023 親子餐廳大集合</footer>    
     </div>
     <script src="/static/js/commom.js"></script>
     <script src="/static/js/restaurant.js"></script>
     <script src="/static/js/favorite.js"></script>
+    <script src="/static/js/message.js"></script>
     
     <!-- <script src="/static/JS/common.js"></script> -->
     <!-- <script src="/static/js/index.js"></script> -->
