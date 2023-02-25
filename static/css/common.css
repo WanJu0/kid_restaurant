@@ -12,12 +12,12 @@
 #decorator_top{
     width: 340px;
     height: 10px;
-    background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
+    background: linear-gradient(65deg,#64b3f4,#26bec9 60%);
     border-radius: 6px 6px 0 0;
 }
 #decorator_down{
     width: 340px;
-    height: 265px;
+    height: 270px;
     background: #FFFFFF;
     box-shadow: 0px 4px 60px #AAAAAA;
     border-radius: 0px 0px 6px 6px;
@@ -68,7 +68,7 @@
 #login_btn{
     width: 310px;
     height: 47px;
-    background: #448899;
+    background: #26bec9;
     border-radius: 5px;
     border: none;
     font-family: 'Noto Sans TC';
@@ -112,12 +112,12 @@
 #signup_top{
     width: 340px;
     height: 10px;
-    background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
+    background: linear-gradient(65deg,#64b3f4,#26bec9 60%);
     border-radius: 6px 6px 0 0;
 }
 #signup_down{
     width: 340px;
-    height: 322px;
+    height: 342px;
     background: #FFFFFF;
     box-shadow: 0px 4px 60px #AAAAAA;
     border-radius: 0px 0px 6px 6px;
@@ -179,7 +179,7 @@
 #signup_btn{
     width: 310px;
     height: 47px;
-    background: #448899;
+    background: #26bec9;
     border-radius: 5px;
     border: none;
     font-family: 'Noto Sans TC';
@@ -190,7 +190,7 @@
     align-items: center;
     text-align: center;
     color: #FFFFFF;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 
 }
 #account{
@@ -203,6 +203,7 @@
     line-height: 13px;
     align-items: center;
     text-align: center;
+    padding: 10px;
 }
 #signup_icon{
     position: absolute;

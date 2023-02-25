@@ -142,20 +142,39 @@ def getallFavorite():
         mycursor = connection_object.cursor(dictionary=True)
         # 這邊要把資料放進去資料庫,並回傳狀態
         try:
-
-            mycursor.execute('SELECT * FROM favorite WHERE user_id=%s ' ,(member_id, ))
+            mycursor.execute('SELECT favorite.user_id, favorite.store_id, restaurant.place_id,restaurant.store_name, restaurant.address, restaurant.county, restaurant.district , restaurant.phone FROM favorite JOIN restaurant ON favorite.store_id = restaurant.id WHERE favorite.user_id=%s ' ,(member_id, ))
             result = mycursor.fetchall()
             print(result,"所有愛心")
             if result != [] :
                 data_value=[]
                 for i in range(0,len(result)):
-                    favorite_restaurant=result[i]["store_id"]
-                    favorite_id=result[i]["favorite_id"]
-                    favorite_list={
-                        "favorite":favorite_restaurant,
+                    favorite_restaurant_id=result[i]["store_id"]
+                    store_name=result[i]["store_name"]
+                    address=result[i]["address"]
+                    county=result[i]["county"]
+                    district=result[i]["district"]
+                    place_id=result[i]["place_id"]
+                    phone=result[i]["phone"]
+                    
 
+                    #  # 圖片處理
+                    mycursor.execute("SELECT group_concat(photo) FROM restaurant INNER JOIN restaurant_photo ON restaurant.place_id=restaurant_photo.place_id WHERE restaurant.place_id=%s group by restaurant_photo.place_id" ,(place_id,))
+                    photo = mycursor.fetchone()
+                    # photo['photo']
+                    photo_str = photo['group_concat(photo)']
+                    photo_list = photo_str.split(',')
+                    favorite_list={
+                        "favorite_restaurant_id":favorite_restaurant_id,
+                        "store_name":store_name,
+                        "place_id":place_id,
+                        "address":address,
+                        "county":county,
+                        "district":district,
+                        "phone":phone,
+                        "image":photo_list
                     }
                     data_value.append(favorite_list)	
+                    
                 data={
 
                     "data":data_value

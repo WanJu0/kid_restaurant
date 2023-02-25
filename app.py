@@ -9,6 +9,7 @@ from api.api_user import *
 from api.api_google_comment import *
 from api.api_favorite import *
 from api.api_messages import *
+from api.api_member import *
 
 
 
@@ -21,6 +22,7 @@ app.register_blueprint(route_api_user)
 app.register_blueprint(route_api_google_comment)
 app.register_blueprint(route_api_favorite)
 app.register_blueprint(route_api_messages)
+app.register_blueprint(route_api_member)
 
 
 @app.route("/")

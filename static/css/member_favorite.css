@@ -1,0 +1,188 @@
+a{
+	text-decoration: none;
+}
+body{
+    margin: 0 auto;
+    max-width: 1920px;
+    font-family: 'Noto Sans TC';
+}
+#navigation_bar{
+    display: flex;
+    margin: 0 auto;
+    max-width: 1200px;
+    font-size: 30px;
+    font-weight: 700;
+    height: 60px;
+    align-items: center;
+    position: relative;
+}
+#welcome{
+    margin: 0 auto;
+    max-width: 1920px;
+    /* position: relative; */
+   
+}
+
+.left{
+    color: #26bec9;
+    -webkit-font-smoothing: antialiased;
+    padding: 15px;
+}
+footer{
+    height:104px; background-color: #757575;
+    font-family: "Noto Sans TC";
+    font-style: normal;font-weight: bold;
+    line-height: 104px;color: #ffffff;
+    text-align: center;margin-top: 55px;
+}
+div[class^=restaurant_information]{
+    width: 270px;
+    margin: 15px;
+    position: relative;
+    overflow: hidden;
+}
+.restaurant_image{
+    width: 268px;
+    height: 197px;
+    vertical-align: top;
+    border-radius: 10px 10px 10px 10px;;
+    border: 1px solid #e8e8e8;
+    margin-bottom: -2px;
+}
+div[class^=product_map]{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    display: flex;
+}
+.map_text{
+    letter-spacing: .2px;
+    color: #fff;
+}
+button[id^=love]{
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background-color: transparent;
+    border-color: transparent;
+    cursor: pointer;
+    display: none;
+}
+.restaurant_image {
+    transition: transform 0.2s;
+  }
+  
+.restaurant_image:hover {
+    transform: scale(1.2);
+  }
+.imgDiv{
+    width: 268px;
+    height: 197px;
+    overflow: hidden;
+    border-radius: 10px 10px 10px 10px;
+}
+button[id^=redlove]{
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background-color: transparent;
+    border-color: transparent;
+    cursor: pointer;
+}
+.store_name{
+    margin: 10px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    color: #333;
+}
+.phone{
+    margin-left: 10px;
+    font-style: normal;
+    color: #666;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+}
+.address{
+    margin-left: 10px;
+    font-style: normal;
+    color: #666;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+}
+.login_logout{
+    align-items: center;
+    display: flex;
+}
+.right_login{
+    position: absolute;
+    right: 20px;
+    border: 1px solid #beb9b9;
+    border-radius: 22px;
+    transition: box-shadow 0.2s ease;
+    padding: 5px 5px 5px 12px;
+    cursor: pointer;
+}
+.right_content{
+    width: 140px;
+    background-color: #FFFFFF;
+    position: absolute;
+    right: 20px;
+    top: 70px;
+    color: #5c5c5c;
+    border: 1px solid #beb9b9;
+    border-radius: 15px;
+    font-size: 16px;
+    padding: 10px;
+    display: none;
+    z-index: 5;
+}
+.sign_in{
+    margin: 10px;
+    cursor: pointer;
+}
+.sign_up{
+    margin: 10px;
+    cursor: pointer;
+}
+.sign_in:hover {
+    background-color: #EBEBEB;;
+}
+.sign_up:hover {
+    background-color: #EBEBEB;;
+}
+.user_icon{
+    margin-right: 3px;
+}
+.right_logout{
+    width: 140px;
+    background-color: #FFFFFF;
+    position: absolute;
+    right: 20px;
+    top: 70px;
+    color: #5c5c5c;
+    border: 1px solid #beb9b9;
+    border-radius: 15px;
+    font-size: 16px;
+    padding: 10px;
+    z-index: 5;
+}
+.member_page{
+    margin: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px;
+    color: #5c5c5c;
+}
+.signout_btn{
+    height: 34px;
+    align-items: center;
+    display: flex;
+    margin: 10px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 13px;
+    cursor: pointer;
+}

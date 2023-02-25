@@ -11,7 +11,7 @@
     margin-right: 40px;
 }
 #member_photo{
-    background-color: #add;
+   
     width: 300px;
     height: 300px;
     margin-top: 15px;
@@ -87,22 +87,24 @@ width: 200px;
 }
 .favorite_photo{
     width: 270px;
-    height: 300px;
-    background-color: aliceblue;
+    height: 230px;
+    border-radius: 10px 10px 10px 10px;
+    border: 1px solid #e8e8e8;
 }
 .favorite_down{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    margin-left: 40px;
-    margin-right: 40px;
+    
+    max-width: 1200px;
+    margin: 0 auto;
 }
-.favorite_content{
+div[class^=favorite_content]{
     margin-right: 10px;
     margin-bottom: 40px;
 }
-.favorite_div{
+/* .favorite_div{
     margin-left: 40px;
-}
+} */
 .myComment_title{
     font-size: 20px;
     margin-top: 20px;
@@ -111,14 +113,14 @@ width: 200px;
     font-weight: 500;
 }
 .comment_photo{
-    width: 270px;
-    height: 300px;
-    background-color: aliceblue;
+    width: 268px;
+    height: 197px;
+   
 }
 .member_icon{
     margin-right: 4px;
 }
-.member_information{
+div[class^=member_information]{
     display: flex;
     align-items: center;
 }
@@ -126,18 +128,39 @@ width: 200px;
     width: 270px
 }
 .comment_content{
-    width: 270px;
+   
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    margin-left: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
-.visitor_comment{
-    margin-right: 10px;
+div[class^=visitor_comment]{
+   
+    margin-bottom: 40px;
+    margin: 15px;
 }
-.myComment_div{
+/* .myComment_div{
    margin-left: 40px;
-}
-.favorite_location{
+} */
+div[class^=favorite_location]{
     display: flex;
     align-items: center;
+    margin-left: 10px;
+}
+.favorite_store{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    color: #333;
+    margin-left: 10px;
+}
+div[class^=favorite_information]{
+    margin-bottom: 5px;
+}
+.google_location{
+    font-style: normal;
+    color: #666;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
 }

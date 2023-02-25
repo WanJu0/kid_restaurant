@@ -46,14 +46,10 @@ def updateMessage():
         data=request.form
         content = data["content"]
         restaurant_id = data["restaurant_id"]
-        print(img)
-        print(data)
-        print(content)
-        print(restaurant_id )
-
+        
         img_filename = str(uuid.uuid4()) + ".jpeg"
-        s3.Bucket('restaurantmessages').put_object(Key=img_filename, Body=img)
-        url="https://d15kspz08wzedg.cloudfront.net/"+ img_filename
+        s3.Bucket('restaurantmessages').put_object(Key=img_filename, Body=img, ContentType='image/jpeg')
+        url="https://d3eag54e4l4ans.cloudfront.net/"+ img_filename
 
         # return "1111"
         connection_object = connection_pool.get_connection()
@@ -89,3 +85,175 @@ def updateMessage():
         # print(data)
         json_result=jsonify(data)
         return json_result,403
+
+# 在member頁面顯示會員的所有評論
+@route_api_messages.route("/api/messages/<memberID>",methods=["GET"])
+def getmember_Message(memberID):
+    connection_object = connection_pool.get_connection()
+    mycursor=connection_object.cursor(dictionary=True)
+    try:
+        mycursor.execute("SELECT * FROM messages JOIN restaurant on messages.store_id=restaurant.id WHERE messages.user_id=%s",(memberID,))
+        result = mycursor.fetchall()
+        # print(result,"所有評論")
+       
+        # # 這邊先將
+        if result != None:
+            data_value=[]
+            for i in range(0,len(result)):
+                messages_id=result[i]["messages_id"]
+                user_id=result[i]["user_id"]
+                store_id=result[i]["store_id"]
+                message_content=result[i]["message_content"]
+                message_photo=result[i]["message_photo"]
+                date=str(result[i]["created_at"])
+                store_name=result[i]["store_name"]
+                
+                # 抓取留言者的大頭照
+                key = f"{user_id}.jpg"
+                # key =user_id +".jpg"
+                print(key,"大頭照" )
+
+                try:
+                    obj=s3.Object(bucket_name="memberphoto", key=key)
+                    # print(obj,"obj")
+                    response = obj.get()
+                    # print(response,"obj_get")
+                    url="https://dk7141qqdhlvd.cloudfront.net/"+ key
+                    
+                    
+                    user_photo={
+                        "image":url,
+                    }
+                except Exception as e:
+                    # print(f'圖片 {key} 不存在')
+                    # print(e)
+                    user_photo={
+                        "image":None,
+                    }
+
+                
+                data={
+                    "messages_id":messages_id,
+                    "user_id":user_id,
+                    "store_id":store_id,
+                    "store_name":store_name,
+                    "message_content":message_content,
+                    "message_photo":message_photo,
+                    "date":date,
+                    "user_photo":user_photo
+                }
+                data_value.append(data)	
+            data={
+                "data":data_value,
+            }
+            json_result=jsonify(data)
+            # print(json_result)
+            mycursor.close()
+            connection_object.close()
+            return make_response(json_result,200) 
+       
+        else:
+            data={
+            "error": True,
+            "message":"編號不存在"
+            }
+            json_result=jsonify(data)
+            mycursor.close()
+            connection_object.close()
+            return json_result,400
+        
+    except Exception as e:
+        print(e)
+        data={
+            "error": True,
+            "message":"伺服器錯誤"
+        }
+        json_result=jsonify(data)
+        mycursor.close()
+        connection_object.close()
+        return json_result,500
+
+# 在餐廳頁面抓取所有餐廳的評論
+@route_api_messages.route("/api/messages/restaurant/<restaurantID>",methods=["GET"])
+def getRestaurantMessage(restaurantID):
+    connection_object = connection_pool.get_connection()
+    mycursor=connection_object.cursor(dictionary=True)
+    try:
+        mycursor.execute("SELECT * FROM messages JOIN member on messages.user_id=member.member_id WHERE store_id=%s",(restaurantID,))
+        result = mycursor.fetchall()
+        print(result,"這邊")
+        
+        # # 這邊先將
+        if result != None:
+            data_value=[]
+            for i in range(0,len(result)):
+                user_id=result[i]["user_id"]
+                store_id=result[i]["store_id"]
+                message_content=result[i]["message_content"]
+                message_photo=result[i]["message_photo"]
+                user_name=result[i]["name"]
+                date=str(result[i]["created_at"])
+                
+                # 抓取留言者的大頭照
+                key = f"{user_id}.jpg"
+                # key =user_id +".jpg"
+                print(key,"大頭照" )
+
+                try:
+                    obj=s3.Object(bucket_name="memberphoto", key=key)
+                    print(obj,"obj")
+                    response = obj.get()
+                    print(response,"obj_get")
+                    url="https://dk7141qqdhlvd.cloudfront.net/"+ key
+                    print(url,"url")
+                    
+                    user_photo={
+                        "image":url,
+                    }
+                except Exception as e:
+                    # print(f'圖片 {key} 不存在')
+                    print(e)
+                    user_photo={
+                        "image":None,
+                    }
+
+                
+                data={
+                    "user_id":user_id,
+                    "store_id":store_id,
+                    "message_content":message_content,
+                    "message_photo":message_photo,
+                    "date":date,
+                    "user_photo":user_photo,
+                    "user_name":user_name
+                }
+                data_value.append(data)	
+            data={
+                "data":data_value,
+            }
+            json_result=jsonify(data)
+            # print(json_result)
+            mycursor.close()
+            connection_object.close()
+            return make_response(json_result,200) 
+       
+        else:
+            data={
+            "error": True,
+            "message":"編號不存在"
+            }
+            json_result=jsonify(data)
+            mycursor.close()
+            connection_object.close()
+            return json_result,400
+        
+    except Exception as e:
+        print(e)
+        data={
+            "error": True,
+            "message":"伺服器錯誤"
+        }
+        json_result=jsonify(data)
+        mycursor.close()
+        connection_object.close()
+        return json_result,500

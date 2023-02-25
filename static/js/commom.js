@@ -74,7 +74,7 @@ function apiSingup(){
             email:email,
             password:password
         };
-        console.log(data);
+        // console.log(data);
     fetch("/api/user",{
         method: "POST" ,
         credentials: "include",

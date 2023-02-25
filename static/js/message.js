@@ -1,3 +1,4 @@
+// 這是在餐廳頁面的js
 let file="";
 // 留言板的圖片預覽,點擊新增照片尚未上傳但可以在網頁預覽
 function message(){
@@ -6,7 +7,7 @@ function message(){
 
     inputElement.addEventListener('change', (e) => {
     file = e.target.files[0]; //获取图片资源
-    console.log(file ,"file")
+    // console.log(file ,"file")
 
     // 只选择图片文件
     if (!file.type.match('image.*')) {
@@ -25,7 +26,7 @@ function message(){
     });
 
 }
-console.log(file,"外面的file")
+// console.log(file,"外面的file")
 
 // 開關註冊
 
@@ -61,7 +62,7 @@ function update_Message(){
     let path = location.pathname;
     let parts = path.split("/");
     let restaurant_id = parts.pop();
-    console.log(restaurant_id,"store_id")
+    // console.log(restaurant_id,"store_id")
 
     // 抓取訊息內容
     const reviewTextarea = document.querySelector('.user-message-textarea');
@@ -71,8 +72,8 @@ function update_Message(){
     // event.preventDefault();  // 防止表單預設提交行為
 
     const review = reviewTextarea.value;
-    console.log(review )
-    console.log(file)
+    // console.log(review )
+    // console.log(file)
     const formData = new FormData();
     formData.append('img', file);
     // 取得文字訊息
@@ -107,12 +108,9 @@ function update_Message(){
         // // 將圖片放在attraction_content容器下面
         // contentDiv.appendChild(img);
 
+        // 按下送出評論時重新整理頁面
+        window.location.href=`/restaurant/${restaurant_id}`;
     })
-
-    // 按下送出評論時重新整理頁面
-    window.location.href=`/restaurant/${restaurant_id}`;
-
-
-
    
 }
+

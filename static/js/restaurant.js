@@ -154,3 +154,83 @@ function restaurantID()
 }
 restaurantID()
 
+// 抓取此餐廳的所有人評論,並顯示在頁面上
+
+function restaurantMessage(){
+    let path = location.pathname;
+    let parts = path.split("/");
+    let restaurant_id = parts.pop();
+
+    // 這邊是將頁面抓到輸入的字串
+    fetch(`/api/messages/restaurant/${restaurant_id}`, {})
+    .then((response) => {
+        // 這裡會得到一個 ReadableStream 的物件
+        // 可以透過 blob(), json(), text() 轉成可用的資訊
+        return response.json(); 
+    }).then((jsonData) => {
+        // console.log(jsonData,"餐廳所有評論")
+        // console.log(jsonData.data[0].date)
+        for (let i =0; i< jsonData.data.length; i++){
+            let user_id = jsonData.data[i].user_id;
+            let message_content =jsonData.data[i].message_content;
+            let message_photo = jsonData.data[i].message_photo;
+            let user_photo =jsonData.data[i].user_photo.image;
+            let date = jsonData.data[0].date.substring(0, 10);
+            let user_name=jsonData.data[i].user_name;
+
+            let content = document.querySelector(".comment_content");
+            let visitorDiv = document.createElement("div");
+            visitorDiv.className = `visitor_comment${i}`;
+            content.appendChild(visitorDiv);
+
+            // 建立comment_photo_div
+            let visitor_comment_content =document.querySelector(`.visitor_comment${i}`);
+            let comment_photoDiv = document.createElement("div");
+            comment_photoDiv.className = `comment_photo_div${i}`;
+            
+
+            let comment_img =document.createElement("img");
+            comment_img.className ="comment_photo";
+            comment_img.src = message_photo;
+            comment_photoDiv.appendChild(comment_img);
+            visitor_comment_content.appendChild(comment_photoDiv);
+
+            // 建立member_information
+            let member_informationDiv = document.createElement("div");
+            member_informationDiv.className = `member_information${i}`;
+            visitor_comment_content .appendChild(member_informationDiv);
+
+            // information 底下建立 user_img和 user
+            let user_img =document.createElement("img");
+            user_img.className ="member_icon";
+            user_img.src = user_photo;
+            user_img.setAttribute("width", "40");
+            user_img.setAttribute("height", "40");
+            member_informationDiv.appendChild(user_img);
+            visitor_comment_content .appendChild(member_informationDiv);
+            
+            let userDiv = document.createElement("div");
+            userDiv.className = "visitor_name";
+            let userNode = document.createTextNode(user_name);
+            userDiv.appendChild(userNode);
+            member_informationDiv.appendChild(userDiv);
+            visitor_comment_content .appendChild(member_informationDiv);
+            
+            // user_comment
+            let user_commentDiv = document.createElement("div");
+            user_commentDiv.className = "user_comment";
+            let user_commentDivNode = document.createTextNode(message_content);
+            user_commentDiv.appendChild(user_commentDivNode);
+            visitor_comment_content.appendChild(user_commentDiv);
+            
+            // comment_date
+            let dateDiv = document.createElement("div");
+            dateDiv.className = "comment_date";
+            let dateNode = document.createTextNode(date);
+            dateDiv.appendChild(dateNode);
+            visitor_comment_content.appendChild(dateDiv);
+        }
+    })
+}
+
+restaurantMessage()
