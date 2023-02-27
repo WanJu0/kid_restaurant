@@ -150,15 +150,15 @@ function restaurant() {
                 .then((response)=>{
                     return response.json();
                 }).then((jsonData)=>{
-                    // console.log(jsonData);
-                    // console.log(jsonData.data,"favorite");
-                    // console.log(jsonData.data[0].favorite,"favorite22");
+                    console.log(jsonData);
+                    console.log(jsonData.data,"favorite");
+                    console.log(jsonData.data[0].favorite_restaurant_id,"favorite22");
                     // console.log(`#love${favorite_id}`)
             
                     if(jsonData.data !== null){
                         for(i=0;i<jsonData.data.length;i++){
                             // console.log(jsonData.data,"1")
-                            let favorite_id=jsonData.data[i].favorite
+                            let favorite_id=jsonData.data[i].favorite_restaurant_id
                             favorite_id=parseFloat(favorite_id)
                             if (store_id_list.includes(favorite_id)) {
                                 const loveButton = document.querySelector(`#love${favorite_id}`);
@@ -768,3 +768,4 @@ function unhomefavorite(redbuttonId){
     })
 
 }
+

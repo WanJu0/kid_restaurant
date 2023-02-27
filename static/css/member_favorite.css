@@ -1,5 +1,6 @@
 a{
 	text-decoration: none;
+    margin: 15px;
 }
 body{
     margin: 0 auto;
@@ -37,7 +38,6 @@ footer{
 }
 div[class^=restaurant_information]{
     width: 270px;
-    margin: 15px;
     position: relative;
     overflow: hidden;
 }
@@ -75,12 +75,22 @@ button[id^=love]{
 .restaurant_image:hover {
     transform: scale(1.2);
   }
-.imgDiv{
+  .imgDiv{
     width: 268px;
     height: 197px;
     overflow: hidden;
     border-radius: 10px 10px 10px 10px;
+    position: relative;
 }
+.imgDiv::before {
+    content: ""; /* 必須有內容才能顯示 */
+    position: absolute; /* 使用絕對定位 */
+    top: 0; /* 與父容器頂部對齊 */
+    left: 0; /* 與父容器左側對齊 */
+    width: 100%; /* 滿寬 */
+    height: 38px; /* 高度為 38 像素 */
+    background-image: linear-gradient(0deg,transparent,rgba(0,0,0,.2),rgba(0,0,0,.4)); /* 背景漸層 */
+  }
 button[id^=redlove]{
     position: absolute;
     top: 5px;

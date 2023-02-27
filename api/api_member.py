@@ -24,15 +24,15 @@ s3 = boto3.resource('s3',
     aws_secret_access_key=aws_secret_access_key,
     region_name="ap-northeast-1")
 
-connection_pool = mysql.connector.pooling.MySQLConnectionPool(
-    host=mysql_host,
-    user=mysql_username,
-    password=mysql_password ,
-    database=mysql_database,
-    pool_name = "kid_pool",
-    pool_size = 5,
-    pool_reset_session = True,
-)
+# connection_pool = mysql.connector.pooling.MySQLConnectionPool(
+#     host=mysql_host,
+#     user=mysql_username,
+#     password=mysql_password ,
+#     database=mysql_database,
+#     pool_name = "kid_pool",
+#     pool_size = 5,
+#     pool_reset_session = True,
+# )
 
 route_api_member = Blueprint("route_api_member", __name__, template_folder="templates")
 

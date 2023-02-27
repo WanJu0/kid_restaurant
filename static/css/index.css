@@ -30,6 +30,7 @@ body{
 }
 a{
 	text-decoration: none;
+    margin: 15px;;
 }
 .left{
     color: #26bec9;
@@ -53,9 +54,13 @@ footer{
     margin-bottom: 55px; */
     margin-top: 40px;
 }
+
+div[class^=restaurant_link]{
+    margin: 15px;
+}
+
 div[class^=restaurant_information]{
     width: 270px;
-    margin: 15px;
     position: relative;
     overflow: hidden;
 }
@@ -296,6 +301,12 @@ li{
 .sign_up:hover {
     background-color: #EBEBEB;;
 }
+.category-bar__sub-category-item:hover {
+    background-color: #f2f2f2;
+  }
+.category-bar__category-item:hover .panel-pop-up {
+    display: block;
+}
 .user_icon{
     margin-right: 3px;
 }
@@ -350,17 +361,20 @@ a{
     cursor: pointer;
 }
 .panel-pop-up{
-    background-color: #ebebeb;
+    background-color:  #ffffff;
     border-radius: 6px;
     position: absolute;
     width: 180px;
     margin-left: 20px;
-    top: 50px;
+    top: 52px;
+    transition: all 0.3s ease-in-out;
+
 
 }
 .category-bar__sub-category-item{
-    padding: 8px 16px;
-    
+    padding: 10px 16px;
+    margin: 5px;
+    border-radius: 10px 10px 10px 10px;
 }
 .dropdown-arrow{
     border-color: transparent transparent #ef5c28;
@@ -373,9 +387,20 @@ a{
     z-index: 1001;
     top: 0;
 }
-.category-bar_category span:hover { /* 滑鼠滑入按鈕變色*/
+/* 滑鼠滑入按鈕變色*/
+/* .category-bar_category :hover { 
     
     color: #26bec9;
+    border-bottom: 2px solid #26bec9;
+} */
+.category-bar_category:not(:hover) {
+   
+    border-bottom: none;
+  }
+.category-bar_category:hover .location {
+color: #26bec9;
+}
+.category-bar_category:hover {
     border-bottom: 2px solid #26bec9;
 }
 /* .category-bar_category ::after{
@@ -427,6 +452,26 @@ button[id^=love]{
     height: 197px;
     overflow: hidden;
     border-radius: 10px 10px 10px 10px;
+    position: relative;
+}
+.imgDiv::before {
+    content: ""; /* 必須有內容才能顯示 */
+    position: absolute; /* 使用絕對定位 */
+    top: 0; /* 與父容器頂部對齊 */
+    left: 0; /* 與父容器左側對齊 */
+    width: 100%; /* 滿寬 */
+    height: 38px; /* 高度為 38 像素 */
+    background-image: linear-gradient(0deg,transparent,rgba(0,0,0,.2),rgba(0,0,0,.4)); /* 背景漸層 */
+  }
+.restaurant_image ::before{
+    content: "";
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+    height: 25%;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(0deg,transparent,rgba(0,0,0,.2),rgba(0,0,0,.4));
 }
 button[id^=redlove]{
     position: absolute;
@@ -440,3 +485,26 @@ button[id^=redlove]{
 /* #redlove2{
     display: block;
 } */
+div[class^=product_redlove] .product_redlove_photo {
+    opacity: 1;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  
+div[class^=product_redlove]:active .product_redlove_photo {
+    transform: scale(1.2);
+    opacity: 0.8;
+}
+div[class^=product_redlove] .product_redlove_photo:hover {
+    animation: pulse 1s ease-in-out infinite;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

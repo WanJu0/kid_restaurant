@@ -92,21 +92,21 @@ function update_Message(){
         return response.json();
     }).then((jsonData) => {
         // console.log(jsonData,"回傳")
-        // let content=document.querySelector(".donw_content")
-        // let contentDiv = document.createElement("div");
-        // contentDiv.className ="message";
-        // let textDiv = document.createElement("div");
-        // textDiv.className ="text";
-        // let textNode = document.createTextNode(jsonData.content);
-        // textDiv.appendChild(textNode);
-        // contentDiv.appendChild(textDiv);
+        let content=document.querySelector(".donw_content")
+        let contentDiv = document.createElement("div");
+        contentDiv.className ="message";
+        let textDiv = document.createElement("div");
+        textDiv.className ="text";
+        let textNode = document.createTextNode(jsonData.content);
+        textDiv.appendChild(textNode);
+        contentDiv.appendChild(textDiv);
         // content.prepend(contentDiv);
 
 
-        // let img = document.createElement("img");
-        // img.src = jsonData.photo;
-        // // 將圖片放在attraction_content容器下面
-        // contentDiv.appendChild(img);
+        let img = document.createElement("img");
+        img.src = jsonData.photo;
+        // 將圖片放在attraction_content容器下面
+        contentDiv.appendChild(img);
 
         // 按下送出評論時重新整理頁面
         window.location.href=`/restaurant/${restaurant_id}`;

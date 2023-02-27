@@ -39,52 +39,51 @@ def updateMessage():
     cookie=request.cookies.get("Set-Cookie")
     if cookie != None:
         # 從前端接收資料
-        decode= jwt.decode(cookie, "secretJWT", ['HS256'])
-        member_id=decode["id"]
-        member_name=decode["name"]
-        img=request.files["img"]
-        data=request.form
+        decode = jwt.decode(cookie, "secretJWT", ['HS256'])
+        member_id = decode["id"]
+        member_name = decode["name"]
+        img = request.files.get("img") # 使用 get 方法，如果沒有上傳照片，img 就會為 None
+        data = request.form
         content = data["content"]
         restaurant_id = data["restaurant_id"]
-        
-        img_filename = str(uuid.uuid4()) + ".jpeg"
-        s3.Bucket('restaurantmessages').put_object(Key=img_filename, Body=img, ContentType='image/jpeg')
-        url="https://d3eag54e4l4ans.cloudfront.net/"+ img_filename
 
-        # return "1111"
+        if img:
+            img_filename = str(uuid.uuid4()) + ".jpeg"
+            s3.Bucket('restaurantmessages').put_object(Key=img_filename, Body=img, ContentType='image/jpeg')
+            url = "https://d3eag54e4l4ans.cloudfront.net/" + img_filename
+        else:
+            url = None
+
         connection_object = connection_pool.get_connection()
-        mycursor=connection_object.cursor()
+        mycursor = connection_object.cursor()
         try:
-            mycursor.execute("INSERT INTO messages (user_id, store_id, message_content, message_photo ) VALUES (%s, %s, %s, %s)" ,(member_id, restaurant_id, content,url))
+            mycursor.execute("INSERT INTO messages (user_id, store_id, message_content, message_photo ) VALUES (%s, %s, %s, %s)", (member_id, restaurant_id, content, url))
             connection_object.commit()
-            
+            data = {
+                "content": content,
+                "photo": url,
+                "restaurant_id": restaurant_id
+            }
+            json_result = jsonify(data)
             mycursor.close()
             connection_object.close()
-            data={
-                "content":content,
-                "photo":url,
-                "restaurant_id":restaurant_id
-            }
-            json_result=jsonify(data)
-            return make_response(json_result,200) 
+            return make_response(json_result, 200) 
         except Exception as e:
-            # print(e)
-            data={
+            data = {
                 "error": True,
-                "message":e
+                "message": e
             }
-            json_result=jsonify(data)
+            json_result = jsonify(data)
             mycursor.close()
             connection_object.close()
-            return json_result,500
+            return json_result, 500
     else:
-        data={
-                "error":True,
-                "message":"請先登入會員"
-            }
-        # print(data)
-        json_result=jsonify(data)
-        return json_result,403
+        data = {
+            "error": True,
+            "message": "請先登入會員"
+        }
+        json_result = jsonify(data)
+        return json_result, 403
 
 # 在member頁面顯示會員的所有評論
 @route_api_messages.route("/api/messages/<memberID>",methods=["GET"])
