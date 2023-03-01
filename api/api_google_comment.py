@@ -8,29 +8,23 @@ from flask import jsonify
 import os
 load_dotenv()
 import requests
+from api.connector import connection_pool
 
 mysql_username = os.getenv("MYSQL_USERNAME")
 mysql_password = os.getenv("MYSQL_PASSWORD")
 mysql_host = os.getenv("MYSQL_HOST")
 mysql_database = os.getenv("MYSQL_DATABASE")
 
-connection_pool = mysql.connector.pooling.MySQLConnectionPool(
-    host=mysql_host,
-    user=mysql_username,
-    password=mysql_password ,
-    database=mysql_database,
-    pool_name = "kid_pool",
-    pool_size = 5,
-    pool_reset_session = True,
-)
 
+print(connection_pool,"google_comment")
 route_api_google_comment = Blueprint("route_api_google_comment", __name__, template_folder="templates")
 
 @route_api_google_comment.route("/api/google_comment/<placeID>",methods=["GET"])
 def google_comment(placeID):
-    connection_object = connection_pool.get_connection()
-    mycursor=connection_object.cursor(dictionary=True)
+   
     try:
+        connection_object = connection_pool.get_connection()
+        mycursor=connection_object.cursor(dictionary=True)
         mycursor.execute("SELECT * FROM google_comment WHERE place_id=%s",(placeID,))
         result = mycursor.fetchall()
         # print(result)
@@ -55,35 +49,14 @@ def google_comment(placeID):
             "data":data_value,
         }
         json_result=jsonify(data)
-        mycursor.close()
-        connection_object.close()
         return json_result,200
-       
-
-
-        # category_result=[]
-        # for x in range(0,len(result)):
-        #     category=list(result[x])
-        #     categories_list=category[0]
-        #     category_result.append(categories_list)
-        
-        # data={
-        #     "data":category_result
-        # }
-        # json_result=jsonify(data)
-        # # print(json_result)
-        # mycursor.close()
-        # connection_object.close()
-        # return json_result
-        # return "111"
-            
     except:
         data={
             "error": True,
             "message":"伺服器錯誤"
         }
         json_result=jsonify(data)
+        return json_result,500
+    finally:
         mycursor.close()
         connection_object.close()
-        return json_result,500
-    

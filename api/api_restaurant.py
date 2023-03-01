@@ -8,6 +8,7 @@ from flask import jsonify
 import os
 load_dotenv()
 import requests
+from api.connector import connection_pool
 
 mysql_username = os.getenv("MYSQL_USERNAME")
 mysql_password = os.getenv("MYSQL_PASSWORD")
@@ -17,24 +18,17 @@ mysql_database = os.getenv("MYSQL_DATABASE")
 
 
 
-connection_pool = mysql.connector.pooling.MySQLConnectionPool(
-    host=mysql_host,
-    user=mysql_username,
-    password=mysql_password ,
-    database=mysql_database,
-    pool_name = "kid_pool",
-    pool_size = 5,
-    pool_reset_session = True,
-)
+print(connection_pool,"restaurant")
 
 route_api_restaurant = Blueprint("route_api_restaurant", __name__, template_folder="templates")
 @route_api_restaurant.route("/api/restaurant",methods=["GET"])
 def api_restaurant():
-    connection_object = connection_pool.get_connection()
-    mycursor=connection_object.cursor(dictionary=True)
+    
     page = int(request.args.get("page","0"))
     keyword = request.args.get("keyword","")
     try:
+        connection_object = connection_pool.get_connection()
+        mycursor=connection_object.cursor(dictionary=True)
         if keyword == "":
             mycursor.execute("SELECT * FROM restaurant LIMIT %s ,%s",(page*12,12))
             result = mycursor.fetchall()
@@ -95,8 +89,6 @@ def api_restaurant():
                 "data":data_value
                 }
                 json_result=jsonify(data)
-                mycursor.close()
-                connection_object.close()
                 return json_result,200
             data={
 
@@ -104,8 +96,6 @@ def api_restaurant():
                 "data":data_value
             }
             json_result=jsonify(data)
-            mycursor.close()
-            connection_object.close()
             return json_result,200
         else:
             data={
@@ -113,8 +103,6 @@ def api_restaurant():
             "message":"資料不存在"
             }
             json_result=jsonify(data)
-            mycursor.close()
-            connection_object.close()
             return json_result,400
         # for i in range(0,len(result)):
         #     print()
@@ -125,17 +113,19 @@ def api_restaurant():
             "message":e
         }
         json_result=jsonify(data)
+        return json_result,500
+    finally:
         mycursor.close()
         connection_object.close()
-        return json_result,500
     
 
 @route_api_restaurant.route("/api/restaurant/<restaurantID>",methods=["GET"])      
 def restaurant_ID(restaurantID):
     # print(restaurantID)
-    connection_object = connection_pool.get_connection()
-    mycursor=connection_object.cursor(dictionary=True)
+    
     try:
+        connection_object = connection_pool.get_connection()
+        mycursor=connection_object.cursor(dictionary=True)
         mycursor.execute("SELECT * FROM restaurant WHERE id=%s",(restaurantID,))
         result = mycursor.fetchone()
         # print(result)
@@ -165,7 +155,7 @@ def restaurant_ID(restaurantID):
             # 進入google api
             key = os.getenv("key")
             myheaders={
-            "content-type":"application/json",
+                "content-type":"application/json",
             }
             response=requests.get("https://maps.googleapis.com/maps/api/place/details/json?place_id="+place_id+"&language=zh-TW&key="+key,headers=myheaders).json()
             # print(response,"google")
@@ -197,8 +187,6 @@ def restaurant_ID(restaurantID):
 			
             json_result=jsonify(data)
             # print(json_result)
-            mycursor.close()
-            connection_object.close()
             return json_result
         else:
             data={
@@ -206,8 +194,6 @@ def restaurant_ID(restaurantID):
             "message":"編號不存在"
             }
             json_result=jsonify(data)
-            mycursor.close()
-            connection_object.close()
             return json_result,400
         # return "1111" 
     except Exception as e:
@@ -217,8 +203,10 @@ def restaurant_ID(restaurantID):
             "message":e
         }
         json_result=jsonify(data)
+        return json_result,500
+    finally:
         mycursor.close()
         connection_object.close()
-        return json_result,500
+    
     
 # @route_api_restaurant.route("https://maps.googleapis.com/maps/api/place/details/json?place_id="+place_id+"&language=zh-TW&key="+key)

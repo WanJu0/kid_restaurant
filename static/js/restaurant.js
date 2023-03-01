@@ -20,7 +20,7 @@ function restaurantID()
         locationlink.textContent = jsonData.data.county;
         locationlink.addEventListener("click", function() {
         // 當點擊該元素時，返回上一頁
-        window.history.back();
+             window.history.back();
         });
         locationDiv.appendChild(locationlink);
 
@@ -227,7 +227,11 @@ function restaurantMessage(){
             // information 底下建立 user_img和 user
             let user_img =document.createElement("img");
             user_img.className ="member_icon";
-            user_img.src = user_photo;
+            if (user_photo) {
+                user_img.src = user_photo;
+              } else {
+                user_img.src = "/static/image/member.png";
+              }
             user_img.setAttribute("width", "40");
             user_img.setAttribute("height", "40");
             informationDiv.appendChild(user_img);

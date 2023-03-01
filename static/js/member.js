@@ -6,8 +6,6 @@ fetch("/api/user/auth", {
     method: "GET",
 })
 .then((response) => {
-    // 這裡會得到一個 ReadableStream 的物件
-    // 可以透過 blob(), json(), text() 轉成可用的資訊
     return response.json();
 }).then((jsonData) => {
     if (jsonData.data == false) {
@@ -68,7 +66,7 @@ function update_member_photo(){
         // 可以透過 blob(), json(), text() 轉成可用的資訊
         return response.json();
     }).then((jsonData) => {
-        console.log(jsonData,"大頭照回傳值")
+        // console.log(jsonData,"大頭照回傳值")
 
       
     })
@@ -110,7 +108,7 @@ function myFavorite(){
             //新增一個連結在最外層
             let restaurantLink = document.createElement("a");
             store_id_list.push(store_id);
-            console.log(store_id,"oooooo")
+            // console.log(store_id,"oooooo")
             // console.log(store_id_list,"aaaaaa")
             restaurantLink.className = `restaurant_link${i}`;
             restaurantLink.href=`/restaurant/${jsonData.data[i].favorite_restaurant_id}`;
@@ -216,16 +214,10 @@ myFavorite();
 
 // 顯示我所有的評論
 function myMessage(){
-//    console.log(member_id,"member_id")
-    // 這邊是將頁面抓到輸入的字串
     fetch(`/api/messages/${member_id}`, {})
     .then((response) => {
-        // 這裡會得到一個 ReadableStream 的物件
-        // 可以透過 blob(), json(), text() 轉成可用的資訊
         return response.json(); 
     }).then((jsonData) => {
-        // console.log(jsonData.data,"使用者的所有評論")
-        // console.log(jsonData.data[0].date)
         for (let i =0; i< jsonData.data.length; i++){
             let user_id = jsonData.data[i].user_id;
             let message_content =jsonData.data[i].message_content;
@@ -234,58 +226,196 @@ function myMessage(){
             let date = jsonData.data[0].date.substring(0, 10)
 
             let content = document.querySelector(".comment_content");
-            let visitorDiv = document.createElement("div");
-            visitorDiv.className = `visitor_comment${i}`;
-            content.appendChild(visitorDiv);
+            let googleDiv = document.createElement("div");
+            googleDiv.className = `member_comment${i}`;
+            content.appendChild(googleDiv);
 
-            // 建立comment_photo_div
-            let visitor_comment_content =document.querySelector(`.visitor_comment${i}`);
-            let comment_photoDiv = document.createElement("div");
-            comment_photoDiv.className = `comment_photo_div${i}`;
-            
+            // 建立google_information
+            let google_information_content =document.querySelector(`.member_comment${i}`);
+            let informationDiv = document.createElement("div");
+            informationDiv.className = `message_information${i}`;
+            // googleDiv.appendChild(informationDiv);
 
-            let comment_img =document.createElement("img");
-            comment_img.className ="comment_photo";
-            comment_img.src = message_photo;
-            comment_photoDiv.appendChild(comment_img);
-            visitor_comment_content.appendChild(comment_photoDiv);
-
-            // 建立member_information
-            let member_informationDiv = document.createElement("div");
-            member_informationDiv.className = `member_information${i}`;
-            visitor_comment_content .appendChild(member_informationDiv);
 
             // information 底下建立 user_img和 user
             let user_img =document.createElement("img");
-            user_img.className ="member_icon";
+            user_img.className ="member_photo";
             user_img.src = user_photo;
             user_img.setAttribute("width", "40");
             user_img.setAttribute("height", "40");
-            member_informationDiv.appendChild(user_img);
-            visitor_comment_content .appendChild(member_informationDiv);
-            
+            informationDiv.appendChild(user_img);
+            googleDiv.appendChild(informationDiv);
+            // content.appendChild(informationDiv);
+
             let userDiv = document.createElement("div");
-            userDiv.className = "visitor_name";
-            let userNode = document.createTextNode("還缺名字");
+            userDiv.className = "member_name";
+            let userNode = document.createTextNode(member_name);
             userDiv.appendChild(userNode);
-            member_informationDiv.appendChild(userDiv);
-            visitor_comment_content .appendChild(member_informationDiv);
-            
-            // user_comment
-            let user_commentDiv = document.createElement("div");
-            user_commentDiv.className = "user_comment";
-            let user_commentDivNode = document.createTextNode(message_content);
-            user_commentDiv.appendChild(user_commentDivNode);
-            visitor_comment_content.appendChild(user_commentDiv);
-            
-            // comment_date
+            informationDiv.appendChild(userDiv);
+            googleDiv.appendChild(informationDiv);
+           
+            // 評論內容
+            let textDiv = document.createElement("div");
+            textDiv.className = `member_message_comment${i}`;
+            let textP = document.createElement("p")
+            let textNode = document.createTextNode(message_content);
+            textP.appendChild(textNode);
+            textDiv.appendChild(textP);
+            googleDiv.appendChild(textDiv);
+
+            let comment_content =document.querySelector(`.member_message_comment${i}`);
+
+            // 如果留言有圖片,則將照片放上去
+            if (message_photo !=null){
+                
+                let message_img =document.createElement("img");
+                message_img.className ="message_photo";
+                message_img.src = message_photo;
+                message_img.setAttribute("width", "100");
+                message_img.setAttribute("height", "80");
+                comment_content.appendChild(message_img);
+                // googleDiv.appendChild(informationDiv);
+
+            }
+
+            // 留言時間
             let dateDiv = document.createElement("div");
             dateDiv.className = "comment_date";
             let dateNode = document.createTextNode(date);
             dateDiv.appendChild(dateNode);
-            visitor_comment_content.appendChild(dateDiv);
+            googleDiv.appendChild(dateDiv);
+
+            // let content = document.querySelector(".comment_content");
+            // let visitorDiv = document.createElement("div");
+            // visitorDiv.className = `visitor_comment${i}`;
+            // content.appendChild(visitorDiv);
+
+            // // 建立comment_photo_div
+            // let visitor_comment_content =document.querySelector(`.visitor_comment${i}`);
+            // let comment_photoDiv = document.createElement("div");
+            // comment_photoDiv.className = `comment_photo_div${i}`;
+            
+
+            // let comment_img =document.createElement("img");
+            // comment_img.className ="comment_photo";
+            // comment_img.src = message_photo;
+            // comment_photoDiv.appendChild(comment_img);
+            // visitor_comment_content.appendChild(comment_photoDiv);
+
+            // // 建立member_information
+            // let member_informationDiv = document.createElement("div");
+            // member_informationDiv.className = `member_information${i}`;
+            // visitor_comment_content .appendChild(member_informationDiv);
+
+            // // information 底下建立 user_img和 user
+            // let user_img =document.createElement("img");
+            // user_img.className ="member_icon";
+            // user_img.src = user_photo;
+            // user_img.setAttribute("width", "40");
+            // user_img.setAttribute("height", "40");
+            // member_informationDiv.appendChild(user_img);
+            // visitor_comment_content .appendChild(member_informationDiv);
+            
+            // let userDiv = document.createElement("div");
+            // userDiv.className = "visitor_name";
+            // let userNode = document.createTextNode("還缺名字");
+            // userDiv.appendChild(userNode);
+            // member_informationDiv.appendChild(userDiv);
+            // visitor_comment_content .appendChild(member_informationDiv);
+            
+            // // user_comment
+            // let user_commentDiv = document.createElement("div");
+            // user_commentDiv.className = "user_comment";
+            // let user_commentDivNode = document.createTextNode(message_content);
+            // user_commentDiv.appendChild(user_commentDivNode);
+            // visitor_comment_content.appendChild(user_commentDiv);
+            
+            // // comment_date
+            // let dateDiv = document.createElement("div");
+            // dateDiv.className = "comment_date";
+            // let dateNode = document.createTextNode(date);
+            // dateDiv.appendChild(dateNode);
+            // visitor_comment_content.appendChild(dateDiv);
         }
     })
 }
+
+function updateMember(){
+    let nameElement = document.querySelector("#input_name");
+    let name = nameElement.value;
+    let emailElement = document.querySelector("#input_mail");
+    let contact_email = emailElement.value;
+    let phoneElement = document.querySelector("#input_phone");
+    let phone = phoneElement.value;
+    let birthdayElement = document.querySelector("#member_date");
+    let birthday = birthdayElement.value;
+    let maleElement= document.querySelector("#male") ;
+    let male= maleElement.checked ;
+    let femaleElement = document.querySelector("#female") ;
+    let female= femaleElement.checked ;
+    let genderResult="";
+    // console.log(name);
+    // console.log(email);
+    // console.log(phone);
+    // console.log(birthday);
+    // console.log(emergencyName);
+    // console.log(emergencyPhone);
+    if(male==false & female==false){
+        genderResult="";
+    }
+    if(male==true){
+        genderResult="男生";
+    }
+    if(female==true){
+        genderResult="女生";
+    }
+    
+    // 將輸入的資訊更新到資料庫中
+    let data=
+        {
+            name:name,
+            contact_email:contact_email,
+            phone:phone,
+            birthday:birthday,
+            gender:genderResult,
+        };
+    // console.log(data)
+    fetch("/api/member",{
+        method:"POST",
+        credentials:"include",
+        body:JSON.stringify(data),
+        headers:new Headers({
+            "content-type":"application/json"
+        })
+    })
+}
+
+fetch("/api/member", {
+    method: "GET",
+})
+.then((response) => {
+    // 這裡會得到一個 ReadableStream 的物件
+    // 可以透過 blob(), json(), text() 轉成可用的資訊
+    return response.json();
+}).then((jsonData) => {
+    // console.log(jsonData)
+    let name=jsonData.name;
+    let contact_email=jsonData.contact_email;
+    let member_phone=jsonData.member_phone;
+    let birthday=jsonData.birthday;
+    let gender=jsonData.gender;
+    // user_id=jsonData.data["id"];
+    // // 將基本資訊自動填入
+    document.querySelector("#input_name").value = name;
+    document.querySelector("#input_mail").value = contact_email;
+    document.querySelector("#input_phone").value = member_phone;
+    document.querySelector("#member_date").value = birthday;
+    if(gender=="男生"){
+        document.querySelector("#male").checked=true;
+    }
+    if(gender=="女生"){
+        document.querySelector("#female").checked=true;
+    }
+})
 
 

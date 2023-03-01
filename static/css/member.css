@@ -164,3 +164,38 @@ div[class^=favorite_information]{
     line-height: 20px;
     font-weight: 400;
 }
+
+.comment_content{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+div[class^=message_information]{
+    display: flex;
+    align-items: center;
+}
+div[class^=member_message_comment]{
+    margin: 10px;
+    margin-right: 20px;
+    background-color: #f6f6f6;
+    border-radius: 6px;
+    padding: 15px;
+    margin-top: 15px;
+    position: relative;
+    margin-bottom: 5px;
+    overflow: hidden;
+    word-break: break-word;
+    white-space: pre-line;
+}
+.comment_date{
+    margin: 10px;
+    margin-bottom: 40px
+}
+div[class^=member_comment]{
+    margin-right: 10px;
+}
+.message_photo{
+    object-fit: cover;
+    border-radius: 4px;
+}

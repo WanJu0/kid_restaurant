@@ -150,9 +150,9 @@ function restaurant() {
                 .then((response)=>{
                     return response.json();
                 }).then((jsonData)=>{
-                    console.log(jsonData);
-                    console.log(jsonData.data,"favorite");
-                    console.log(jsonData.data[0].favorite_restaurant_id,"favorite22");
+                    // console.log(jsonData);
+                    // console.log(jsonData.data,"favorite");
+                    // console.log(jsonData.data[0].favorite_restaurant_id,"favorite22");
                     // console.log(`#love${favorite_id}`)
             
                     if(jsonData.data !== null){
@@ -396,6 +396,7 @@ function apiRestaurant(clickedCity) {
     // 讓nextPage先回到0
 
     // const data = {username}
+    console.log('apiRestaurant function called with location: ' + location);
     fetch(`/api/restaurant?keyword=${clickedCity}`, {})
         .then((response) => {
             // 這裡會得到一個 ReadableStream 的物件
@@ -742,11 +743,11 @@ function homefavorite(buttonId){
 }
 
 function unhomefavorite(redbuttonId){
-    console.log(redbuttonId);
+    // console.log(redbuttonId);
     let parts = redbuttonId.split("love");
     let restaurant_id = parts.pop();
-    console.log(restaurant_id,"restaurant_id")
-    '#red'+redbuttonId
+    // console.log(restaurant_id,"restaurant_id")
+    // '#red'+redbuttonId
     let favoriteElement = document.querySelector('#love'+restaurant_id);
     let unfavoriteElement = document.querySelector(`#${redbuttonId}`);
     favoriteElement.style.display = "block";
@@ -756,7 +757,7 @@ function unhomefavorite(redbuttonId){
         {
             restaurant_id:restaurant_id
         };
-    console.log(data,"要傳的資料")
+    // console.log(data,"要傳的資料")
     fetch("/api/favorites",{
         method: "DELETE" ,
         credentials: "include",
@@ -768,4 +769,3 @@ function unhomefavorite(redbuttonId){
     })
 
 }
-
