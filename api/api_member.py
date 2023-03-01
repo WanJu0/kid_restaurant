@@ -43,18 +43,34 @@ def memberPhoto():
         img=request.files["img"]
         key=img.filename
         # print(img,"img")
-        # print(key,"key")
+        print(key,"key")
         # print(test,"test")
         
         s3.Bucket('memberphoto').put_object(Key=img.filename, Body=img, ContentType='image/jpeg')
         url="https://dk7141qqdhlvd.cloudfront.net/"+ key
         # print(url,"上傳後照片網址")
-        data={
-            "image":url,
-        }
-        json_result=jsonify(data)
-        return make_response(json_result,200)  
-        # return "上傳成功"  
+        # 這邊傳去後端的網址會跟著船正確的父黨名過去
+        # 我這邊應該再把網址存入資料庫中～get的時候直接從資料庫讀取網址
+        try:
+            connection_object = connection_pool.get_connection()
+            mycursor = connection_object.cursor()
+            mycursor.execute("UPDATE member SET member_photo=%s  WHERE member_id=%s" ,(url, memberId))
+            connection_object.commit()
+            data={
+                "image":url,
+            }
+            json_result = jsonify(data)
+            return make_response(json_result, 200) 
+        except Exception as e:
+            data = {
+                "error": True,
+                "message": e
+            }
+            json_result = jsonify(data)
+            return json_result, 500
+        finally:
+            mycursor.close()
+            connection_object.close()
        
     else:
         data={
@@ -187,12 +203,15 @@ def getMember():
             member_phone=result[0]["member_phone"]
             birthday=result[0]["birthday"]
             gender=result[0]["gender"]
+            member_photo=result[0]["member_photo"]
+
             data={
                 "name":name,
                 "contact_email":contact_email,
                 "member_phone":member_phone,
                 "birthday":str(birthday),
-                "gender":gender
+                "gender":gender,
+                "member_photo":member_photo
             }
             json_result=jsonify(data)
             return make_response(json_result,200) 

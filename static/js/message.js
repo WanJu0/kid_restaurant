@@ -58,7 +58,18 @@ function openMessage() {
 }
 
 function update_Message(){
-    // 抓取現在頁面的餐廳id
+
+    let updateButton = document.getElementById("add_message");
+    updateButton.innerHTML = " ";
+    let loading_img =document.createElement("img");
+    loading_img.className ="loading_img";
+    loading_img.src ="/static/image/loading.gif";
+    loading_img.setAttribute("width", "30");
+    loading_img.setAttribute("height", "30");
+    updateButton.appendChild(loading_img);
+    // 模擬更新時間
+    setTimeout(function() {
+        // 抓取現在頁面的餐廳id
     let path = location.pathname;
     let parts = path.split("/");
     let restaurant_id = parts.pop();
@@ -111,6 +122,10 @@ function update_Message(){
         // 按下送出評論時重新整理頁面
         window.location.href=`/restaurant/${restaurant_id}`;
     })
+        updateButton.innerHTML = originalText;
+    }, 2000); // 這裡的 3000 毫秒代表模擬更新需要的時間，可以依照實際情況進行調整
+
+    
    
 }
 

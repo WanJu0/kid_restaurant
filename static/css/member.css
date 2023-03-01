@@ -46,7 +46,7 @@
 #update_button{
     width: 154px;
     height: 36px;
-    background: #4897c6;
+    background: #26bec9;
     border-radius: 5px;
     color: #FFFFFF;
     font-family: 'Noto Sans TC';
@@ -174,6 +174,8 @@ div[class^=favorite_information]{
 div[class^=message_information]{
     display: flex;
     align-items: center;
+    position: relative;
+   
 }
 div[class^=member_message_comment]{
     margin: 10px;
@@ -198,4 +200,24 @@ div[class^=member_comment]{
 .message_photo{
     object-fit: cover;
     border-radius: 4px;
+}
+.dot_photo{
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+    background-color: #fff;
+  border-radius: 50%;
+  padding: 8px;
+  transition: all 0.3s ease-in-out; /* 添加过渡效果 */
+}
+
+.dot_photo:hover,
+.dot_photo:focus {
+  background-color: #f6f6f6;
+  transform: scale(1.1);
+}
+
+.dot_photo:active {
+  background-color: #d9d9d9;
+  transform: scale(0.9);
 }

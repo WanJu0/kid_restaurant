@@ -9,18 +9,14 @@ fetch("/api/user/auth", {
     return response.json();
 }).then((jsonData) => {
     if (jsonData.data == false) {
-        // 打開註冊頁面
         window.location.href = "/"
     }
     else{
-        // console.log(jsonData.data)
         member_id=jsonData.data["id"]; 
         member_name=jsonData.data["name"]; 
         const member_email=jsonData.data["email"]; 
-        // 將基本資訊自動填入
         document.getElementById("input_name").value = member_name;
         document.getElementById("input_mail").value = member_email;
-        // console.log(member_id)
         myMessage()
     }
     
@@ -73,24 +69,24 @@ function update_member_photo(){
 });
 }
 // 看使用者是否有照片有的話就顯示沒有就是預設圖片
-fetch("/api/member/photo", {
-    method: 'GET',
-})
-.then((response) => {
-    // 這裡會得到一個 ReadableStream 的物件
-    // 可以透過 blob(), json(), text() 轉成可用的資訊
-    return response.json();
-}).then((jsonData) => {
-    // console.log(jsonData,"照片")
-    // console.log(jsonData.image,"照片")
-    let personImg = document.querySelector(".add_photo");
-    if (jsonData.image!==null){
-        personImg.src =jsonData.image;
-    }
-    else{
-        personImg.src ="/static/image/member_photo.png"
-    }
-})
+// fetch("/api/member/photo", {
+//     method: 'GET',
+// })
+// .then((response) => {
+//     // 這裡會得到一個 ReadableStream 的物件
+//     // 可以透過 blob(), json(), text() 轉成可用的資訊
+//     return response.json();
+// }).then((jsonData) => {
+//     // console.log(jsonData,"照片")
+//     // console.log(jsonData.image,"照片")
+//     let personImg = document.querySelector(".add_photo");
+//     if (jsonData.image!==null){
+//         personImg.src =jsonData.image;
+//     }
+//     else{
+//         personImg.src ="/static/image/member_photo.png"
+//     }
+// })
 
 // 顯示所有我收藏的餐廳資訊
 function myFavorite(){
@@ -218,11 +214,12 @@ function myMessage(){
     .then((response) => {
         return response.json(); 
     }).then((jsonData) => {
+        console.log(jsonData.data,"所有評論")
         for (let i =0; i< jsonData.data.length; i++){
             let user_id = jsonData.data[i].user_id;
             let message_content =jsonData.data[i].message_content;
             let message_photo = jsonData.data[i].message_photo;
-            let user_photo =jsonData.data[i].user_photo.image
+            let user_photo =jsonData.data[i].user_photo
             let date = jsonData.data[0].date.substring(0, 10)
 
             let content = document.querySelector(".comment_content");
@@ -240,7 +237,14 @@ function myMessage(){
             // information 底下建立 user_img和 user
             let user_img =document.createElement("img");
             user_img.className ="member_photo";
-            user_img.src = user_photo;
+            
+            if (user_photo!==null){
+                user_img.src = user_photo;
+            }
+            else{
+                user_img.src ="/static/image/member.png"
+            }
+           
             user_img.setAttribute("width", "40");
             user_img.setAttribute("height", "40");
             informationDiv.appendChild(user_img);
@@ -253,6 +257,19 @@ function myMessage(){
             userDiv.appendChild(userNode);
             informationDiv.appendChild(userDiv);
             googleDiv.appendChild(informationDiv);
+
+            //修改符號
+            // let modifyDiv = document.createElement("div");
+            // modifyDiv.className = "dot_div";
+            let modify_img =document.createElement("img");
+            modify_img.className ="dot_photo";
+            modify_img.src ="/static/image/dot_2.png"
+            modify_img.setAttribute("width", "20");
+            modify_img.setAttribute("height", "20");
+            // modifyDiv.appendChild(modify_img);
+            informationDiv.appendChild(modify_img);
+            googleDiv.appendChild(informationDiv);
+
            
             // 評論內容
             let textDiv = document.createElement("div");
@@ -341,7 +358,17 @@ function myMessage(){
 }
 
 function updateMember(){
-    let nameElement = document.querySelector("#input_name");
+    let updateButton = document.getElementById("update_button");
+    updateButton.innerHTML = " ";
+    let loading_img =document.createElement("img");
+    loading_img.className ="loading_img";
+    loading_img.src ="/static/image/loading.gif";
+    loading_img.setAttribute("width", "30");
+    loading_img.setAttribute("height", "30");
+    updateButton.appendChild(loading_img);
+    // 模擬更新時間
+    setTimeout(function() {
+        let nameElement = document.querySelector("#input_name");
     let name = nameElement.value;
     let emailElement = document.querySelector("#input_mail");
     let contact_email = emailElement.value;
@@ -388,6 +415,10 @@ function updateMember(){
             "content-type":"application/json"
         })
     })
+        updateButton.innerHTML = "更新會員資料";
+    }, 3000); // 這裡的 3000 毫秒代表模擬更新需要的時間，可以依照實際情況進行調整
+        
+    
 }
 
 fetch("/api/member", {
@@ -398,18 +429,27 @@ fetch("/api/member", {
     // 可以透過 blob(), json(), text() 轉成可用的資訊
     return response.json();
 }).then((jsonData) => {
-    // console.log(jsonData)
+    console.log(jsonData)
     let name=jsonData.name;
     let contact_email=jsonData.contact_email;
     let member_phone=jsonData.member_phone;
     let birthday=jsonData.birthday;
     let gender=jsonData.gender;
+    let member_photo=jsonData.member_photo;
     // user_id=jsonData.data["id"];
     // // 將基本資訊自動填入
     document.querySelector("#input_name").value = name;
     document.querySelector("#input_mail").value = contact_email;
     document.querySelector("#input_phone").value = member_phone;
     document.querySelector("#member_date").value = birthday;
+
+    let personImg = document.querySelector(".add_photo");
+    if (member_photo!==null){
+        personImg.src =member_photo;
+    }
+    else{
+        personImg.src ="/static/image/member_photo.png"
+    }
     if(gender=="男生"){
         document.querySelector("#male").checked=true;
     }

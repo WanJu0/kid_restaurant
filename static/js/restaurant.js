@@ -204,11 +204,12 @@ function restaurantMessage(){
     .then((response) => {
         return response.json(); 
     }).then((jsonData) => {
+        console.log(jsonData.data,"jsonData.data")
         for (let i =0; i< jsonData.data.length; i++){
             let user_id = jsonData.data[i].user_id;
             let message_content =jsonData.data[i].message_content;
             let message_photo = jsonData.data[i].message_photo;
-            let user_photo =jsonData.data[i].user_photo.image;
+            let user_photo =jsonData.data[i].user_photo;
             let date = jsonData.data[0].date.substring(0, 10);
             let user_name=jsonData.data[i].user_name;
 

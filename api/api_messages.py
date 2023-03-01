@@ -87,7 +87,7 @@ def getmember_Message(memberID):
         mycursor=connection_object.cursor(dictionary=True)
         mycursor.execute("SELECT * FROM messages JOIN restaurant on messages.store_id=restaurant.id WHERE messages.user_id=%s",(memberID,))
         result = mycursor.fetchall()
-        # print(result,"所有評論")
+        print(result,"所有評論")
        
         # # 這邊先將
         if result != None:
@@ -102,28 +102,33 @@ def getmember_Message(memberID):
                 store_name=result[i]["store_name"]
                 
                 # 抓取留言者的大頭照
-                key = f"{user_id}.jpg"
-                # key =user_id +".jpg"
-                print(key,"大頭照" )
+                mycursor.execute("SELECT * FROM member WHERE member_id=%s",(user_id,))
+                photoresult = mycursor.fetchall()
+                print(photoresult,"photoresult")
 
-                try:
-                    obj=s3.Object(bucket_name="memberphoto", key=key)
-                    # print(obj,"obj")
-                    response = obj.get()
-                    # print(response,"obj_get")
-                    url="https://dk7141qqdhlvd.cloudfront.net/"+ key
+                user_photo=photoresult[0]["member_photo"]
+                # key = f"{user_id}.jpg"
+                # # key =user_id +".jpg"
+                # print(key,"大頭照" )
+
+                # try:
+                #     obj=s3.Object(bucket_name="memberphoto", key=key)
+                #     # print(obj,"obj")
+                #     response = obj.get()
+                #     # print(response,"obj_get")
+                #     url="https://dk7141qqdhlvd.cloudfront.net/"+ key
                     
                     
-                    user_photo={
-                        "image":url,
-                    }
+                #     user_photo={
+                #         "image":url,
+                #     }
                     
-                except Exception as e:
-                    # print(f'圖片 {key} 不存在')
-                    # print(e)
-                    user_photo={
-                        "image":None,
-                    }
+                # except Exception as e:
+                #     # print(f'圖片 {key} 不存在')
+                #     # print(e)
+                #     user_photo={
+                #         "image":None,
+                #     }
                 
                 data={
                     "messages_id":messages_id,
@@ -186,27 +191,33 @@ def getRestaurantMessage(restaurantID):
                 date=str(result[i]["created_at"])
                 
                 # 抓取留言者的大頭照
-                key = f"{user_id}.jpg"
-                # key =user_id +".jpg"
-                print(key,"大頭照" )
+                mycursor.execute("SELECT * FROM member WHERE member_id=%s",(user_id,))
+                photoresult = mycursor.fetchall()
+                print(photoresult,"photoresult")
 
-                try:
-                    obj=s3.Object(bucket_name="memberphoto", key=key)
-                    # print(obj,"obj")
-                    response = obj.get()
-                    # print(response,"obj_get")
-                    url="https://dk7141qqdhlvd.cloudfront.net/"+ key
-                    # print(url,"url")
+                user_photo=photoresult[0]["member_photo"]
+                # # 抓取留言者的大頭照
+                # key = f"{user_id}.jpg"
+                # # key =user_id +".jpg"
+                # print(key,"大頭照" )
+
+                # try:
+                #     obj=s3.Object(bucket_name="memberphoto", key=key)
+                #     # print(obj,"obj")
+                #     response = obj.get()
+                #     # print(response,"obj_get")
+                #     url="https://dk7141qqdhlvd.cloudfront.net/"+ key
+                #     # print(url,"url")
                     
-                    user_photo={
-                        "image":url,
-                    }
-                except Exception as e:
-                    # print(f'圖片 {key} 不存在')
-                    print(e)
-                    user_photo={
-                        "image":None,
-                    }
+                #     user_photo={
+                #         "image":url,
+                #     }
+                # except Exception as e:
+                #     # print(f'圖片 {key} 不存在')
+                #     print(e)
+                #     user_photo={
+                #         "image":None,
+                #     }
                 
                 data={
                     "user_id":user_id,
