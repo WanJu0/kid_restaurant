@@ -6,27 +6,17 @@ let store_id_list=[];
 
 // console.log(store_id_list,"list222")
 function restaurant() {
-    // 這邊是將頁面抓到輸入的字串
-    
     fetch(`/api/restaurant?page=${nextPage}`, {})
         .then((response) => {
-            // 這裡會得到一個 ReadableStream 的物件
-            // 可以透過 blob(), json(), text() 轉成可用的資訊
             return response.json();
         }).then((jsonData) => {
-            // console.log(jsonData.data,"0216")
-        
             for (let i = 0; i < jsonData.data.length; i++) {
-
                 let store_id= jsonData.data[i].id;
                 let address = jsonData.data[i].address;
                 let straddress = address.split('台灣');
                 let content = document.querySelector("#content");
                 store_id_list.push(store_id);
-                // console.log(typeof store_id,"oooooo")
-                // console.log(store_id_list,"aaaaaa")
-
-        
+                
                 //新增一個連結在最外層
                 let restaurantLink = document.createElement("a");
                 restaurantLink.className = `restaurant_link${i}`;
@@ -98,12 +88,6 @@ function restaurant() {
                 prodcut_redlove_content.appendChild(redloveImg);
                 restaurant_content.appendChild(prodcut_redlove_content);
 
-                // 新增一個連結在information最外層
-                // let restaurantLink = document.createElement("a");
-                // restaurantLink.className = `restaurant_link${i}`;
-                // restaurantLink.href=`/restaurant/${jsonData.data[i].id}`;
-                // restaurant_content.appendChild(restaurantLink);
-
                 // 建立information
                 let informationElement = document.createElement("div");
                 informationElement.className = `information${i}`;
@@ -150,11 +134,6 @@ function restaurant() {
                 .then((response)=>{
                     return response.json();
                 }).then((jsonData)=>{
-                    // console.log(jsonData);
-                    // console.log(jsonData.data,"favorite");
-                    // console.log(jsonData.data[0].favorite_restaurant_id,"favorite22");
-                    // console.log(`#love${favorite_id}`)
-            
                     if(jsonData.data !== null){
                         for(i=0;i<jsonData.data.length;i++){
                             // console.log(jsonData.data,"1")
@@ -204,8 +183,6 @@ const callback = (entries) => {
             isLoading = true;
             fetch(`/api/restaurant?page=${nextPage}&keyword=${keyword}`, {})
                 .then((response) => {
-                    // 這裡會得到一個 ReadableStream 的物件
-                    // 可以透過 blob(), json(), text() 轉成可用的資訊
                     return response.json();
                 }).then((jsonData) => {
             
@@ -217,8 +194,6 @@ const callback = (entries) => {
                         //新增一個連結在最外層
                         let restaurantLink = document.createElement("a");
                         store_id_list.push(store_id);
-                        // console.log(typeof store_id,"oooooo")
-                        // console.log(store_id_list,"bbbbb")
                         restaurantLink.className = `restaurant_link${i+12*nextPage}`;
                         restaurantLink.href=`/restaurant/${jsonData.data[i].id}`;
                         content.appendChild(restaurantLink);
@@ -288,12 +263,6 @@ const callback = (entries) => {
                         prodcut_redlove_content.appendChild(redloveImg);
                         restaurant_content.appendChild(prodcut_redlove_content);
 
-                        // // 新增一個連結在information最外層
-                        // let restaurantLink = document.createElement("a");
-                        // restaurantLink.className = `restaurant_link${i+12*nextPage}`;
-                        // restaurantLink.href=`/restaurant/${jsonData.data[i].id}`;
-                        // restaurant_content.appendChild(restaurantLink);
-                            
                         // 建立information
                         let informationElement = document.createElement("div");
                         informationElement.className = `information${i+12*nextPage}`;
@@ -338,10 +307,7 @@ const callback = (entries) => {
                             .then((response)=>{
                                 return response.json();
                             }).then((jsonData)=>{
-                                // console.log(jsonData);
-                                // console.log(jsonData.data,"favorite");
-                                // console.log(jsonData.data[0].favorite,"favorite22");
-                                // console.log(`#love${favorite_id}`)
+ 
                         
                                 if(jsonData.data !== null){
                                     for(i=0;i<jsonData.data.length;i++){
@@ -350,11 +316,11 @@ const callback = (entries) => {
                                         favorite_id=parseFloat(favorite_id)
                                         if (store_id_list.includes(favorite_id)) {
                                             const loveButton = document.querySelector(`#love${favorite_id}`);
-                                            // console.log(loveButton,"loveButton")
+                                           
                                             const redLoveButton = document.querySelector(`#redlove${favorite_id}`);
                                             loveButton.style.display = "none";
                                             redLoveButton.style.display = "block";
-                                            // console.log(store_id_list,"裏")
+                            
                                         }
                                     }
                                    
@@ -399,8 +365,7 @@ function apiRestaurant(clickedCity) {
     console.log('apiRestaurant function called with location: ' + location);
     fetch(`/api/restaurant?keyword=${clickedCity}`, {})
         .then((response) => {
-            // 這裡會得到一個 ReadableStream 的物件
-            // 可以透過 blob(), json(), text() 轉成可用的資訊
+        
             return response.json();
         }).then((jsonData) => {
             for (let i = 0; i < jsonData.data.length; i++) {
@@ -557,57 +522,7 @@ function apiRestaurant(clickedCity) {
         })
         })
 }
-// let divName = "";
-// document.addEventListener("click", function(event) {
-//     let target = event.target;
-//     let parent = target.parentNode;
-//     divName = parent.parentNode.className
-//     console.log(divName)
-// });
 
-// let slideIndex = 1;
-// showSlides(slideIndex);
-
-// // Next/previous controls
-// function plusDivs(n) {
-//     showSlides(slideIndex += n);
-// }
-
-// // Thumbnail image controls
-// function currentSlide(n) {
-//     showSlides(slideIndex = n);
-// }
-
-// function showSlides(n) {
-//     let i;
-//     let slides;
-//     console.log(divName, "裡面的div")
-//     if (divName) {
-//         slides = document.querySelectorAll('.' + divName + ' .photo_list_content');
-//     } else {
-//         slides = document.querySelectorAll('.photo_list_content');
-//     }
-
-//     let dots = document.getElementsByClassName("dot");
-//     if (n > slides.length) {
-//         slideIndex = 1
-//     }
-//     if (n < 1) {
-//         slideIndex = slides.length
-//     }
-//     if (slides.length) {
-//         for (i = 0; i < slides.length; i++) {
-//             slides[i].style.display = "none";
-//         }
-//         for (i = 0; i < dots.length; i++) {
-//             dots[i].className = dots[i].className.replace(" active", "");
-//         }
-//         slides[slideIndex - 1].style.display = "block";
-//         dots[slideIndex - 1].className += " active";
-//     }
-
-
-// }
 
 restaurant()
 
@@ -615,85 +530,9 @@ restaurant()
 let observer = new IntersectionObserver(callback, options)
 const cards = document.querySelector("footer");
 
-// 進入網頁要確認是否儲存的愛心
-
-
-// fetch("/api/user/auth", {
-//     method: "GET",
-// })
-// .then((response) => {
-//     // 這裡會得到一個 ReadableStream 的物件
-//     // 可以透過 blob(), json(), text() 轉成可用的資訊
-//     return response.json();
-// }).then((jsonData) => {
-//     if (jsonData.data != false) {
-//         fetch("/api/favorites",{
-//             method: "GET",
-//         })
-//         .then((response)=>{
-//             return response.json();
-//         }).then((jsonData)=>{
-//             // console.log(jsonData);
-//             // console.log(jsonData.data,"favorite");
-//             // console.log(jsonData.data[0].favorite,"favorite22");
-//             // console.log(`#love${favorite_id}`)
-    
-            
-//             if(jsonData.data !== null){
-//                 for(i=0;i<jsonData.data.length;i++){
-//                     console.log(jsonData.data,"1")
-//                     let favorite_id=jsonData.data[i].favorite
-//                     console.log(favorite_id);
-//                     console.log(jsonData.data,"2")
-//                     let loveButton = document.querySelector(`#love${favorite_id}`);
-//                     console.log(loveButton,"3")
-//                     let redLoveButton = document.querySelector(`#redlove${favorite_id}`);
-//                     console.log(jsonData.data,"4")
-
-//                     loveButton.style.display = "none";
-//                     // console.log(jsonData.data,"5")
-//                     redLoveButton.style.display = "block";
-//                     console.log(jsonData.data,"6")
-//                 }
-//                 // const loveButton = document.querySelector('#love3');
-//                 // const redLoveButton = document.querySelector('#redlove3');
-//                 // let favoriteElement = document.querySelector(".favorite_button");
-//                 // let unfavoriteElement = document.querySelector(".redLove_button");
-//                 // unfavoriteElement.style.display ="flex";
-//                 // favoriteElement.style.display = "none";
-//             }
-//         })
-//     }
-    
-
-    
-// })
-
-// 獲取所有div元素，並綁定click事件監聽器
-// const button = document.querySelectorAll('div[class^="product_love"]');
-
-// const button = document.getElementById('love1');
-// const heartImage = button.querySelector('img');
-
-// button.addEventListener('click', function(event) {
-//   event.preventDefault();
-//   if (heartImage.getAttribute('src') === '/static/image/heart.png') {
-//     heartImage.setAttribute('src', '/static/image/red_heart.png');
-//   } else {
-//     heartImage.setAttribute('src', '/static/image/heart.png');
-//   }
-// });
 
 let redbuttons = document.querySelectorAll('button[id^="love"]');
 
-// // 為每個按鈕元素添加點擊事件監聽器
-// redbuttons.forEach(button => {
-//   button.addEventListener('click', () => {
-//     // 當用戶單擊時，獲取按鈕的ID
-//     let buttonId = button.id;
-//     console.log(buttonId);
-//   });
-// });
 
 function homefavorite(buttonId){
 

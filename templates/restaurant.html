@@ -8,6 +8,9 @@
     <link rel="stylesheet" type="text/css" href="/static/css/restaurant.css" />
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="/static/css/common.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 
 </head>
 <body> 
@@ -87,14 +90,14 @@
     
     <div class="main_content">
         <div class="restuarant_main">
-            <div class="store_title">餐廳名稱</div>
+            <div class="store_title"></div>
             <div class="store_detail">
                 <img class="google_star" src="/static/image/1985836.png" width="16" height="16"/>
-                <div class="google_rent">4.8</div>
+                <div class="google_rent"></div>
                 <img class="location_icon" src="/static/image/location.png" width="16" height="16"/>
-                <div class="google_location">高雄市 , 左營區</div>
+                <div class="google_location"></div>
                 <img class="location_icon" src="/static/image/phone.png" width="16" height="16"/>
-                <div class="store_phone">電話:222222222</div>
+                <div class="store_phone"></div>
                 <button class="favorite_button" onclick="myfavorite()" >
                     <img class="love_icon" src="/static/image/love_none.png" width="16" height="16"/>
                     <div class="save">儲存</div>
@@ -107,41 +110,49 @@
             </div>
             <div class="restaurant_photo_list">
                 <div class="first_photo">
-                    <img class="photo_1" src=""/>
+                    <img class="photo_1" src="/static/image/white_loading.gif"/>
                 </div>
                 <div class="sec_photo">
                     <div>
-                        <img class="photo_2" src=""/>
+                        <img class="photo_2" src="/static/image/white_loading.gif"/>
                     </div>
                     <div>
-                        <img class="photo_3" src=""/>
+                        <img class="photo_3" src="/static/image/white_loading.gif"/>
                     </div>
                     
                 </div>
                 <div class="third_photo">
                     <div>
-                        <img class="photo_4" src=""/>
+                        <img class="photo_4" src="/static/image/white_loading.gif"/>
                     </div>
                     <div>
-                        <img class="photo_5" src=""/>
+                        <img class="photo_5" src="/static/image/white_loading.gif"/>
                     </div>
                     
                 </div>
 
             </div>
             <div class="separator_line"></div>
-            <div>
-                <div class="open_time">
-                    <img class="clock_icon" src="/static/image/clock.png" width="20" height="20"/>
-                    <div class="store_time"></div>  
+            <div class="location_left_div">
+                <div class="location_left">
+                    <div class="open_time">
+                        <img class="clock_icon" src="/static/image/clock.png" width="20" height="20"/>
+                        <div class="store_time"></div>  
+                    </div>
+                   
+                    <div class="weekly_time"></div>
+                    <div class="restaurant_location">
+                        <img class="location_icon" src="/static/image/location.png" width="20" height="20"/>
+                        <div class="store_address"></div>
                     </div>
                 </div>
-                <div class="weekly_time">
-                <div class="restaurant_location">
-                    <img class="location_icon" src="/static/image/location.png" width="20" height="20"/>
-                    <div class="store_address">台北市內湖區文湖街79號</div>
+                
+                <div class="map_div">
+                    <div id="map"></div>
                 </div>
+                
             </div>
+            
             <div class="separator_line"></div>
             <div class="google_comment_title">Google 評論</div>
             <div class="google_comment_div">
@@ -157,71 +168,7 @@
             </div>
             
             <div class="comment_content">
-                <!-- <div class="visitor_comment">
-                    <div>
-                        <img class="comment_photo" src=""/>
-                    </div>
-                    <div class="member_information">
-                        <img class="member_icon" src="/static/image/member.png" width="40" height="40"/>
-                        <div class="visitor_name">某某某</div>
-                        <div></div>
-                    </div>
-                    <div class="user_comment">
-                        氣氛佳餐點也都蠻新鮮美味的
-                        很文青舒適
-                        #適合網美及情侶的約會地點
-                    </div>
-                    <div class="comment_date">2023/02/05</div>
-                </div>
-                <div class="visitor_comment">
-                    <div class="comment_photo_div>
-                        <img class="comment_photo" src=""/>
-                    </div>
-                    <div class="member_information">
-                        <img class="member_icon" src="/static/image/member.png" width="40" height="40"/>
-                        <div class="visitor_name">某某某</div>
-                        <div></div>
-                    </div>
-                    <div class="user_comment">
-                        氣氛佳餐點也都蠻新鮮美味的
-                        很文青舒適
-                        #適合網美及情侶的約會地點
-                    </div>
-                    <div class="comment_date">2023/02/05</div>
-                </div>
-                <div class="visitor_comment">
-                    <div>
-                        <img class="comment_photo" src=""/>
-                    </div>
-                    <div class="member_information">
-                        <img class="member_icon" src="/static/image/member.png" width="40" height="40"/>
-                        <div class="visitor_name">某某某</div>
-                        <div></div>
-                    </div>
-                    <div class="user_comment">
-                        氣氛佳餐點也都蠻新鮮美味的
-                        很文青舒適
-                        #適合網美及情侶的約會地點
-                    </div>
-                    <div class="comment_date">2023/02/05</div>
-                </div>
-                <div class="visitor_comment">
-                    <div>
-                        <img class="comment_photo" src=""/>
-                    </div>
-                    <div class="member_information">
-                        <img class="member_icon" src="/static/image/member.png" width="40" height="40"/>
-                        <div class="visitor_name">某某某</div>
-                        <div></div>
-                    </div>
-                    <div class="user_comment">
-                        氣氛佳餐點也都蠻新鮮美味的
-                        很文青舒適
-                        #適合網美及情侶的約會地點
-                    </div>
-                    <div class="comment_date">2023/02/05</div>
-                </div> -->
-
+               
             </div>
             
 
@@ -249,7 +196,7 @@
                         <textarea class="user-message-textarea" placeholder="對此餐廳的評論"></textarea>
                         <!-- <input id="input_message"type="text" name="message" placeholder="對此餐廳的評論"/><br/> -->
                     
-                        <button onclick="update_Message()" id="add_message">送出評論</button>
+                        <button onclick="create_Message()" id="add_message">送出評論</button>
                     </div>
                 </div>
             </div>
@@ -258,14 +205,10 @@
     <div class="footer_container">
         <footer>COPYRIGHT © 2023 親子餐廳大集合</footer>    
     </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{api_key}}&callback=initMap" async defer></script>
     <script src="/static/js/commom.js"></script>
     <script src="/static/js/restaurant.js"></script>
     <script src="/static/js/favorite.js"></script>
     <script src="/static/js/message.js"></script>
-    
-    <!-- <script src="/static/JS/common.js"></script> -->
-    <!-- <script src="/static/js/index.js"></script> -->
-    
-    <!-- <script src="/static/JS/booking.js"></script> -->
 </body>
 </html>

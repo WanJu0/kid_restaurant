@@ -57,7 +57,7 @@ function openMessage() {
     
 }
 
-function update_Message(){
+function create_Message(){
 
     let updateButton = document.getElementById("add_message");
     updateButton.innerHTML = " ";

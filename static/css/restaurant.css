@@ -260,6 +260,7 @@ p{
     padding: 15px;
 }
 .message_title{
+    margin-bottom: 10px;
     height: 27px;
     font-family: 'Noto Sans TC';
     font-style: normal;
@@ -359,4 +360,20 @@ p{
 .message_photo{
     object-fit: cover;
     border-radius: 4px;
+}
+#map{
+    position: relative;
+    overflow: hidden;
+    width: 400px;
+    height: 210px;
+    border-radius: 10px 10px 10px;
+}
+.map_div{
+    position: absolute;
+    right: 10px;
+    margin: 10px;
+}
+.location_left_div{
+    display: flex;
+    position: relative;
 }

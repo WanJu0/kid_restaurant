@@ -41,25 +41,18 @@ function openHamburger() {
           }
           loginElement.style.display = "none";
         }
+         // 新增事件監聽器以關閉 right_logout 元素的顯示
+      document.addEventListener("click", function(e) {
+        if (!logoutElement.contains(e.target) && !e.target.matches(".fa-bars")) {
+          logoutElement.style.display = "none";
+        }
+        if (!loginElement.contains(e.target) && !e.target.matches(".fa-bars")) {
+            loginElement.style.display = "none";
+          }
+      });
       });
   }
   
-
-// function closeLogin(event) {
-//     let loginElement = document.querySelector(".right_content");
-//     if (event.target !== loginElement) {
-//         loginElement.style.display = "none";
-//         document.removeEventListener("click", closeLogin);
-//     }
-// }
-
-// function closeLogout(event) {
-//     let logoutElement = document.querySelector(".right_logout");
-//     if (event.target !== logoutElement) {
-//         logoutElement.style.display = "none";
-//         document.removeEventListener("click", closeLogout);
-//     }
-// }
 // 註冊系統
 function apiSingup(){
     const nameElement = document.getElementById("input_signup_name");
@@ -149,8 +142,6 @@ function check()
         method: "GET" ,
     })
     .then((response) => {
-        // 這裡會得到一個 ReadableStream 的物件
-        // 可以透過 blob(), json(), text() 轉成可用的資訊
         return response.json(); 
     }).then((jsonData) => {
         
@@ -184,32 +175,9 @@ function logout()
         method: "DELETE" ,
     })
     .then((response) => {
-        // 這裡會得到一個 ReadableStream 的物件
-        // 可以透過 blob(), json(), text() 轉成可用的資訊
         return response.json(); 
     }).then((jsonData) => {
         window.location.replace(location.href)
         
     })
 }
-
-// 檢查是否有登入
-// fetch("/api/user/auth", {
-//     method: "GET",
-// })
-// .then((response) => {
-//     // 這裡會得到一個 ReadableStream 的物件
-//     // 可以透過 blob(), json(), text() 轉成可用的資訊
-//     return response.json();
-// }).then((jsonData) => {
-//     if (jsonData.data == false) {
-//         // 使用者沒有登入的話就導向首頁
-//         window.location.href = "/";
-
-//     }
-//     // 顯示在booking頁面登入者資料
-//     document.getElementById("booking_name").innerHTML = "您好 , " + bookingName + " ,待預定的行程如下"
-//     // 將登入者的信箱跟名字自動放入input
-//     document.getElementById("input_contact_name").value = bookingName;
-//     document.getElementById("input_contact_mail").value = bookingEmail;
-// })

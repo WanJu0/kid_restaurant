@@ -9,9 +9,6 @@ fetch(`/api/favorites/${restaurant_id}`,{
 .then((response)=>{
     return response.json();
 }).then((jsonData)=>{
-    // console.log(jsonData);
-    // console.log(jsonData.love);
-
     if(jsonData.love == true ){
         let favoriteElement = document.querySelector(".favorite_button");
         let unfavoriteElement = document.querySelector(".redLove_button");
@@ -32,8 +29,6 @@ function myfavorite(){
         method: "GET",
     })
     .then((response) => {
-        // 這裡會得到一個 ReadableStream 的物件
-        // 可以透過 blob(), json(), text() 轉成可用的資訊
         return response.json();
     }).then((jsonData) => {
         if (jsonData.data == false) {
@@ -49,7 +44,6 @@ function myfavorite(){
             {
                 id:jsonData.data.id,
                 restaurant_id:restaurant_id
-                
             };
             fetch("/api/favorites",{
                 method: "POST" ,
@@ -60,17 +54,6 @@ function myfavorite(){
                     "content-type":"application/json"
                 })
             })
-            // .then(function(response){
-            //     if(response.status ==400){
-            //         document.getElementById("error_message").innerHTML = "請選擇日期和時間"
-            //         return ;
-            //     }
-            //     if(response.status ==200){
-            //         response.json().then(function(data){
-            //             window.location.href="/booking";
-            //         })
-            //     }
-            // })
         }
         
     })

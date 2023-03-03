@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
+	
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>全台親子餐廳</title>
     <link rel="stylesheet" type="text/css" href="/static/css/member_favorite.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/member.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/common.css" />
+    
 </head>
 <body> 
     <body> 
@@ -125,127 +128,42 @@
             <div class="favorite_title">我喜愛的餐廳</div>
         </div>
         <div class="favorite_down">
-            <!-- <div class="favorite_content">
-                <div class="favorite_information">
-                    <div class="favorite_store">餐廳名稱</div>
-                    <div  class="favorite_location">
-                        <img class="location_icon" src="/static/image/location.png" width="16" height="16"/>
-                        <div class="google_location">高雄市 , 左營區</div>
-                    </div>
-                </div>
-                <div>
-                    <img class="favorite_photo" src=""/>
-                </div>
-            </div>
-            <div class="favorite_content">
-                <div class="favorite_information">
-                    <div class="favorite_store">餐廳名稱</div>
-                    <div class="favorite_location">
-                        <img class="location_icon" src="/static/image/location.png" width="16" height="16"/>
-                        <div class="google_location">高雄市 , 左營區</div>
-                    </div>
-                </div>
-                <div>
-                    <img class="favorite_photo" src=""/>
-                </div>
-            </div>
-            <div class="favorite_content">
-                <div class="favorite_information">
-                    <div class="favorite_store">餐廳名稱</div>
-                    <div class="favorite_location">
-                        <img class="location_icon" src="/static/image/location.png" width="16" height="16"/>
-                        <div class="google_location">高雄市 , 左營區</div>
-                    </div>
-                    
-                </div>
-                <div>
-                    <img class="favorite_photo" src=""/>
-                </div>
-            </div>
-            <div class="favorite_content">
-                <div class="favorite_information">
-                    <div class="favorite_store">餐廳名稱</div>
-                    <div class="favorite_location">
-                        <img class="location_icon" src="/static/image/location.png" width="16" height="16"/>
-                        <div class="google_location">高雄市 , 左營區</div>
-                    </div>
-                </div>
-                <div>
-                    <img class="favorite_photo" src=""/>
-                </div>
-            </div> -->
+            
         </div>
         <div class="separator_line"></div>
         <div class="myComment_div">
             <div class="myComment_title">我的評論</div>
         </div>
         <div class="comment_content">
-            <!-- <div class="visitor_comment">
-                <div>
-                    <img class="comment_photo" src=""/>
-                </div>
-                <div class="member_information">
-                    <img class="member_icon" src="/static/image/member.png" width="40" height="40"/>
-                    <div class="visitor_name">某某某</div>
-                    <div></div>
-                </div>
-                <div class="user_comment">
-                    氣氛佳餐點也都蠻新鮮美味的
-                    很文青舒適
-                    #適合網美及情侶的約會地點
-                </div>
-                <div class="comment_date">2023/02/05</div>
-            </div>
-            <div class="visitor_comment">
-                <div>
-                    <img class="comment_photo" src=""/>
-                </div>
-                <div class="member_information">
-                    <img class="member_icon" src="/static/image/member.png" width="40" height="40"/>
-                    <div class="visitor_name">某某某</div>
-                    <div></div>
-                </div>
-                <div class="user_comment">
-                    氣氛佳餐點也都蠻新鮮美味的
-                    很文青舒適
-                    #適合網美及情侶的約會地點
-                </div>
-                <div class="comment_date">2023/02/05</div>
-            </div>
-            <div class="visitor_comment">
-                <div>
-                    <img class="comment_photo" src=""/>
-                </div>
-                <div class="member_information">
-                    <img class="member_icon" src="/static/image/member.png" width="40" height="40"/>
-                    <div class="visitor_name">某某某</div>
-                    <div></div>
-                </div>
-                <div class="user_comment">
-                    氣氛佳餐點也都蠻新鮮美味的
-                    很文青舒適
-                    #適合網美及情侶的約會地點
-                </div>
-                <div class="comment_date">2023/02/05</div>
-            </div>
-            <div class="visitor_comment">
-                <div>
-                    <img class="comment_photo" src=""/>
-                </div>
-                <div class="member_information">
-                    <img class="member_icon" src="/static/image/member.png" width="40" height="40"/>
-                    <div class="visitor_name">某某某</div>
-                    <div></div>
-                </div>
-                <div class="user_comment">
-                    氣氛佳餐點也都蠻新鮮美味的
-                    很文青舒適
-                    #適合網美及情侶的約會地點
-                </div>
-                <div class="comment_date">2023/02/05</div>
-            </div> -->
-
+            
         </div>
+    </div>
+    <div class="overlay_message" id="overlay_message">
+        <div class="message_content">
+            <div class="message_section">
+                <div class="decorator_top"></div>
+                <div class="message_down">
+                    <div class="message_main">
+                        <div class="message_title">
+                            <div class="message_name">新增評論</div>
+                            <img onclick="closeMessage()" class="x_icon" src="/static/image/icon_closex.png" />
+                        </div>
+                        <div id="message_photo">
+                            <input id="input_message_img" type="file" accept="image/*"/>
+                            <label for="input_message_img" id="input_message_img_label2">
+                                <img onclick="message()" class="add_message_photo" src="/static/image/add_photo.png" width="200" height="200"/>
+                            </label>
+                            <div id="preview_box2"></div>
+                            
+                        </div>
+                        <textarea class="user-message-textarea" placeholder="對此餐廳的評論"></textarea>
+                        <!-- <input id="input_message"type="text" name="message" placeholder="對此餐廳的評論"/><br/> -->
+                    
+                        <button onclick="update_Message()" id="add_message">送出評論</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
     </div>
 
     
@@ -257,6 +175,7 @@
     <script src="/static/js/commom.js"></script>
     <script src="/static/js/member.js"></script>
     <script src="/static/js/favorite.js"></script>
+    
     
     <!-- <script src="/static/JS/booking.js"></script> -->
 </body>

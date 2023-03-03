@@ -1,6 +1,7 @@
 let member_id="";
 let member_name="";
 let store_id_list=[];
+let message_file="";
 // 進到member頁面時判斷是否有登入
 fetch("/api/user/auth", {
     method: "GET",
@@ -68,26 +69,6 @@ function update_member_photo(){
     })
 });
 }
-// 看使用者是否有照片有的話就顯示沒有就是預設圖片
-// fetch("/api/member/photo", {
-//     method: 'GET',
-// })
-// .then((response) => {
-//     // 這裡會得到一個 ReadableStream 的物件
-//     // 可以透過 blob(), json(), text() 轉成可用的資訊
-//     return response.json();
-// }).then((jsonData) => {
-//     // console.log(jsonData,"照片")
-//     // console.log(jsonData.image,"照片")
-//     let personImg = document.querySelector(".add_photo");
-//     if (jsonData.image!==null){
-//         personImg.src =jsonData.image;
-//     }
-//     else{
-//         personImg.src ="/static/image/member_photo.png"
-//     }
-// })
-
 // 顯示所有我收藏的餐廳資訊
 function myFavorite(){
     fetch("/api/favorites",{})
@@ -207,7 +188,8 @@ function myFavorite(){
 }
 
 myFavorite();
-
+// 點擊的messageId
+let messageId ="";
 // 顯示我所有的評論
 function myMessage(){
     fetch(`/api/messages/${member_id}`, {})
@@ -221,11 +203,15 @@ function myMessage(){
             let message_photo = jsonData.data[i].message_photo;
             let user_photo =jsonData.data[i].user_photo
             let date = jsonData.data[0].date.substring(0, 10)
+            let messages_id=jsonData.data[i].messages_id
+            let store_name=jsonData.data[i].store_name
+            console.log(messages_id,"messages_id")
 
             let content = document.querySelector(".comment_content");
-            let googleDiv = document.createElement("div");
-            googleDiv.className = `member_comment${i}`;
-            content.appendChild(googleDiv);
+            let visitorDiv = document.createElement("div");
+            visitorDiv.className = `member_comment${i}`;
+            visitorDiv.id="message_id"+messages_id;
+            content.appendChild(visitorDiv);
 
             // 建立google_information
             let google_information_content =document.querySelector(`.member_comment${i}`);
@@ -248,7 +234,7 @@ function myMessage(){
             user_img.setAttribute("width", "40");
             user_img.setAttribute("height", "40");
             informationDiv.appendChild(user_img);
-            googleDiv.appendChild(informationDiv);
+            visitorDiv.appendChild(informationDiv);
             // content.appendChild(informationDiv);
 
             let userDiv = document.createElement("div");
@@ -256,21 +242,124 @@ function myMessage(){
             let userNode = document.createTextNode(member_name);
             userDiv.appendChild(userNode);
             informationDiv.appendChild(userDiv);
-            googleDiv.appendChild(informationDiv);
+            visitorDiv.appendChild(informationDiv);
 
             //修改符號
             // let modifyDiv = document.createElement("div");
             // modifyDiv.className = "dot_div";
             let modify_img =document.createElement("img");
             modify_img.className ="dot_photo";
+            modify_img.id=""
             modify_img.src ="/static/image/dot_2.png"
             modify_img.setAttribute("width", "20");
             modify_img.setAttribute("height", "20");
-            // modifyDiv.appendChild(modify_img);
-            informationDiv.appendChild(modify_img);
-            googleDiv.appendChild(informationDiv);
+            
+            modify_img.addEventListener("click", (event) => {
+                // 獲取圖像座標
+                let imgRect = modify_img.getBoundingClientRect();
+                let imgX = imgRect.left;
+                let imgY = imgRect.top;
 
-           
+                // 獲取父級 div 的 id
+                let grandParentId = modify_img.parentNode.parentNode.id;
+                messageId = grandParentId.split('message_id')[1];
+                console.log(messageId)
+                
+               
+                // 創建彈出框並設置位置
+                let popupDiv = document.createElement("div");
+                popupDiv.className = "popup_div";
+                popupDiv.style.position = "absolute";
+                popupDiv.style.right = "10px";
+                popupDiv.style.top ="40px";
+                visitorDiv.appendChild(popupDiv);
+               
+              
+                // 創建修改按鈕
+                let modifyBtn = document.createElement("button");
+                modifyBtn.innerText = "修改";
+                modifyBtn.className = "popup_button";
+                popupDiv.appendChild(modifyBtn);
+                let popArrow =document.createElement("div");
+                popArrow.className = "popArrow";
+                popupDiv.appendChild(popArrow);
+
+                modifyBtn.addEventListener("click", () => {
+                  // 當修改按鈕被點擊時的操作,跳出標及畫框並放入原本的圖片和文字,送出時用更新的方式更新message編號的內容
+                    openMessage();
+                    fetch(`/api/messages_id/${messageId}`, {
+                        method: 'GET',
+                    })
+                    .then((response) => {
+                        return response.json();
+                    }).then((jsonData) => {
+                        console.log(messageId,"裏面" )
+                        console.log(jsonData.data,"大頭照回傳值")
+                        let message_photo=jsonData.data[0].message_photo;
+                        console.log(message_photo)
+                        document.querySelector(".message_name").innerHTML="更新評論-"+jsonData.data[0].store_name
+                        // if (message_photo!==null){
+                        //     let photoDiv=document.querySelector(".add_message_photo");
+                        //     photoDiv.src=message_photo;
+                        // }
+                        document.querySelector(".user-message-textarea").innerHTML=jsonData.data[0].message_content
+                    })
+                //   popupDiv.remove();
+   
+                });
+
+  
+                // 創建刪除按鈕,刪除message編號內容
+                let deleteBtn = document.createElement("button");
+                deleteBtn.innerText = "刪除留言";
+                deleteBtn.className = "popup_button";
+                popupDiv.appendChild(deleteBtn);
+                deleteBtn.addEventListener("click", () => {
+                    let data = {
+                        messageId: messageId,
+                    };
+                    console.log(data, "request")
+                    fetch("/api/messages", {
+                            method: "DELETE",
+                            body: JSON.stringify(data),
+                            cache: "no-cache",
+                            headers: new Headers({
+                                "content-type": "application/json"
+                            })
+                        })
+                        .then((response) => {
+                            return response.json();
+                        }).then((jsonData) => {
+                           
+                            window.location.href = "/member";
+                        
+                        })
+                  popupDiv.remove();
+                });
+
+                // 創建取消按鈕
+                let cancelBtn = document.createElement("button");
+                cancelBtn.innerText = "取消";
+                cancelBtn.className = "cancel_button";
+                popupDiv.appendChild(cancelBtn);
+                cancelBtn.addEventListener("click", () => {
+                  popupDiv.remove();
+                });
+                
+                
+              });
+            informationDiv.appendChild(modify_img);
+            visitorDiv.appendChild(informationDiv);
+
+            // 評論的餐廳名稱
+            let store_nameDiv = document.createElement("div");
+            store_nameDiv.className = `message_store_name_div`;
+            let storeP = document.createElement("div")
+            storeP.className = `message_store_name`;
+            let storeNode = document.createTextNode(store_name);
+            storeP.appendChild(storeNode);
+            store_nameDiv.appendChild(storeP);
+            visitorDiv.appendChild(store_nameDiv);
             // 評論內容
             let textDiv = document.createElement("div");
             textDiv.className = `member_message_comment${i}`;
@@ -278,7 +367,7 @@ function myMessage(){
             let textNode = document.createTextNode(message_content);
             textP.appendChild(textNode);
             textDiv.appendChild(textP);
-            googleDiv.appendChild(textDiv);
+            visitorDiv.appendChild(textDiv);
 
             let comment_content =document.querySelector(`.member_message_comment${i}`);
 
@@ -300,59 +389,41 @@ function myMessage(){
             dateDiv.className = "comment_date";
             let dateNode = document.createTextNode(date);
             dateDiv.appendChild(dateNode);
-            googleDiv.appendChild(dateDiv);
+            visitorDiv.appendChild(dateDiv);
 
-            // let content = document.querySelector(".comment_content");
-            // let visitorDiv = document.createElement("div");
-            // visitorDiv.className = `visitor_comment${i}`;
-            // content.appendChild(visitorDiv);
+            let pHeight = textP.offsetHeight;
+            let lineHeight = parseInt(window.getComputedStyle(textP).lineHeight);
 
-            // // 建立comment_photo_div
-            // let visitor_comment_content =document.querySelector(`.visitor_comment${i}`);
-            // let comment_photoDiv = document.createElement("div");
-            // comment_photoDiv.className = `comment_photo_div${i}`;
+            // 如果行數大於五行，加入 CSS 屬性
+            if (pHeight > 5 * lineHeight){
+                textP.style.display = '-webkit-box';
+                textP.style.boxOrient = "vertical";
+                textP.style.WebkitBoxOrient = "vertical";
+                textP.style.webkitLineClamp = '4';
+                
+                // 建立展開按鈕
+                let expandBtn_content =document.querySelector(`.google_user_comment${i}`);
+                let expandBtn = document.createElement("button");
+                expandBtn.innerText = "展開 ";
+                expandBtn.style.display = "block";
+                expandBtn.addEventListener("click", function() {
+                    if (expandBtn.innerText === "展開") {
+                        textP.style.display = "block";
+                        expandBtn.innerText = "收起";
+                    } else {
+                        textP.style.display = "-webkit-box";
+                        textP.style.boxOrient = "vertical";
+                        textP.style.WebkitBoxOrient = "vertical";
+                        textP.style.webkitLineClamp = "4";
+                        expandBtn.innerText = "展開";
+                    }
+                });
+                expandBtn_content.appendChild(expandBtn);
+            }
+            else{
+                // 
+            }
             
-
-            // let comment_img =document.createElement("img");
-            // comment_img.className ="comment_photo";
-            // comment_img.src = message_photo;
-            // comment_photoDiv.appendChild(comment_img);
-            // visitor_comment_content.appendChild(comment_photoDiv);
-
-            // // 建立member_information
-            // let member_informationDiv = document.createElement("div");
-            // member_informationDiv.className = `member_information${i}`;
-            // visitor_comment_content .appendChild(member_informationDiv);
-
-            // // information 底下建立 user_img和 user
-            // let user_img =document.createElement("img");
-            // user_img.className ="member_icon";
-            // user_img.src = user_photo;
-            // user_img.setAttribute("width", "40");
-            // user_img.setAttribute("height", "40");
-            // member_informationDiv.appendChild(user_img);
-            // visitor_comment_content .appendChild(member_informationDiv);
-            
-            // let userDiv = document.createElement("div");
-            // userDiv.className = "visitor_name";
-            // let userNode = document.createTextNode("還缺名字");
-            // userDiv.appendChild(userNode);
-            // member_informationDiv.appendChild(userDiv);
-            // visitor_comment_content .appendChild(member_informationDiv);
-            
-            // // user_comment
-            // let user_commentDiv = document.createElement("div");
-            // user_commentDiv.className = "user_comment";
-            // let user_commentDivNode = document.createTextNode(message_content);
-            // user_commentDiv.appendChild(user_commentDivNode);
-            // visitor_comment_content.appendChild(user_commentDiv);
-            
-            // // comment_date
-            // let dateDiv = document.createElement("div");
-            // dateDiv.className = "comment_date";
-            // let dateNode = document.createTextNode(date);
-            // dateDiv.appendChild(dateNode);
-            // visitor_comment_content.appendChild(dateDiv);
         }
     })
 }
@@ -368,7 +439,7 @@ function updateMember(){
     updateButton.appendChild(loading_img);
     // 模擬更新時間
     setTimeout(function() {
-        let nameElement = document.querySelector("#input_name");
+    let nameElement = document.querySelector("#input_name");
     let name = nameElement.value;
     let emailElement = document.querySelector("#input_mail");
     let contact_email = emailElement.value;
@@ -381,12 +452,7 @@ function updateMember(){
     let femaleElement = document.querySelector("#female") ;
     let female= femaleElement.checked ;
     let genderResult="";
-    // console.log(name);
-    // console.log(email);
-    // console.log(phone);
-    // console.log(birthday);
-    // console.log(emergencyName);
-    // console.log(emergencyPhone);
+    
     if(male==false & female==false){
         genderResult="";
     }
@@ -425,8 +491,7 @@ fetch("/api/member", {
     method: "GET",
 })
 .then((response) => {
-    // 這裡會得到一個 ReadableStream 的物件
-    // 可以透過 blob(), json(), text() 轉成可用的資訊
+  
     return response.json();
 }).then((jsonData) => {
     console.log(jsonData)
@@ -457,5 +522,106 @@ fetch("/api/member", {
         document.querySelector("#female").checked=true;
     }
 })
+
+
+function closeMessage() {
+    let element = document.querySelector(".overlay_message")
+    element.style.display = "none";
+}
+function openMessage() {
+    fetch("/api/user/auth", {
+        method: "GET",
+    })
+    .then((response) => {
+        return response.json();
+    }).then((jsonData) => {
+        if (jsonData.data == false) {
+            // 打開註冊頁面
+            openLogin();
+        }
+        else{
+            //  如果有登入打開新增評論頁面
+            let element = document.querySelector(".overlay_message")
+            element.style.display = "block";
+        }
+        
+    })
+    
+}
+
+function update_Message(){
+    console.log(messageId)
+    let updateButton = document.getElementById("add_message");
+    updateButton.innerHTML = " ";
+    let loading_img =document.createElement("img");
+    loading_img.className ="loading_img";
+    loading_img.src ="/static/image/loading.gif";
+    loading_img.setAttribute("width", "30");
+    loading_img.setAttribute("height", "30");
+    updateButton.appendChild(loading_img);
+    // 模擬更新時間
+    setTimeout(function() {
+    
+
+    // 抓取訊息內容
+    const reviewTextarea = document.querySelector('.user-message-textarea');
+    const submitBtn = document.querySelector('#add_message');
+
+
+    const review = reviewTextarea.value;
+    // console.log(review )
+    // console.log(file)
+    const formData = new FormData();
+    formData.append('img', message_file);
+    // 取得文字訊息
+    content = document.querySelector(".user-message-textarea").value;
+    formData.append('content', content);
+    formData.append('restaurant_id', restaurant_id );
+    formData.append('messageId', messageId );
+
+    
+    fetch("/api/update/messages", {
+        method: 'POST',
+        body: formData,
+    })
+    .then((response) => {
+        return response.json();
+    }).then((jsonData) => {
+        window.location.href=`/member`;
+    })
+        updateButton.innerHTML ="送出評論";
+    }, 2000); // 這裡的 3000 毫秒代表模擬更新需要的時間，可以依照實際情況進行調整
+
+    
+   
+}
+
+// 留言板的圖片預覽,點擊新增照片尚未上傳但可以在網頁預覽
+function message(){
+    // 留言板的圖片預覽
+    const inputElement = document.querySelector('#input_message_img');
+
+    inputElement.addEventListener('change', (e) => {
+    message_file = e.target.files[0]; //获取图片资源
+    console.log(message_file,"message_file")
+   
+
+    // 只选择图片文件
+    if (!message_file.type.match('image.*')) {
+        return false;
+    }
+
+    const reader = new FileReader();
+
+    reader.readAsDataURL(message_file); // 读取文件
+
+    // 渲染文件
+    reader.onload = (arg) => {
+        const previewBox = document.querySelector('.add_message_photo');    
+        previewBox.src = arg.target.result;
+    }
+    });
+
+}
 
 

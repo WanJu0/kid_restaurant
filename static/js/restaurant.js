@@ -8,12 +8,18 @@ function restaurantID()
     .then((response) => {
         return response.json(); 
     }).then((jsonData) => {
-        // console.log(jsonData);
+        console.log(jsonData,"11");
         let store_name= jsonData.data.store_name;
         let rating = jsonData.data.rating;
         let address = jsonData.data.address;
         let straddress = address.split('台灣');
         let place_id=jsonData.data.place_id;
+        let lat= parseFloat(jsonData.data.lat);
+        let lng= parseFloat(jsonData.data.lng);
+        
+        initMap(lat, lng)
+        // initMap()
+
         
         let locationDiv = document.querySelector(".location_page");
         let locationlink = document.createElement("div");
@@ -28,14 +34,6 @@ function restaurantID()
         let restaurnatlink = document.createElement("div");
         restaurnatlink.textContent = store_name;
         restaurnatDiv.appendChild(restaurnatlink);
-
-
-        
-        // let locationDiv = document.querySelector(".location_page");
-        // let locationlink = document.createElement("div");
-        // locationlink.textContent = jsonData.data.county;
-        // locationlink.setAttribute("onclick", "apiRestaurant(this.innerHTML)");
-        // locationDiv.appendChild(locationlink);
 
 
         if(jsonData.data.opening_hours==false){
@@ -276,10 +274,63 @@ function restaurantMessage(){
             let dateNode = document.createTextNode(date);
             dateDiv.appendChild(dateNode);
             googleDiv.appendChild(dateDiv);
+
+            let pHeight = textP.offsetHeight;
+            let lineHeight = parseInt(window.getComputedStyle(textP).lineHeight);
+            // 如果行數大於五行，加入 CSS 屬性
+            if (pHeight > 5 * lineHeight){
+                textP.style.display = '-webkit-box';
+                textP.style.boxOrient = "vertical";
+                textP.style.WebkitBoxOrient = "vertical";
+                textP.style.webkitLineClamp = '4';
+                
+                // 建立展開按鈕
+                let expandBtn_content =document.querySelector(`.user_comment${i}`);
+                let expandBtn = document.createElement("button");
+                expandBtn.innerText = "展開 ";
+                expandBtn.style.display = "block";
+                expandBtn.addEventListener("click", function() {
+                    if (expandBtn.innerText === "展開") {
+                        textP.style.display = "block";
+                        expandBtn.innerText = "收起";
+                    } else {
+                        textP.style.display = "-webkit-box";
+                        textP.style.boxOrient = "vertical";
+                        textP.style.WebkitBoxOrient = "vertical";
+                        textP.style.webkitLineClamp = "4";
+                        expandBtn.innerText = "展開";
+                    }
+                });
+                expandBtn_content.appendChild(expandBtn);
+            }
+            else{
+                // 
+            }
+
         }
     })
 }
 
 restaurantMessage()
 
-// 
+function initMap(lat, lng) {
+    let map=new google.maps.Map(document.getElementById("map"), {
+      center: { lat: lat, lng: lng },
+      
+      zoom: 16,
+    });
+    const marker = new google.maps.Marker({
+        position: { lat: lat, lng: lng},
+        draggable: true,
+        animation: google.maps.Animation.DROP,
+        title: "餐廳位置",
+        map: map,
+        });
+  }
+  
+  window.initMap = initMap;
+
+
+
+
+

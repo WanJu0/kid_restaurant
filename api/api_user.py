@@ -76,7 +76,7 @@ def signup():
 # 登入系統！
 @route_api_user.route("/api/user/auth",methods=["PUT"])
 def signin():   
-    print(connection_pool,"user")
+    
     email=request.json["email"]
     password=request.json["password"]
     #登入帳號密碼不能為空

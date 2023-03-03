@@ -10,7 +10,10 @@ from api.api_google_comment import *
 from api.api_favorite import *
 from api.api_messages import *
 from api.api_member import *
+from dotenv import load_dotenv
+load_dotenv()
 
+api_key = os.getenv('GOOGLE_MAPS_API_KEY')
 
 
 app=Flask(__name__)
@@ -34,7 +37,8 @@ def member():
     return render_template("member.html")
 @app.route("/restaurant/<id>")
 def restaurant(id):
-    return render_template("restaurant.html")
+    api_key = os.getenv('GOOGLE_MAPS_API_KEY')
+    return render_template("restaurant.html", api_key=api_key)
 
 
 if __name__ == "__main__":
