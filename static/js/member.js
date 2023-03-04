@@ -26,8 +26,8 @@ fetch("/api/user/auth", {
 function update_member_photo() {
     const inputElement = document.querySelector('#img_input2');
     inputElement.addEventListener('change', (e) => {
-        let file = e.target.files[0]; //取得檔案資訊
-        // 创建一个包含原文件内容的 Blob
+        let file = e.target.files[0]; 
+        
         const fileBlob = new Blob([file], {
             type: file.type
         });
@@ -44,8 +44,6 @@ function update_member_photo() {
         const reader = new FileReader();
         reader.readAsDataURL(file); 
         
-
-        // 渲染文件
         reader.onload = (arg) => {
             const previewBox = document.querySelector('.add_photo');
             previewBox.src = arg.target.result;
@@ -191,6 +189,7 @@ function myMessage() {
             return response.json();
         }).then((jsonData) => {
             for (let i = 0; i < jsonData.data.length; i++) {
+                
                 let user_id = jsonData.data[i].user_id;
                 let message_content = jsonData.data[i].message_content;
                 let message_photo = jsonData.data[i].message_photo;
@@ -198,6 +197,7 @@ function myMessage() {
                 let date = jsonData.data[0].date.substring(0, 10)
                 let messages_id = jsonData.data[i].messages_id
                 let store_name = jsonData.data[i].store_name
+                let store_id=jsonData.data[i].store_id
                 
 
                 let content = document.querySelector(".comment_content");
@@ -237,23 +237,24 @@ function myMessage() {
                 
                 let modify_img = document.createElement("img");
                 modify_img.className = "dot_photo";
-                modify_img.id = ""
                 modify_img.src = "/static/image/dot_2.png"
                 modify_img.setAttribute("width", "20");
                 modify_img.setAttribute("height", "20");
 
-    
+                let popupDivExists = false; // 記錄 popupDiv 是否已經存在
                 modify_img.addEventListener("click", (event) => {
-                    // 獲取圖像座標
-                    let imgRect = modify_img.getBoundingClientRect();
+                    if (popupDivExists) { 
+                        document.querySelector(".popup_div").remove();
+                        popupDivExists = false;
+                    } else {
+                        let imgRect = modify_img.getBoundingClientRect();
                     let imgX = imgRect.left;
                     let imgY = imgRect.top;
 
                     // 獲取父級 div 的 id
                     let grandParentId = modify_img.parentNode.parentNode.id;
                     messageId = grandParentId.split('message_id')[1];
-                    console.log(messageId)
-
+                   
 
                     // 創建彈出框並設置位置
                     let popupDiv = document.createElement("div");
@@ -275,7 +276,7 @@ function myMessage() {
 
 
                     modifyBtn.addEventListener("click", () => {
-                        // 當修改按鈕被點擊時的操作,跳出標及畫框並放入原本的圖片和文字,送出時用更新的方式更新message編號的內容
+                        
                         openMessage();
                         fetch(`/api/messages_id/${messageId}`, {
                                 method: 'GET',
@@ -329,7 +330,12 @@ function myMessage() {
                     popupDiv.appendChild(cancelBtn);
                     cancelBtn.addEventListener("click", () => {
                         popupDiv.remove();
+                        popupDivExists = false;
                     });
+
+                    popupDivExists = true;
+                    }
+                    
 
 
                 });
@@ -339,8 +345,9 @@ function myMessage() {
                 // 評論的餐廳名稱
                 let store_nameDiv = document.createElement("div");
                 store_nameDiv.className = `message_store_name_div`;
-                let storeP = document.createElement("div")
+                let storeP = document.createElement("a")
                 storeP.className = `message_store_name`;
+                storeP.href = `/restaurant/${store_id}`;
                 let storeNode = document.createTextNode(store_name);
                 storeP.appendChild(storeNode);
                 store_nameDiv.appendChild(storeP);
@@ -571,13 +578,12 @@ function update_Message() {
 
 }
 
-// 留言板的圖片預覽,點擊新增照片尚未上傳但可以在網頁預覽
 function message() {
     // 留言板的圖片預覽
     const inputElement = document.querySelector('#input_message_img');
 
     inputElement.addEventListener('change', (e) => {
-        message_file = e.target.files[0]; //获取图片资源
+        message_file = e.target.files[0]; 
         
 
         if (!message_file.type.match('image.*')) {
@@ -586,7 +592,7 @@ function message() {
 
         const reader = new FileReader();
 
-        reader.readAsDataURL(message_file); // 读取文件
+        reader.readAsDataURL(message_file); 
 
         // 渲染文件
         reader.onload = (arg) => {

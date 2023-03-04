@@ -343,6 +343,7 @@ div[class^=member_comment]{
 }
 .message_store_name{
     font-weight: 700;
+    color: #000;
 }
 .popup_button,.delete_button,.cancel_button{
     border: 1px solid #ffffff;
