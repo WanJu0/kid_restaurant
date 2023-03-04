@@ -377,3 +377,6 @@ p{
     display: flex;
     position: relative;
 }
+#city{
+    color: #138184;
+}

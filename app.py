@@ -32,6 +32,10 @@ app.register_blueprint(route_api_member)
 def index():
 	return render_template("index.html")
 
+@app.route("/city/<county>")
+def city(county):
+	return render_template("city.html")
+
 @app.route("/member")
 def member():
     return render_template("member.html")

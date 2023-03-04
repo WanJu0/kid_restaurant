@@ -15,8 +15,6 @@ mysql_password = os.getenv("MYSQL_PASSWORD")
 mysql_host = os.getenv("MYSQL_HOST")
 mysql_database = os.getenv("MYSQL_DATABASE")
 
-api_key = os.getenv('GOOGLE_MAPS_API_KEY')
-
 
 route_api_restaurant = Blueprint("route_api_restaurant", __name__, template_folder="templates")
 @route_api_restaurant.route("/api/restaurant",methods=["GET"])
@@ -205,4 +203,7 @@ def restaurant_ID(restaurantID):
     finally:
         mycursor.close()
         connection_object.close()
+
+
     
+# @route_api_restaurant.route("https://maps.googleapis.com/maps/api/place/details/json?place_id="+place_id+"&language=zh-TW&key="+key)

@@ -95,7 +95,7 @@ def signin():
         # 檢查帳號密碼是否正確
         mycursor.execute('SELECT * FROM member WHERE email=%s AND password =%s' ,(email, password))
         result = mycursor.fetchone()
-        # print(result)
+        print(result,"111")
         if result==None:
             data={
                 "error":True,
@@ -103,8 +103,6 @@ def signin():
             }
             # print(data)
             json_result=jsonify(data)
-            mycursor.close()
-            connection_object.close()
             return json_result,400
         else:
         # 用jwt產生token

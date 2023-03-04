@@ -1,12 +1,18 @@
 let nextPage = 0;
 let isLoading = false;
-let keyword = "";
+let cityName= "";
 
 let store_id_list=[];
 
 // console.log(store_id_list,"list222")
-function restaurant() {
-    fetch(`/api/restaurant?page=${nextPage}`, {})
+function city() {
+    let s = location.href;
+    let path = decodeURI(location.pathname);
+    let city=path.split("/city/");
+    cityName=city[1];
+    console.log(path)
+    console.log(cityName)
+    fetch(`/api/restaurant?keyword=${cityName}`, {})
         .then((response) => {
             return response.json();
         }).then((jsonData) => {
@@ -181,7 +187,7 @@ const callback = (entries) => {
     if (entries[0].isIntersecting) {
         if (nextPage !== null) {
             isLoading = true;
-            fetch(`/api/restaurant?page=${nextPage}&keyword=${keyword}`, {})
+            fetch(`/api/restaurant?page=${nextPage}&keyword=${cityName}`, {})
                 .then((response) => {
                     return response.json();
                 }).then((jsonData) => {
@@ -524,7 +530,7 @@ function apiRestaurant(clickedCity) {
 }
 
 
-restaurant()
+
 
 // 追蹤footer
 let observer = new IntersectionObserver(callback, options)
@@ -608,4 +614,4 @@ function unhomefavorite(redbuttonId){
     })
 
 }
-
+city()

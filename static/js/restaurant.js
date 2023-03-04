@@ -22,12 +22,11 @@ function restaurantID()
 
         
         let locationDiv = document.querySelector(".location_page");
-        let locationlink = document.createElement("div");
+        let locationlink = document.createElement("a");
+        locationlink.id="city";
+        let clickedCity = document.querySelector("#city");
         locationlink.textContent = jsonData.data.county;
-        locationlink.addEventListener("click", function() {
-        // 當點擊該元素時，返回上一頁
-             window.history.back();
-        });
+        locationlink.href=`/city/${jsonData.data.county}`;
         locationDiv.appendChild(locationlink);
 
         let restaurnatDiv = document.querySelector(".restaurant_page");
@@ -331,6 +330,32 @@ function initMap(lat, lng) {
   window.initMap = initMap;
 
 
+// let map;
+
+// function initMap(lat, lng){
+//     map = new google.maps.Map(document.getElementById("map"), {
+//     center: { lat: lat, lng: lng },
+//     zoom: 16,
+//     });
+//     const marker = new google.maps.Marker({
+//     position: { lat: lat, lng: lng},
+//     map: map,
+//     draggable: true,
+//     animation: google.maps.Animation.DROP,
+//     });
+//     marker.addListener("click", toggleBounce);
+// }
+
+// function toggleBounce(){
+//     if(marker.getAnimation() !== null){
+//         marker.setAnimation(null);
+//     } 
+//     else{
+//         marker.setAnimation(google.maps.Animation.BOUNCE);
+//     }
+// }
+
+// window.initMap = initMap;
 
 
 
