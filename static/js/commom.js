@@ -67,7 +67,7 @@ function apiSingup(){
             email:email,
             password:password
         };
-        // console.log(data);
+        
     fetch("/api/user",{
         method: "POST" ,
         credentials: "include",
@@ -78,8 +78,6 @@ function apiSingup(){
         })
     })
     .then((response) => {
-        // 這裡會得到一個 ReadableStream 的物件
-        // 可以透過 blob(), json(), text() 轉成可用的資訊
         return response.json(); 
     }).then((jsonData) => {
        
@@ -119,8 +117,6 @@ function apiSingin()
     })
     .then(function(response){
         if(response.status ==400){
-            // console.log(`Response status was not 200:${response.status}`);
-            
             document.getElementById("signin_message").innerHTML = "帳號密碼有誤"
             return ;
         }
@@ -167,8 +163,7 @@ function check()
         
     })
 }
-// check()
-// 登出系統
+
 function logout()
 {
     fetch("/api/user/auth",{

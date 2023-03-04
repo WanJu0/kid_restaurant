@@ -511,4 +511,27 @@ div[class^=product_redlove] .product_redlove_photo:hover {
     transform: scale(1);
   }
 }
-
+.slogan{
+    margin: 0 auto;
+    position: absolute;
+    top: 180px;
+    background-color: cadetblue;
+    opacity: 0.9;
+    border-radius: 10px 10px 10px 10px;
+}
+.slogan_top{
+    font-size: 28px;
+    margin: 10px;
+    color: #F8F8F8;
+    background-color: cadetblue;
+    opacity: 0.9;
+    /* font-size: 4rem; */
+    font-weight: 600;
+}
+.slogan_middle{
+    font-size: 18px;
+    margin: 10px;
+    color: #F8F8F8;
+    background-color: cadetblue;
+    opacity: 0.9;
+}

@@ -8,7 +8,6 @@ function restaurantID()
     .then((response) => {
         return response.json(); 
     }).then((jsonData) => {
-        console.log(jsonData,"11");
         let store_name= jsonData.data.store_name;
         let rating = jsonData.data.rating;
         let address = jsonData.data.address;
@@ -18,8 +17,7 @@ function restaurantID()
         let lng= parseFloat(jsonData.data.lng);
         
         initMap(lat, lng)
-        // initMap()
-
+       
         
         let locationDiv = document.querySelector(".location_page");
         let locationlink = document.createElement("a");
@@ -74,7 +72,7 @@ function restaurantID()
             document.querySelector(".photo_5").src = "https://"+ jsonData.data.image[4];
         }, 100);
         document.querySelector(".store_address").innerHTML = straddress[1];
-        // 抓取google comment
+        
         fetch(`/api/google_comment/${place_id}`,{})
             .then((response) =>{
                 return response.json();
@@ -102,7 +100,7 @@ function restaurantID()
                     user_img.setAttribute("height", "40");
                     informationDiv.appendChild(user_img);
                     googleDiv.appendChild(informationDiv);
-                    // content.appendChild(informationDiv);
+                    
 
                     let userDiv = document.createElement("div");
                     userDiv.className = "google_user";
@@ -110,7 +108,7 @@ function restaurantID()
                     userDiv.appendChild(userNode);
                     informationDiv.appendChild(userDiv);
                     googleDiv.appendChild(informationDiv);
-                    // content.appendChild(informationDiv);
+                    
 
                     // 給予幾顆星
                     let star_img =document.createElement("img");
@@ -153,7 +151,7 @@ function restaurantID()
                     let pHeight = textP.offsetHeight;
                     let lineHeight = parseInt(window.getComputedStyle(textP).lineHeight);
 
-                    // 如果行數大於五行，加入 CSS 屬性
+                 
                     if (pHeight > 5 * lineHeight){
                         textP.style.display = '-webkit-box';
                         textP.style.boxOrient = "vertical";
@@ -180,7 +178,7 @@ function restaurantID()
                         expandBtn_content.appendChild(expandBtn);
                     }
                     else{
-                        // 
+                      
                     }
 
 
@@ -191,7 +189,6 @@ function restaurantID()
 }
 restaurantID()
 
-// 抓取此餐廳的所有人評論,並顯示在頁面上
 
 function restaurantMessage(){
     let path = location.pathname;
@@ -201,7 +198,7 @@ function restaurantMessage(){
     .then((response) => {
         return response.json(); 
     }).then((jsonData) => {
-        console.log(jsonData.data,"jsonData.data")
+        
         for (let i =0; i< jsonData.data.length; i++){
             let user_id = jsonData.data[i].user_id;
             let message_content =jsonData.data[i].message_content;
@@ -219,10 +216,7 @@ function restaurantMessage(){
             let google_information_content =document.querySelector(`.comment${i}`);
             let informationDiv = document.createElement("div");
             informationDiv.className = `information${i}`;
-            // googleDiv.appendChild(informationDiv);
-
-
-            // information 底下建立 user_img和 user
+          
             let user_img =document.createElement("img");
             user_img.className ="member_icon";
             if (user_photo) {
@@ -234,7 +228,7 @@ function restaurantMessage(){
             user_img.setAttribute("height", "40");
             informationDiv.appendChild(user_img);
             googleDiv.appendChild(informationDiv);
-            // content.appendChild(informationDiv);
+           
 
             let userDiv = document.createElement("div");
             userDiv.className = "user";
@@ -254,7 +248,6 @@ function restaurantMessage(){
 
             let comment_content =document.querySelector(`.user_comment${i}`);
 
-            // 如果留言有圖片,則將照片放上去
             if (message_photo !=null){
                 
                 let message_img =document.createElement("img");
@@ -263,7 +256,6 @@ function restaurantMessage(){
                 message_img.setAttribute("width", "100");
                 message_img.setAttribute("height", "80");
                 comment_content.appendChild(message_img);
-                // googleDiv.appendChild(informationDiv);
 
             }
 
@@ -276,7 +268,7 @@ function restaurantMessage(){
 
             let pHeight = textP.offsetHeight;
             let lineHeight = parseInt(window.getComputedStyle(textP).lineHeight);
-            // 如果行數大於五行，加入 CSS 屬性
+           
             if (pHeight > 5 * lineHeight){
                 textP.style.display = '-webkit-box';
                 textP.style.boxOrient = "vertical";
@@ -330,32 +322,6 @@ function initMap(lat, lng) {
   window.initMap = initMap;
 
 
-// let map;
-
-// function initMap(lat, lng){
-//     map = new google.maps.Map(document.getElementById("map"), {
-//     center: { lat: lat, lng: lng },
-//     zoom: 16,
-//     });
-//     const marker = new google.maps.Marker({
-//     position: { lat: lat, lng: lng},
-//     map: map,
-//     draggable: true,
-//     animation: google.maps.Animation.DROP,
-//     });
-//     marker.addListener("click", toggleBounce);
-// }
-
-// function toggleBounce(){
-//     if(marker.getAnimation() !== null){
-//         marker.setAnimation(null);
-//     } 
-//     else{
-//         marker.setAnimation(google.maps.Animation.BOUNCE);
-//     }
-// }
-
-// window.initMap = initMap;
 
 
 

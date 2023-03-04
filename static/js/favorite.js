@@ -2,7 +2,7 @@
 let path = location.pathname;
 let parts = path.split("/");
 let restaurant_id = parts.pop();
-// console.log(restaurant_id,"2222")
+
 fetch(`/api/favorites/${restaurant_id}`,{
     method: "GET",
 })
@@ -23,7 +23,7 @@ function myfavorite(){
     let path = location.pathname;
     let parts = path.split("/");
     let restaurant_id = parts.pop();
-    // console.log(restaurant_id)
+    
 
     fetch("/api/user/auth", {
         method: "GET",
@@ -32,7 +32,7 @@ function myfavorite(){
         return response.json();
     }).then((jsonData) => {
         if (jsonData.data == false) {
-            // 打開註冊頁面
+            
             openLogin();
         }
         else{
@@ -71,7 +71,6 @@ function unfavorite(){
         {
             restaurant_id:restaurant_id
         };
-    // console.log(data,"要傳的資料")
     fetch("/api/favorites",{
         method: "DELETE" ,
         credentials: "include",
@@ -85,11 +84,8 @@ function unfavorite(){
 }
 
 function member_unfavorite(redbuttonId){
-    // console.log(redbuttonId);
     let parts = redbuttonId.split("love");
     let restaurant_id = parts.pop();
-    // console.log(restaurant_id,"restaurant_id");
-    // '#red'+redbuttonId
     let favoriteElement = document.querySelector('#love'+restaurant_id);
     let unfavoriteElement = document.querySelector(`#${redbuttonId}`);
     favoriteElement.style.display = "block";
@@ -99,7 +95,6 @@ function member_unfavorite(redbuttonId){
         {
             restaurant_id:restaurant_id
         };
-    // console.log(data,"要傳的資料")
     fetch("/api/favorites",{
         method: "DELETE" ,
         credentials: "include",
@@ -110,7 +105,7 @@ function member_unfavorite(redbuttonId){
         })
          
     }).then(response => {
-        // 刪除成功後重新整理頁面
+    
         window.location.href="/member";
     });
 

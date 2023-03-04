@@ -354,3 +354,6 @@ div[class^=member_comment]{
     background-color: #f2f2f2;
     padding:10px;
 }
+.add_message_photo{
+    cursor: pointer;
+}

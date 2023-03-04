@@ -2,7 +2,7 @@ let member_id = "";
 let member_name = "";
 let store_id_list = [];
 let message_file = "";
-// 進到member頁面時判斷是否有登入
+
 fetch("/api/user/auth", {
         method: "GET",
     })
@@ -32,22 +32,18 @@ function update_member_photo() {
             type: file.type
         });
 
-        // console.log(member_id,"選擇照片時看user id是誰")
-        // 將名字改成想要的名稱,這邊用id來命名
-        const originalFileName = file.name; // 获取原始文件名
-        const newFileName = `${member_id}.${file.type.split('/')[1]}`; // 将扩展名替换为 file.type 的后缀名
+        const originalFileName = file.name; 
+        const newFileName = `${member_id}.${file.type.split('/')[1]}`; 
         const newFile = new File([fileBlob], newFileName, {
             type: file.type
         });
-        // console.log(member_id,"function李")
-        // console.log(originalFileName,"originalFileName")
-        // console.log(newFileName,"newFileNam")
+        
         if (!file.type.match('image.*')) {
             return false;
         }
         const reader = new FileReader();
-        reader.readAsDataURL(file); // 读取文件
-        // console.log(file.type ,"file.type ")
+        reader.readAsDataURL(file); 
+        
 
         // 渲染文件
         reader.onload = (arg) => {
@@ -62,13 +58,9 @@ function update_member_photo() {
                 body: formData,
             })
             .then((response) => {
-                // 這裡會得到一個 ReadableStream 的物件
-                // 可以透過 blob(), json(), text() 轉成可用的資訊
                 return response.json();
             }).then((jsonData) => {
-                // console.log(jsonData,"大頭照回傳值")
-
-
+               
             })
     });
 }
@@ -78,7 +70,7 @@ function myFavorite() {
         .then((response) => {
             return response.json();
         }).then((jsonData) => {
-            // console.log(jsonData.data,"我的最愛");
+            
             for (let i = 0; i < jsonData.data.length; i++) {
 
                 let store_id = jsonData.data[i].favorite_restaurant_id;;
@@ -88,8 +80,7 @@ function myFavorite() {
                 //新增一個連結在最外層
                 let restaurantLink = document.createElement("a");
                 store_id_list.push(store_id);
-                // console.log(store_id,"oooooo")
-                // console.log(store_id_list,"aaaaaa")
+                
                 restaurantLink.className = `restaurant_link${i}`;
                 restaurantLink.href = `/restaurant/${jsonData.data[i].favorite_restaurant_id}`;
                 content.appendChild(restaurantLink);
@@ -152,7 +143,7 @@ function myFavorite() {
                 let prodcut_redlove_content = document.querySelector(`.product_redlove${i}`)
                 let redloveImg = document.createElement("img");
                 redloveImg.className = " product_redlove_photo";
-                // redloveImg.id="redlove"+store_id;
+               
                 redloveImg.src = "/static/image/red_heart.png";
                 redloveImg.setAttribute("width", "24");
                 redloveImg.setAttribute("height", "24");
@@ -191,7 +182,7 @@ function myFavorite() {
 }
 
 myFavorite();
-// 點擊的messageId
+
 let messageId = "";
 // 顯示我所有的評論
 function myMessage() {
@@ -199,8 +190,6 @@ function myMessage() {
         .then((response) => {
             return response.json();
         }).then((jsonData) => {
-            console.log(jsonData.data, "所有評論")
-            
             for (let i = 0; i < jsonData.data.length; i++) {
                 let user_id = jsonData.data[i].user_id;
                 let message_content = jsonData.data[i].message_content;
@@ -209,7 +198,7 @@ function myMessage() {
                 let date = jsonData.data[0].date.substring(0, 10)
                 let messages_id = jsonData.data[i].messages_id
                 let store_name = jsonData.data[i].store_name
-                console.log(messages_id, "messages_id")
+                
 
                 let content = document.querySelector(".comment_content");
                 let visitorDiv = document.createElement("div");
@@ -221,9 +210,7 @@ function myMessage() {
                 let google_information_content = document.querySelector(`.member_comment${i}`);
                 let informationDiv = document.createElement("div");
                 informationDiv.className = `message_information${i}`;
-                // googleDiv.appendChild(informationDiv);
-
-
+                
                 // information 底下建立 user_img和 user
                 let user_img = document.createElement("img");
                 user_img.className = "member_photo";
@@ -238,7 +225,7 @@ function myMessage() {
                 user_img.setAttribute("height", "40");
                 informationDiv.appendChild(user_img);
                 visitorDiv.appendChild(informationDiv);
-                // content.appendChild(informationDiv);
+               
 
                 let userDiv = document.createElement("div");
                 userDiv.className = "member_name";
@@ -247,9 +234,7 @@ function myMessage() {
                 informationDiv.appendChild(userDiv);
                 visitorDiv.appendChild(informationDiv);
 
-                //修改符號
-                // let modifyDiv = document.createElement("div");
-                // modifyDiv.className = "dot_div";
+                
                 let modify_img = document.createElement("img");
                 modify_img.className = "dot_photo";
                 modify_img.id = ""
@@ -257,8 +242,7 @@ function myMessage() {
                 modify_img.setAttribute("width", "20");
                 modify_img.setAttribute("height", "20");
 
-                
-
+    
                 modify_img.addEventListener("click", (event) => {
                     // 獲取圖像座標
                     let imgRect = modify_img.getBoundingClientRect();
@@ -302,10 +286,7 @@ function myMessage() {
                                 let message_photo = jsonData.data[0].message_photo;
 
                                 document.querySelector(".message_name").innerHTML = "更新評論-" + jsonData.data[0].store_name
-                                // if (message_photo!==null){
-                                //     let photoDiv=document.querySelector(".add_message_photo");
-                                //     photoDiv.src=message_photo;
-                                // }
+                                
                                 document.querySelector(".user-message-textarea").innerHTML = jsonData.data[0].message_content
                             })
                         //   popupDiv.remove();
@@ -384,7 +365,7 @@ function myMessage() {
                     message_img.setAttribute("width", "100");
                     message_img.setAttribute("height", "80");
                     comment_content.appendChild(message_img);
-                    // googleDiv.appendChild(informationDiv);
+                    
 
                 }
 
@@ -467,7 +448,7 @@ function updateMember() {
             genderResult = "女生";
         }
 
-        // 將輸入的資訊更新到資料庫中
+        
         let data = {
             name: name,
             contact_email: contact_email,
@@ -475,7 +456,7 @@ function updateMember() {
             birthday: birthday,
             gender: genderResult,
         };
-        // console.log(data)
+       
         fetch("/api/member", {
             method: "POST",
             credentials: "include",
@@ -485,7 +466,7 @@ function updateMember() {
             })
         })
         updateButton.innerHTML = "更新會員資料";
-    }, 3000); // 這裡的 3000 毫秒代表模擬更新需要的時間，可以依照實際情況進行調整
+    }, 3000); 
 
 
 }
@@ -497,15 +478,14 @@ fetch("/api/member", {
 
         return response.json();
     }).then((jsonData) => {
-        console.log(jsonData)
+        
         let name = jsonData.name;
         let contact_email = jsonData.contact_email;
         let member_phone = jsonData.member_phone;
         let birthday = jsonData.birthday;
         let gender = jsonData.gender;
         let member_photo = jsonData.member_photo;
-        // user_id=jsonData.data["id"];
-        // // 將基本資訊自動填入
+        
         document.querySelector("#input_name").value = name;
         document.querySelector("#input_mail").value = contact_email;
         document.querySelector("#input_phone").value = member_phone;
@@ -539,10 +519,10 @@ function openMessage() {
             return response.json();
         }).then((jsonData) => {
             if (jsonData.data == false) {
-                // 打開註冊頁面
+                
                 openLogin();
             } else {
-                //  如果有登入打開新增評論頁面
+               
                 let element = document.querySelector(".overlay_message")
                 element.style.display = "block";
             }
@@ -564,15 +544,10 @@ function update_Message() {
     // 模擬更新時間
     setTimeout(function() {
 
-
-        // 抓取訊息內容
         const reviewTextarea = document.querySelector('.user-message-textarea');
         const submitBtn = document.querySelector('#add_message');
-
-
         const review = reviewTextarea.value;
-        // console.log(review )
-        // console.log(file)
+        
         const formData = new FormData();
         formData.append('img', message_file);
         // 取得文字訊息
@@ -592,9 +567,7 @@ function update_Message() {
                 window.location.href = `/member`;
             })
         updateButton.innerHTML = "送出評論";
-    }, 2000); // 這裡的 3000 毫秒代表模擬更新需要的時間，可以依照實際情況進行調整
-
-
+    }, 2000); 
 
 }
 
@@ -605,10 +578,8 @@ function message() {
 
     inputElement.addEventListener('change', (e) => {
         message_file = e.target.files[0]; //获取图片资源
-        console.log(message_file, "message_file")
+        
 
-
-        // 只选择图片文件
         if (!message_file.type.match('image.*')) {
             return false;
         }
