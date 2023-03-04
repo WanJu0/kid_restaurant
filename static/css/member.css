@@ -358,3 +358,7 @@ div[class^=member_comment]{
 .add_message_photo{
     cursor: pointer;
 }
+.member_photo{
+    object-fit: cover;
+    margin-right: 5px;
+}

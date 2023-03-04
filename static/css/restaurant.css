@@ -380,3 +380,6 @@ p{
 #city{
     color: #138184;
 }
+.member_icon{
+    object-fit: cover;
+}
