@@ -30,13 +30,10 @@ def api_restaurant():
             result = mycursor.fetchall()
         
         else:
-            # 模糊比對景點名稱或分類完全比對
             mycursor.execute("SELECT * FROM restaurant WHERE county=%s or district LIKE %s LIMIT %s ,%s",(keyword ,"%"+keyword+"%", page*12, 12))
             result = mycursor.fetchall()
-            # print(result)
         if result != None:
             data_value=[]
-            # print(result)
             for i in range(0,len(result)):
                 id=result[i]["id"]
                 place_id=result[i]["place_id"]
@@ -49,15 +46,12 @@ def api_restaurant():
                 lng=result[i]["lng"]
                 phone=result[i]["phone"]
                 rating=result[i]["rating"]
-
-                #  # 圖片處理
                 mycursor.execute("SELECT group_concat(photo) FROM restaurant INNER JOIN restaurant_photo ON restaurant.place_id=restaurant_photo.place_id WHERE restaurant.place_id=%s group by restaurant_photo.place_id" ,(place_id,))
                 photo = mycursor.fetchone()
-                # photo['photo']
+               
                 photo_str = photo['group_concat(photo)']
                 photo_list = photo_str.split(',')
-                # print( photo_list,"照片")
-                # photo_str = photo[0].split(',')
+            
                 attraction_list={
                     "id":id ,
                     "place_id":place_id,
@@ -100,8 +94,6 @@ def api_restaurant():
             }
             json_result=jsonify(data)
             return json_result,400
-        # for i in range(0,len(result)):
-        #     print()
     except Exception as e:
         print(e)
         data={
@@ -117,15 +109,13 @@ def api_restaurant():
 
 @route_api_restaurant.route("/api/restaurant/<restaurantID>",methods=["GET"])      
 def restaurant_ID(restaurantID):
-    # print(restaurantID)
-    
+
     try:
         connection_object = connection_pool.get_connection()
         mycursor=connection_object.cursor(dictionary=True)
         mycursor.execute("SELECT * FROM restaurant WHERE id=%s",(restaurantID,))
         result = mycursor.fetchone()
-        # print(result)
-        # print(type(result))
+    
         if result != None:
             id= result["id"]
             place_id=result["place_id"]
@@ -138,27 +128,22 @@ def restaurant_ID(restaurantID):
             lng=result["lng"]
             phone=result["phone"]
             rating=result["rating"]
-            
-            # 圖片處理
+
             mycursor.execute("SELECT GROUP_CONCAT(photo) FROM restaurant INNER JOIN restaurant_photo ON restaurant.place_id=restaurant_photo.place_id WHERE restaurant.place_id=%s GROUP BY restaurant_photo.place_id" ,(place_id,))
             photo = mycursor.fetchone()
-            # print(photo)
+
             photo_str = photo['GROUP_CONCAT(photo)']
             photo_list = photo_str.split(',')
-            # print(photo[0])
-        #     photo_str = photo[0].split(',')
-            # print(photo_list,"111")
-            # 進入google api
+
             key = os.getenv("key")
             myheaders={
                 "content-type":"application/json",
             }
             response=requests.get("https://maps.googleapis.com/maps/api/place/details/json?place_id="+place_id+"&language=zh-TW&key="+key,headers=myheaders).json()
-            # print(response,"google")
+
             opening_hours=response["result"]["current_opening_hours"]["open_now"]
             weekday_text=response["result"]["current_opening_hours"]["weekday_text"]
-            # print(opening_hours)
-            # print(weekday_text)
+            
             attraction_list={
                 "id":id ,
                 "place_id":place_id,
@@ -182,7 +167,6 @@ def restaurant_ID(restaurantID):
             }
 			
             json_result=jsonify(data)
-            # print(json_result)
             return json_result
         else:
             data={
@@ -191,7 +175,6 @@ def restaurant_ID(restaurantID):
             }
             json_result=jsonify(data)
             return json_result,400
-        # return "1111" 
     except Exception as e:
         print(e)
         data={
@@ -204,6 +187,3 @@ def restaurant_ID(restaurantID):
         mycursor.close()
         connection_object.close()
 
-
-    
-# @route_api_restaurant.route("https://maps.googleapis.com/maps/api/place/details/json?place_id="+place_id+"&language=zh-TW&key="+key)

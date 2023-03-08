@@ -24,14 +24,10 @@ route_api_favorite = Blueprint("route_api_favorite", __name__, template_folder="
 def apiFavorite():
     cookie=request.cookies.get("Set-Cookie")
     if cookie != None:
-        # 從前端接收資料
         decode= jwt.decode(cookie, "secretJWT", ['HS256'])
         member_id=decode["id"]
         member_name=decode["name"]
         store_id=request.json["restaurant_id"]
-        # print(member_id)
-        # print(store_id)
-        
         try:
             connection_object = connection_pool.get_connection()
             mycursor = connection_object.cursor()
@@ -68,7 +64,6 @@ def apiFavorite():
 def getFavorite(restaurantID):
     cookie=request.cookies.get("Set-Cookie")
     if cookie != None:
-        # 從前端接收資料
         decode= jwt.decode(cookie, "secretJWT", ['HS256'])
         member_id=decode["id"]
         member_name=decode["name"]
@@ -109,16 +104,13 @@ def getFavorite(restaurantID):
                 "error":True,
                 "message":"請先登入會員"
             }
-        # print(data)
         json_result=jsonify(data)
         return json_result,403
 
-# 這個是抓取使用者的所有儲存餐廳
 @route_api_favorite.route("/api/favorites",methods=["GET"])
 def getallFavorite():
     cookie=request.cookies.get("Set-Cookie")
     if cookie != None:
-        # 從前端接收資料
         decode= jwt.decode(cookie, "secretJWT", ['HS256'])
         member_id=decode["id"]
         member_name=decode["name"]
@@ -127,7 +119,6 @@ def getallFavorite():
             mycursor = connection_object.cursor(dictionary=True)
             mycursor.execute('SELECT favorite.user_id, favorite.store_id, restaurant.place_id,restaurant.store_name, restaurant.address, restaurant.county, restaurant.district , restaurant.phone FROM favorite JOIN restaurant ON favorite.store_id = restaurant.id WHERE favorite.user_id=%s ' ,(member_id, ))
             result = mycursor.fetchall()
-            # print(result,"所有愛心")
             if result != [] :
                 data_value=[]
                 for i in range(0,len(result)):
@@ -138,12 +129,10 @@ def getallFavorite():
                     district=result[i]["district"]
                     place_id=result[i]["place_id"]
                     phone=result[i]["phone"]
-                    
-
-                    #  # 圖片處理
+                
                     mycursor.execute("SELECT group_concat(photo) FROM restaurant INNER JOIN restaurant_photo ON restaurant.place_id=restaurant_photo.place_id WHERE restaurant.place_id=%s group by restaurant_photo.place_id" ,(place_id,))
                     photo = mycursor.fetchone()
-                    # photo['photo']
+                    
                     photo_str = photo['group_concat(photo)']
                     photo_list = photo_str.split(',')
                     favorite_list={
@@ -189,19 +178,17 @@ def getallFavorite():
                 "error":True,
                 "message":"請先登入會員"
             }
-        # print(data)
         return json_result,403
 
 @route_api_favorite.route("/api/favorites",methods=["DELETE"])
 def deleteFavorite():
     cookie=request.cookies.get("Set-Cookie")
     if cookie != None:
-        # 從前端接收資料
         decode= jwt.decode(cookie, "secretJWT", ['HS256'])
         member_id=decode["id"]
         member_name=decode["name"]
         store_id=request.json["restaurant_id"]
-        # print(store_id)
+        
         try:
             connection_object = connection_pool.get_connection()
             mycursor = connection_object.cursor()
@@ -234,6 +221,6 @@ def deleteFavorite():
                 "error":True,
                 "message":"請先登入會員"
             }
-        # print(data)
+        
         json_result=jsonify(data)
         return json_result,403

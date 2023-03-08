@@ -23,11 +23,9 @@ route_api_user = Blueprint("route_api_user", __name__, template_folder="template
 
 @route_api_user.route("/api/user",methods=["POST"])
 def signup():
-    # 從前端接收資料
     name=request.json["name"]
     email=request.json["email"]
     password=request.json["password"]
-    #註冊帳號密碼不能為空
     if name=="" or email=="" or password=="":
         data={
             "error":True,
@@ -39,10 +37,9 @@ def signup():
     try:
         connection_object = connection_pool.get_connection()
         mycursor = connection_object.cursor()
-        # 檢查姓名 帳號是否存在
         mycursor.execute('SELECT * FROM member WHERE name=%s or email =%s ' ,(name, email))
         result = mycursor.fetchone()
-        # print(result)
+
         if result != None:
             data={
                 "error":True,
@@ -51,16 +48,31 @@ def signup():
             json_result=jsonify(data)
             return json_result,400
         else:
-            # 把資料放進資料庫 完成註冊
             mycursor.execute("INSERT INTO member (name, email, password ) VALUES (%s, %s, %s)" ,(name,email,password))
             connection_object.commit()
             print(mycursor.rowcount, "record inserted.")
-            data={
-                "ok":True,
-            }
-            # print(data)
-            json_result=jsonify(data)
-            return json_result, 200
+            mycursor.execute('SELECT * FROM member WHERE email=%s AND password =%s' ,(email, password))
+            result = mycursor.fetchone()
+            if result==None:
+                data={
+                    "error":True,
+                    "message":"帳號密碼有誤"
+                }
+                json_result=jsonify(data)
+                return json_result,400
+            else:
+                encoded_jwt = jwt.encode({
+                    "id":result[0],
+                    "name":result[1],
+                    "email":result[2],
+                    },"secretJWT", algorithm='HS256')
+                data={
+                    "ok":True,
+                }
+                response = make_response(jsonify(data))
+                response.set_cookie(key="Set-Cookie", value=encoded_jwt, max_age=604800)
+                json_result=jsonify(data)
+                return response,200
     except Exception as e:
         print(e)
         data={
@@ -73,47 +85,38 @@ def signup():
         mycursor.close()
         connection_object.close()
 
-# 登入系統！
 @route_api_user.route("/api/user/auth",methods=["PUT"])
 def signin():   
     
     email=request.json["email"]
     password=request.json["password"]
-    #登入帳號密碼不能為空
     if email=="" or password=="":
         data={
             "error":True,
             "message":"請輸入帳號密碼"
         }
-        # print(data)
         json_result=jsonify(data)
         return json_result,400
    
     try:
         connection_object = connection_pool.get_connection()
         mycursor = connection_object.cursor()
-        # 檢查帳號密碼是否正確
         mycursor.execute('SELECT * FROM member WHERE email=%s AND password =%s' ,(email, password))
         result = mycursor.fetchone()
-        print(result,"111")
         if result==None:
             data={
                 "error":True,
                 "message":"帳號密碼有誤"
             }
-            # print(data)
             json_result=jsonify(data)
             return json_result,400
         else:
-        # 用jwt產生token
-        
+
             encoded_jwt = jwt.encode({
                 "id":result[0],
                 "name":result[1],
                 "email":result[2],
-                # "exp": datetime.utcnow() + timedelta(minutes=1)
                 },"secretJWT", algorithm='HS256')
-            # print(encoded_jwt)
             data={
                 "ok":True,
             }
@@ -141,7 +144,6 @@ def signin_get():
     cookie=request.cookies.get("Set-Cookie")
     if cookie != None:
         decode= jwt.decode(cookie, "secretJWT", ['HS256'])
-        # print(decode)
         data={
             "data":decode
         }

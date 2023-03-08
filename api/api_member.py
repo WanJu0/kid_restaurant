@@ -38,9 +38,10 @@ def memberPhoto():
         test=request.files
         img=request.files["img"]
         key=img.filename
+        keyName=str(uuid.uuid4()) + key
        
-        s3.Bucket('memberphoto').put_object(Key=img.filename, Body=img, ContentType='image/jpeg')
-        url="https://dk7141qqdhlvd.cloudfront.net/"+ key
+        s3.Bucket('memberphoto').put_object(Key=keyName, Body=img, ContentType='image/jpeg')
+        url="https://dk7141qqdhlvd.cloudfront.net/"+ keyName
         
         try:
             connection_object = connection_pool.get_connection()
@@ -68,48 +69,47 @@ def memberPhoto():
                 "error":True,
                 "message":"請先登入會員"
             }
-        # print(data)
+        
         json_result=jsonify(data)
         return make_response(json_result,403)  
 
-@route_api_member.route("/api/member/photo",methods=["GET"])
-def checkImg():
-    cookie=request.cookies.get("Set-Cookie")
-    if cookie != None:
-        decode= jwt.decode(cookie, "secretJWT", ['HS256'])
-        memberId=decode["id"]
-        member_name=decode["name"]
-        member_email=decode["email"]
-        key =str(memberId) + ".jpg"
+# @route_api_member.route("/api/member/photo",methods=["GET"])
+# def checkImg():
+#     cookie=request.cookies.get("Set-Cookie")
+#     if cookie != None:
+#         decode= jwt.decode(cookie, "secretJWT", ['HS256'])
+#         memberId=decode["id"]
+#         member_name=decode["name"]
+#         member_email=decode["email"]
+#         key =str(memberId) + ".jpg"
        
-        try:
-            obj=s3.Object(bucket_name="memberphoto", key=key)
-            response = obj.get()
-            # print(response,"obj_get")
-            url="https://dk7141qqdhlvd.cloudfront.net/"+ key
-            data={
-                "image":url,
-            }
-            json_result=jsonify(data) 
-            return make_response(json_result,200)  
-        except Exception as e:
-            print(e)
-            data={
-                "image":None,
-            }
-            json_result=jsonify(data)
-            return make_response(json_result,200)  
-            # return "False" 
-    else:
-        data={
-                "error":True,
-                "message":"請先登入會員"
-            }
-        # print(data)
-        json_result=jsonify(data) 
-        return make_response(json_result,403)  
+#         try:
+#             obj=s3.Object(bucket_name="memberphoto", key=key)
+#             response = obj.get()
+            
+#             url="https://dk7141qqdhlvd.cloudfront.net/"+ key
+#             data={
+#                 "image":url,
+#             }
+#             json_result=jsonify(data) 
+#             return make_response(json_result,200)  
+#         except Exception as e:
+#             print(e)
+#             data={
+#                 "image":None,
+#             }
+#             json_result=jsonify(data)
+#             return make_response(json_result,200)  
+            
+#     else:
+#         data={
+#                 "error":True,
+#                 "message":"請先登入會員"
+#             }
+       
+#         json_result=jsonify(data) 
+#         return make_response(json_result,403)  
 
-# 會員頁面資料更新api
 @route_api_member.route("/api/member",methods=["POST"])
 def apiMembers():
     
@@ -150,7 +150,7 @@ def apiMembers():
                 "message":"請先登入會員"
             }
         return json_result,403
-# 打開會員頁面時,顯示已經填入的訊息
+
 @route_api_member.route("/api/member",methods=["GET"])
 def getMember():
     cookie=request.cookies.get("Set-Cookie")
@@ -198,6 +198,6 @@ def getMember():
                 "error":True,
                 "message":"請先登入會員"
             }
-        # print(data)
+       
         json_result=jsonify(data)
         return json_result,403

@@ -27,8 +27,6 @@ def google_comment(placeID):
         mycursor=connection_object.cursor(dictionary=True)
         mycursor.execute("SELECT * FROM google_comment WHERE place_id=%s",(placeID,))
         result = mycursor.fetchall()
-        # print(result)
-        # print(len(result))
         data_value=[]
         for i in range(0,len(result)):
             author_name=result[i]["author_name"]

@@ -87,6 +87,7 @@ function apiSingup(){
         if(jsonData.ok==true){
             document.getElementById("signup_message").innerHTML = "註冊成功" ;
             document.getElementById("login_btn").style.margin="0px";
+            window.location.href = "/";
 
         }
     })

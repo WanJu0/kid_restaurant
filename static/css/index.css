@@ -403,17 +403,14 @@ a{
 .category-bar_category:hover .location {
 color: #26bec9;
 }
-.category-bar_category:hover {
-    border-bottom: 2px solid #26bec9;
-}
-/* .category-bar_category ::after{
-    content: "";
-    display: block;
-    height: 0.1rem;
-    width: 100%;
-    background-color: #26bec9;
+.category-bar__category-item {
+    border-bottom: 2px solid transparent;
+  }
+  
+  .category-bar__category-item:hover {
+    border-bottom-color: #26bec9;
+  }
 
-} */
 .category-bar_category .category-bar__category-item:hover > .panel-pop-up { /* 滑鼠滑入展開次選單*/
     display: block;
 }
@@ -534,4 +531,61 @@ div[class^=product_redlove] .product_redlove_photo:hover {
     color: #F8F8F8;
     background-color: cadetblue;
     opacity: 0.9;
+}
+
+
+@media(max-width:1200px){
+    
+    #navigation_bar{
+        display: flex;
+        margin: 0 auto;
+        width: auto;
+       
+    }
+    #content{
+        width: 90%;
+        flex-wrap: wrap;
+        grid-template-columns: 1fr 1fr 1fr;
+        
+    }
+    .imgDiv{
+        
+        height: auto;
+        width: 100%;
+        /* vertical-align: top;
+        aspect-ratio: 4/3; */
+    }
+    div[class^=restaurant_information] {
+        height: auto;
+        width: 100%;
+    }
+    .restaurant_image{
+        
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4/3;
+        /* vertical-align: top;
+        aspect-ratio: 4/3; */
+    }
+    
+}
+@media(max-width:980px){
+    #content{
+        width: 90%;
+        flex-wrap: wrap;
+        grid-template-columns: 1fr 1fr ;
+        
+    }
+}
+@media(max-width:600px){
+    #content{
+        width: 90%;
+        flex-wrap: wrap;
+        grid-template-columns: 1fr ;
+        
+    }
+    .panel-pop-up{
+        width: 90px;
+        margin-left: 2px;
+    }
 }

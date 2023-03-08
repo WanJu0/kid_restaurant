@@ -127,13 +127,7 @@ div[class^=member_information]{
 .user_comment{
     width: 270px
 }
-.comment_content{
-   
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    max-width: 1200px;
-    margin: 0 auto;
-}
+
 div[class^=visitor_comment]{
    
     margin-bottom: 40px;
@@ -361,4 +355,90 @@ div[class^=member_comment]{
 .member_photo{
     object-fit: cover;
     margin-right: 5px;
+}
+
+@media(max-width:1200px){
+    
+    #navigation_bar{
+        display: flex;
+        margin: 0 auto;
+        width: auto;
+       
+    }
+    .favorite_down{
+        width: 90%;
+        flex-wrap: wrap;
+        grid-template-columns: 1fr 1fr 1fr;
+        
+    }
+    .imgDiv{
+        
+        height: auto;
+        width: 100%;
+        /* vertical-align: top;
+        aspect-ratio: 4/3; */
+    }
+    div[class^=restaurant_information] {
+        height: auto;
+        width: 100%;
+    }
+    .restaurant_image{
+        
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4/3;
+        /* vertical-align: top;
+        aspect-ratio: 4/3; */
+    }
+    #member_content{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media(max-width:980px){
+    .favorite_down{
+        width: 90%;
+        flex-wrap: wrap;
+        grid-template-columns: 1fr 1fr ;
+        
+    }
+    
+}
+@media(max-width:600px){
+    .favorite_down{
+        width: 90%;
+        flex-wrap: wrap;
+        grid-template-columns: 1fr ;
+        
+    }
+    .comment_content{
+        width: 90%;
+        flex-wrap: wrap;
+        grid-template-columns: 1fr ;
+    }
+
+}
+@media(max-width:850px){
+    #member_content{
+        grid-template-columns: 1fr ;
+        height: auto;
+        width: auto;
+    }
+    #member_div{
+        max-width: 800px;
+        display: block;
+    }
+    #update_member{
+        justify-content: flex-end;
+        margin-bottom: 20px;
+        margin-right: 10px;
+        display: flex;
+        position:initial;
+    }
+    #member_photo{
+        margin: 10px auto;
+    }
+    .member_item{
+        margin: 10px auto;
+    }
+    
 }

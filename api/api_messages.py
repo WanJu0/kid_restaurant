@@ -32,12 +32,11 @@ route_api_messages = Blueprint("route_api_messages", __name__, template_folder="
 def createMessage():
     cookie=request.cookies.get("Set-Cookie")
     if cookie != None:
-        # 從前端接收資料
         decode = jwt.decode(cookie, "secretJWT", ['HS256'])
         member_id = decode["id"]
         member_name = decode["name"]
-        img = request.files.get("img") # 使用 get 方法，如果沒有上傳照片，img 就會為 None
-        # print(img,"img")
+        img = request.files.get("img")
+        
         data = request.form
         content = data["content"]
         restaurant_id = data["restaurant_id"]
@@ -80,7 +79,7 @@ def createMessage():
         json_result = jsonify(data)
         return json_result, 403
 
-# 在member頁面顯示會員的所有評論
+
 @route_api_messages.route("/api/messages/<memberID>",methods=["GET"])
 def getmember_Message(memberID):
    
@@ -90,8 +89,6 @@ def getmember_Message(memberID):
         mycursor.execute("SELECT * FROM messages JOIN restaurant on messages.store_id=restaurant.id WHERE messages.user_id=%s",(memberID,))
         result = mycursor.fetchall()
        
-       
-        # # 這邊先將
         if result != None:
             data_value=[]
             for i in range(0,len(result)):
@@ -103,10 +100,8 @@ def getmember_Message(memberID):
                 date=str(result[i]["created_at"])
                 store_name=result[i]["store_name"]
                 
-                # 抓取留言者的大頭照
                 mycursor.execute("SELECT * FROM member WHERE member_id=%s",(user_id,))
-                photoresult = mycursor.fetchall()
-                # print(photoresult,"photoresult")
+                photoresult = mycursor.fetchall() 
 
                 user_photo=photoresult[0]["member_photo"]
                 
@@ -125,7 +120,6 @@ def getmember_Message(memberID):
                 "data":data_value,
             }
             json_result=jsonify(data)
-            # print(json_result)
             return make_response(json_result,200) 
        
         else:
@@ -149,7 +143,6 @@ def getmember_Message(memberID):
         connection_object.close()
 
 
-# 在餐廳頁面抓取所有餐廳的評論
 @route_api_messages.route("/api/messages/restaurant/<restaurantID>",methods=["GET"])
 def getRestaurantMessage(restaurantID):
     
@@ -159,8 +152,7 @@ def getRestaurantMessage(restaurantID):
         mycursor.execute("SELECT * FROM messages JOIN member on messages.user_id=member.member_id WHERE store_id=%s",(restaurantID,))
         
         result = mycursor.fetchall()
-       
-        # # 這邊先將
+
         if result != None:
             data_value=[]
             for i in range(0,len(result)):
@@ -171,7 +163,6 @@ def getRestaurantMessage(restaurantID):
                 user_name=result[i]["name"]
                 date=str(result[i]["created_at"])
                 
-                # 抓取留言者的大頭照
                 mycursor.execute("SELECT * FROM member WHERE member_id=%s",(user_id,))
                 photoresult = mycursor.fetchall()
                 user_photo=photoresult[0]["member_photo"]
@@ -190,7 +181,6 @@ def getRestaurantMessage(restaurantID):
                 "data":data_value,
             }
             json_result=jsonify(data)
-            # print(json_result)
             return make_response(json_result,200) 
        
         else:
@@ -213,16 +203,14 @@ def getRestaurantMessage(restaurantID):
         mycursor.close()
         connection_object.close()
 
-# 更新評論內容
 @route_api_messages.route("/api/update/messages",methods=["POST"])
 def updateMessage():
     cookie=request.cookies.get("Set-Cookie")
     if cookie != None:
-        # 從前端接收資料
         decode = jwt.decode(cookie, "secretJWT", ['HS256'])
         member_id = decode["id"]
         member_name = decode["name"]
-        img = request.files.get("img") # 使用 get 方法，如果沒有上傳照片，img 就會為 None
+        img = request.files.get("img") 
         print(img,"更新的圖片")
         data = request.form
         content = data["content"]
@@ -267,7 +255,6 @@ def updateMessage():
         json_result = jsonify(data)
         return json_result, 403
 
-# 特定message_id的評論
 @route_api_messages.route("/api/messages_id/<messageID>",methods=["GET"])
 def getMessage_id(messageID):
    
@@ -277,8 +264,6 @@ def getMessage_id(messageID):
         mycursor.execute("SELECT * FROM messages JOIN restaurant on messages.store_id=restaurant.id WHERE messages_id=%s",(messageID,))
         result = mycursor.fetchall()
         
-
-        # 這邊先將
         if result != None:
             data_value=[]
             for i in range(0,len(result)):
@@ -290,13 +275,11 @@ def getMessage_id(messageID):
                 date=str(result[i]["created_at"])
                 store_name=result[i]["store_name"]
                 
-                # 抓取留言者的大頭照
                 mycursor.execute("SELECT * FROM member WHERE member_id=%s",(user_id,))
                 photoresult = mycursor.fetchall()
                 print(photoresult,"photoresult")
 
                 user_photo=photoresult[0]["member_photo"]
-                
                 
                 data={
                     "messages_id":messages_id,
@@ -346,8 +329,7 @@ def deleteMessage():
         decode= jwt.decode(cookie, "secretJWT", ['HS256'])
         member_id=decode["id"]
         member_name=decode["name"]
-        # print(member_name)
-        # 和資料庫做互動
+    
         connection_object = connection_pool.get_connection()
         mycursor = connection_object.cursor()
         mycursor.execute("DELETE FROM messages WHERE messages_id=%s",(messageID,))
@@ -366,7 +348,7 @@ def deleteMessage():
                 "error":True,
                 "message":"刪除失敗"
             }
-            # print(data)
+
             json_result=jsonify(data) 
             mycursor.close()
             connection_object.close()
@@ -378,6 +360,5 @@ def deleteMessage():
                 "error":True,
                 "message":"請先登入會員"
             }
-        # print(data)
         json_result=jsonify(data) 
         return make_response(json_result,403)  

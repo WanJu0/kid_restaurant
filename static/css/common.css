@@ -81,6 +81,7 @@
     color: #FFFFFF;
     text-align: center;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 #no_account{
     color: #666666;
@@ -177,6 +178,7 @@
     padding: 15px;
 }
 #signup_btn{
+    cursor: pointer;
     width: 310px;
     height: 47px;
     background: #26bec9;
@@ -280,4 +282,7 @@
     display: none;
     width: 100vw;
     left: 0;
+}
+.signup_icon{
+    cursor: pointer;
 }
