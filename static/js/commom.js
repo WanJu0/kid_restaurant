@@ -25,7 +25,6 @@ function openHamburger() {
       .then((jsonData) => {
         let loginElement = document.querySelector(".right_content");
         let logoutElement = document.querySelector(".right_logout");
-        console.log(jsonData.data, "登入這");
         if (jsonData.data == false) {
           if (loginElement.style.display === "block") {
             loginElement.style.display = "none";

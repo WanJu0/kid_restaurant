@@ -141,8 +141,10 @@ def restaurant_ID(restaurantID):
             }
             response=requests.get("https://maps.googleapis.com/maps/api/place/details/json?place_id="+place_id+"&language=zh-TW&key="+key,headers=myheaders).json()
 
-            opening_hours=response["result"]["current_opening_hours"]["open_now"]
-            weekday_text=response["result"]["current_opening_hours"]["weekday_text"]
+            # opening_hours=response["result"]["current_opening_hours"]["open_now"]
+            opening_hours = response["result"].get("current_opening_hours", {}).get("open_now", None)
+            # weekday_text=response["result"]["current_opening_hours"]["weekday_text"]
+            weekday_text = response["result"].get("current_opening_hours", {}).get("weekday_text", [])
             
             attraction_list={
                 "id":id ,

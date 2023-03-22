@@ -8,6 +8,7 @@ function restaurantID()
     .then((response) => {
         return response.json(); 
     }).then((jsonData) => {
+        // console.log(jsonData.data)
         let store_name= jsonData.data.store_name;
         let rating = jsonData.data.rating;
         let address = jsonData.data.address;
@@ -31,6 +32,7 @@ function restaurantID()
         let restaurnatlink = document.createElement("div");
         restaurnatlink.textContent = store_name;
         restaurnatDiv.appendChild(restaurnatlink);
+
 
 
         if(jsonData.data.opening_hours==false){
@@ -77,7 +79,7 @@ function restaurantID()
             .then((response) =>{
                 return response.json();
             }).then((jsonData)=>{
-                console.log(jsonData.data);
+                // console.log(jsonData.data);
                 for (let i =0; i< jsonData.data.length; i++){
 
                     let content = document.querySelector(".google_comment_div");
@@ -320,8 +322,3 @@ function initMap(lat, lng) {
   }
   
   window.initMap = initMap;
-
-
-
-
-
